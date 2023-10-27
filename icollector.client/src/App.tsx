@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import { FormattedDate, FormattedMessage, IntlProvider } from 'react-intl';
+import { LOCALES } from './i18n/locales';
+import { messages } from './i18n/messages';
 
 interface Forecast {
     date: string;
@@ -9,6 +12,7 @@ interface Forecast {
 }
 
 function App() {
+    const locale = LOCALES.ENGLISH;
     const [forecasts, setForecasts] = useState<Forecast[]>();
 
     useEffect(() => {
@@ -29,7 +33,9 @@ function App() {
             <tbody>
                 {forecasts.map(forecast =>
                     <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
+                        <td>
+                            <FormattedDate value={forecast.date} />
+                        </td>
                         <td>{forecast.temperatureC}</td>
                         <td>{forecast.temperatureF}</td>
                         <td>{forecast.summary}</td>
@@ -39,11 +45,17 @@ function App() {
         </table>;
 
     return (
-        <div>
-            <h1 id="tabelLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
+        <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={locale}>
+            <div>
+                <h1 id="tabelLabel">
+                    <FormattedMessage id="weather_forecast" />
+                </h1>
+                <p>
+                    <FormattedMessage id="wf_description" />
+                </p>
+                {contents}
+            </div>
+        </IntlProvider>
     );
 
     async function populateWeatherData() {
