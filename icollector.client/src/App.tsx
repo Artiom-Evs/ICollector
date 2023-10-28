@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import { FormattedDate, FormattedMessage, IntlProvider } from 'react-intl';
 import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
+import Layout from './components/Layout';
+import { Button, Container } from "reactstrap";
 
 interface Forecast {
     date: string;
@@ -46,15 +47,17 @@ function App() {
 
     return (
         <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={locale}>
-            <div>
-                <h1 id="tabelLabel">
-                    <FormattedMessage id="weather_forecast" />
-                </h1>
-                <p>
-                    <FormattedMessage id="wf_description" />
-                </p>
-                {contents}
-            </div>
+            <Layout>
+                <Container>
+                    <h1 id="tabelLabel">
+                        <FormattedMessage id="weather_forecast" />
+                    </h1>
+                    <p>
+                        <FormattedMessage id="wf_description" />
+                    </p>
+                    {contents}
+                </Container>
+            </Layout>
         </IntlProvider>
     );
 
