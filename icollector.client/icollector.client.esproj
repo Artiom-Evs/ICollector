@@ -11,5 +11,6 @@
   <ItemGroup>
     <Folder Include="src\%40types\" />
     <Folder Include="src\providers\" />
+    <Folder Include="src\hooks\" />
   </ItemGroup>
 </Project>
