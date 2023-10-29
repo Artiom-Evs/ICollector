@@ -1,6 +1,6 @@
 import { LOCALES } from "./locales";
 
-export const messages = {
+export const messages: Record<string, Record<string, string>> = {
     [LOCALES.ENGLISH]: {
         home_page: "Home",
         choose_language: "Choose language",

@@ -8,9 +8,9 @@ const Header = () => {
     const handleToggleClick = () => setCollapse(!collapsed);
 
     // intended for auto-collapse nav panel when user taps outside of it
-    const handleDocumentClick = (e) => {
+    const handleDocumentClick = (e: Event) => {
         const navPanel = document.getElementById("navPanel");
-        if (!navPanel?.contains(e.target)) {
+        if (!navPanel?.contains(e.target as Node)) {
             setCollapse(true);
         }
     }

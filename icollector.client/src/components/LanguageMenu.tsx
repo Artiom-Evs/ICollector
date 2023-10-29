@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownItem, DropdownToggle, Dropdown } from "reactstrap
 import { LOCALES } from '../i18n/locales';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-const languages = {
+const languages: Record<string, string> = {
 	[LOCALES.ENGLISH]: "English",
 	[LOCALES.POLISH]: "Polski",
 	[LOCALES.RUSSIAN]: "Русский"
