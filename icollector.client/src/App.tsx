@@ -3,7 +3,7 @@ import { FormattedDate, FormattedMessage, IntlProvider } from 'react-intl';
 import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import Layout from './components/Layout';
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 
 interface Forecast {
     date: string;
@@ -13,12 +13,16 @@ interface Forecast {
 }
 
 function App() {
-    const locale = LOCALES.ENGLISH;
+    const [locale, setLocale] = useState(LOCALES.ENGLISH);
     const [forecasts, setForecasts] = useState<Forecast[]>();
 
     useEffect(() => {
         populateWeatherData();
     }, []);
+
+    document.addEventListener("language-changed", (e) => {
+        setLocale((e as CustomEvent).detail);
+    });
 
     const contents = forecasts === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>

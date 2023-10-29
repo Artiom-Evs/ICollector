@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Collapse, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
+import { Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
+import LanguageMenu from "./LanguageMenu";
 
 const Header = () => {
     const [collapsed, setCollapse] = useState<boolean>(true);
     const handleToggleClick = () => setCollapse(!collapsed);
 
     return (
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" container light>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" container>
             <NavbarBrand href="/">ICollector</NavbarBrand>
             <NavbarToggler onClick={handleToggleClick} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
-                <ul className="navbar-nav flex-grow">
+                <Nav className="navbar-nav flex-grow">
                     <NavItem>
                         <NavLink href="/">
                             <FormattedMessage id="home_page" />
                         </NavLink>
                     </NavItem>
-                </ul>
+                    <NavItem className="ms-1 d-flex align-items-center">
+                        <LanguageMenu />
+                    </NavItem>
+                </Nav>
             </Collapse>
         </Navbar>
     );
