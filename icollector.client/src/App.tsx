@@ -4,6 +4,7 @@ import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import Layout from './components/Layout';
 import { Container } from "reactstrap";
+import ThemeProvider from './providers/ThemeProvider';
 
 interface Forecast {
     date: string;
@@ -14,7 +15,7 @@ interface Forecast {
 
 function getStoredLocale() {
     const savedLocale = localStorage.getItem('locale')
-    return savedLocale || LOCALES.ENGLISH
+    return savedLocale ?? LOCALES.ENGLISH
 }
 
 function setStoredLocale(locale: string) {
@@ -62,17 +63,19 @@ function App() {
 
     return (
         <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={locale}>
-            <Layout>
-                <Container>
-                    <h1 id="tabelLabel">
-                        <FormattedMessage id="weather_forecast" />
-                    </h1>
-                    <p>
-                        <FormattedMessage id="wf_description" />
-                    </p>
-                    {contents}
-                </Container>
-            </Layout>
+            <ThemeProvider>
+                <Layout>
+                    <Container>
+                        <h1 id="tabelLabel">
+                            <FormattedMessage id="weather_forecast" />
+                        </h1>
+                        <p>
+                            <FormattedMessage id="wf_description" />
+                        </p>
+                        {contents}
+                    </Container>
+                </Layout>
+            </ThemeProvider>
         </IntlProvider>
     );
 

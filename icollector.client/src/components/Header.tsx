@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import LanguageMenu from "./LanguageMenu";
+import ThemeMenu from "./ThemeMenu";
 
 const Header = () => {
     const [collapsed, setCollapse] = useState<boolean>(true);
@@ -32,6 +33,9 @@ const Header = () => {
                         <NavLink href="/">
                             <FormattedMessage id="home_page" />
                         </NavLink>
+                    </NavItem>
+                    <NavItem className="ms-1 d-flex align-items-center">
+                        <ThemeMenu />
                     </NavItem>
                     <NavItem className="ms-1 d-flex align-items-center">
                         <LanguageMenu />
