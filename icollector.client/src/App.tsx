@@ -12,8 +12,17 @@ interface Forecast {
     summary: string;
 }
 
+function getStoredLocale() {
+    const savedLocale = localStorage.getItem('locale')
+    return savedLocale || LOCALES.ENGLISH
+}
+
+function setStoredLocale(locale: string) {
+    localStorage.setItem("locale", locale)
+}
+
 function App() {
-    const [locale, setLocale] = useState(LOCALES.ENGLISH);
+    const [locale, setLocale] = useState(getStoredLocale);
     const [forecasts, setForecasts] = useState<Forecast[]>();
 
     useEffect(() => {
@@ -21,7 +30,9 @@ function App() {
     }, []);
 
     document.addEventListener("language-changed", (e) => {
-        setLocale((e as CustomEvent).detail);
+        const locale = (e as CustomEvent).detail;
+        setLocale(locale);
+        setStoredLocale(locale);
     });
 
     const contents = forecasts === undefined

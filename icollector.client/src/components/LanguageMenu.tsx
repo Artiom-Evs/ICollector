@@ -23,7 +23,7 @@ const LanguageMenu = () => {
 	return (
 		<Dropdown toggle={handleToggle} isOpen={isOpen}>
 			<DropdownToggle caret size="sm">
-				{language}
+				{languages[language]}
 			</DropdownToggle>
 			<DropdownMenu>
 				<DropdownItem header>
