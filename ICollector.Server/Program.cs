@@ -1,7 +1,19 @@
+using ICollector.Server.Data;
+using ICollector.Server.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("mssql")
+        ?? throw new InvalidOperationException("The 'mssql' connection string not found.")));
+
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddRoles<AppRole>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -10,7 +22,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -18,6 +29,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapGroup("/identity").MapIdentityApi<AppUser>();
 
 var summaries = new[]
 {
