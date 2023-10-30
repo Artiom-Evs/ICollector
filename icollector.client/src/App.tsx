@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import Layout from './components/Layout';
 import { Container } from "reactstrap";
-import ThemeProvider from './providers/ThemeProvider';
-import LocaleProvider from './providers/LocaleProvider';
 
 interface Forecast {
     date: string;
@@ -45,21 +43,17 @@ function App() {
         </table>;
 
     return (
-        <LocaleProvider>
-            <ThemeProvider>
-                <Layout>
-                    <Container>
-                        <h1 id="tabelLabel">
-                            <FormattedMessage id="weather_forecast" />
-                        </h1>
-                        <p>
-                            <FormattedMessage id="wf_description" />
-                        </p>
-                        {contents}
-                    </Container>
-                </Layout>
-            </ThemeProvider>
-        </LocaleProvider>
+        <Layout>
+            <Container>
+                <h1 id="tabelLabel">
+                    <FormattedMessage id="weather_forecast" />
+                </h1>
+                <p>
+                    <FormattedMessage id="wf_description" />
+                </p>
+                {contents}
+            </Container>
+        </Layout>
     );
 
     async function populateWeatherData() {
