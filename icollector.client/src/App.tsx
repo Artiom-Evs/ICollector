@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FormattedDate, FormattedMessage, IntlProvider } from 'react-intl';
-import { LOCALES } from './i18n/locales';
-import { messages } from './i18n/messages';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import Layout from './components/Layout';
 import { Container } from "reactstrap";
 import ThemeProvider from './providers/ThemeProvider';
+import LocaleProvider from './providers/LocaleProvider';
 
 interface Forecast {
     date: string;
@@ -13,28 +12,12 @@ interface Forecast {
     summary: string;
 }
 
-function getStoredLocale() {
-    const savedLocale = localStorage.getItem('locale')
-    return savedLocale ?? LOCALES.ENGLISH
-}
-
-function setStoredLocale(locale: string) {
-    localStorage.setItem("locale", locale)
-}
-
 function App() {
-    const [locale, setLocale] = useState(getStoredLocale);
     const [forecasts, setForecasts] = useState<Forecast[]>();
 
     useEffect(() => {
         populateWeatherData();
     }, []);
-
-    document.addEventListener("language-changed", (e) => {
-        const locale = (e as CustomEvent).detail;
-        setLocale(locale);
-        setStoredLocale(locale);
-    });
 
     const contents = forecasts === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
@@ -62,7 +45,7 @@ function App() {
         </table>;
 
     return (
-        <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={locale}>
+        <LocaleProvider>
             <ThemeProvider>
                 <Layout>
                     <Container>
@@ -76,7 +59,7 @@ function App() {
                     </Container>
                 </Layout>
             </ThemeProvider>
-        </IntlProvider>
+        </LocaleProvider>
     );
 
     async function populateWeatherData() {

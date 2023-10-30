@@ -1,36 +1,35 @@
 import { useState } from 'react'
 import { DropdownMenu, DropdownItem, DropdownToggle, Dropdown } from "reactstrap"
 import { LOCALES } from '../i18n/locales';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import useLocale from '../hooks/useLocale';
 
-const languages: Record<string, string> = {
+const languages: Record<LOCALES, string> = {
 	[LOCALES.ENGLISH]: "English",
 	[LOCALES.POLISH]: "Polski",
 	[LOCALES.RUSSIAN]: "Русский"
 };
 
 const LanguageMenu = () => {
-	const intl = useIntl();
 	const [isOpen, setOpen] = useState(false);
-	const [language, setLanguage] = useState(intl.locale);
+	const [locale, setLocale] = useLocale();
 
 	const handleToggle = () => setOpen(!isOpen);
-	const handleClick = (newLanguage: string) => {
-		setLanguage(newLanguage);
-		document.dispatchEvent(new CustomEvent("language-changed", { detail: newLanguage }));
+	const handleClick = (locale: LOCALES) => {
+		setLocale(locale);
 	}
 
 	return (
 		<Dropdown toggle={handleToggle} isOpen={isOpen}>
 			<DropdownToggle caret size="sm">
-				{languages[language]}
+				{languages[locale]}
 			</DropdownToggle>
 			<DropdownMenu>
 				<DropdownItem header>
 					<FormattedMessage id="choose_language" />
 				</DropdownItem>
 				{Object.entries(languages).map(([code, lang]) =>
-					<DropdownItem key={code} onClick={() => handleClick(code)}>{lang}</DropdownItem>
+					<DropdownItem key={code} onClick={() => handleClick(code as LOCALES)}>{lang}</DropdownItem>
 				)}
 			</DropdownMenu>
 		</Dropdown>
