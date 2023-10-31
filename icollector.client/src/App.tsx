@@ -1,10 +1,15 @@
 import Layout from './components/Layout';
-import Home from './components/Home';
+import { Route, Routes } from 'react-router-dom';
+import AppRoutes from './AppRoutes';
 
 function App() {
     return (
         <Layout>
-            <Home />
+            <Routes>
+                {AppRoutes.map((route, i) =>
+                    <Route key={i} {...route} />
+                )}
+            </Routes>
         </Layout>
     );
 }

@@ -5,12 +5,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css'
 import LocaleProvider from './providers/LocaleProvider.tsx';
 import ThemeProvider from './providers/ThemeProvider.tsx';
+import { HashRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <LocaleProvider>
             <ThemeProvider>
-                <App />
+                <HashRouter>
+                    <App />
+                </HashRouter>
             </ThemeProvider>
         </LocaleProvider>
   </React.StrictMode>,
