@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode } from "react"
 import Header from "./Header";
 import Footer from "./Footer";
+import { Container } from "reactstrap";
 
 interface LayoutProps {
     children?: ReactNode | undefined
@@ -13,7 +14,9 @@ const Layout: FunctionComponent<LayoutProps> = props => {
                 <Header />
             </header>
             <main>
-                {props.children}
+                <Container>
+                    {props.children}
+                </Container>
             </main>
             <footer className="mt-auto">
                 <Footer />
