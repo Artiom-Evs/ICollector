@@ -7,6 +7,11 @@ export const messages: Record<string, Record<string, string>> = {
         choose_theme: "Choose theme",
         light_theme: "Light",
         dark_theme: "Dark",
+        register: "Register",
+        registrationHeader: "Registration",
+        email: "Email",
+        password: "Password",
+        confirmPassword: "Confirm password",
         weather_forecast: "Weather forecast",
         wf_description: "This component demonstrates fetching data from the server."
     }, 
@@ -16,6 +21,11 @@ export const messages: Record<string, Record<string, string>> = {
         choose_theme: "Wybierz motyw",
         light_theme: "Jasny",
         dark_theme: "Ciemny",
+        register: "Zarejestruj się",
+        registrationHeader: "Rejestracja",
+        email: "Email",
+        password: "Hasło",
+        confirmPassword: "Powtórz hasłoпароль",
         weather_forecast: "Prognoza pogody",
         wf_description: "Ten komponent demonstruje pobieranie danych z servera."
     },
@@ -25,6 +35,11 @@ export const messages: Record<string, Record<string, string>> = {
         choose_theme: "Выберите тему",
         light_theme: "Светлая",
         dark_theme: "Тёмная",
+        register: "Зарегистрироваться",
+        registrationHeader: "Регистрация",
+        email: "Email",
+        password: "Пароль",
+        confirmPassword: "Повторите пароль",
         weather_forecast: "Прогноз погоды",
         wf_description: "Этот компонент демонстрирует получение данных с сервера."
     }

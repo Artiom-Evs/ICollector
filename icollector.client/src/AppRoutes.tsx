@@ -4,6 +4,10 @@ const AppRoutes = [
     {
         index: true,
         element: <Home />
+    },
+    {
+        path: "/register",
+        element: <Register />
     }
 ]
 
