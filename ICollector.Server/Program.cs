@@ -35,7 +35,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGroup("/identity").MapIdentityApi<AppUser>();
+app.MapGroup("/api/identity").MapIdentityApi<AppUser>();
 
 var summaries = new[]
 {

@@ -6,14 +6,17 @@ import './index.css'
 import LocaleProvider from './providers/LocaleProvider.tsx';
 import ThemeProvider from './providers/ThemeProvider.tsx';
 import { HashRouter } from 'react-router-dom';
+import AuthProvider from './providers/AuthProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <LocaleProvider>
             <ThemeProvider>
-                <HashRouter>
-                    <App />
-                </HashRouter>
+                <AuthProvider>
+                    <HashRouter>
+                        <App />
+                    </HashRouter>
+                </AuthProvider>
             </ThemeProvider>
         </LocaleProvider>
   </React.StrictMode>,
