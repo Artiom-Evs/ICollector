@@ -1,5 +1,16 @@
 import { FunctionComponent, PropsWithChildren, createContext, useMemo, useState } from "react"
-import { ThemeContextType, Themes } from "../@types/ThemeContextType";
+
+const supportedThemes = [
+    "light",
+    "dark"
+] as const;
+
+export type Themes = typeof supportedThemes[number];
+
+export interface ThemeContextType {
+    theme: Themes,
+    setTheme: (theme: Themes) => void
+}
 
 function getStoredTheme(): Themes | null {
     const savedTheme: string | null = localStorage.getItem("app-theme");

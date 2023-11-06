@@ -2,7 +2,11 @@ import { createContext, FunctionComponent, PropsWithChildren, useMemo, useState 
 import { IntlProvider } from "react-intl";
 import { messages } from "../i18n/messages";
 import { LOCALES } from "../i18n/locales";
-import { LocaleContextType } from "../@types/LocaleContextType";
+
+export interface LocaleContextType {
+    locale: LOCALES,
+    setLocale: (locale: LOCALES) => void
+}
 
 function getStoredLocale(): LOCALES | null {
     const storedLocale = localStorage.getItem('locale');

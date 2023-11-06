@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { DropdownMenu, DropdownItem, DropdownToggle, Dropdown } from "reactstrap"
 import { FormattedMessage } from 'react-intl';
-import { Themes } from '../@types/ThemeContextType';
+import { Themes } from '../providers/ThemeProvider';
 import useTheme from '../hooks/useTheme';
 
 const ThemeMenu = () => {
