@@ -9,6 +9,7 @@ Application project for managing public personal collections (books, stamps, whi
 ### Functional requirements #
 
 *   Access
+    *   ✅ Registration and authentication.
     *   Authorization by next roles:
         *   Guests
             *   Only view collections and collection items.
