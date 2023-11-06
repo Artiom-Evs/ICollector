@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
+import { Link } from 'react-router-dom';
 import LanguageMenu from "./LanguageMenu";
 import ThemeMenu from "./ThemeMenu";
+import AuthMenu from "./Auth/AuthMenu";
 
 const Header = () => {
     const [collapsed, setCollapse] = useState<boolean>(true);
@@ -25,15 +27,16 @@ const Header = () => {
 
     return (
         <Navbar id="navPanel" className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" container>
-            <NavbarBrand href="/">ICollector</NavbarBrand>
+            <NavbarBrand tag={Link} to="/">ICollector</NavbarBrand>
             <NavbarToggler onClick={handleToggleClick} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
                 <Nav className="navbar-nav flex-grow">
                     <NavItem>
-                        <NavLink href="/">
+                        <NavLink tag={Link} to="/">
                             <FormattedMessage id="home_page" />
                         </NavLink>
                     </NavItem>
+                    <AuthMenu />
                     <NavItem className="ms-1 d-flex align-items-center">
                         <ThemeMenu />
                     </NavItem>
