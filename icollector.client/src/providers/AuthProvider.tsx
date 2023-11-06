@@ -12,7 +12,8 @@ export const ApiPaths = {
 interface ApiErrorResult {
     status: number,
     title: string,
-    detail: string
+    detail: string,
+    errors: Record<string, string[]>
 }
 
 interface AuthResult {
