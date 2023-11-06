@@ -7,7 +7,7 @@ env:
   AZURE_WEBAPP_NAME: icollector
   AZURE_WEBAPP_PACKAGE_PATH: /home/runner/work/ICollector/ICollector.Server/publish
   CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 7.0.x
+  DOTNET_CORE_VERSION: 8.0.x
   WORKING_DIRECTORY: ICollector.Server
 jobs:
   build:
