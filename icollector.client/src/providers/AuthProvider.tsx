@@ -9,9 +9,15 @@ export const ApiPaths = {
     Refresh: `${ApiPrefix}/refresh`
 }
 
+interface ApiErrorResult {
+    status: number,
+    title: string,
+    detail: string
+}
+
 interface AuthResult {
     status: number,
-    data: object | null
+    data: ApiErrorResult | null
 }
 
 export interface AuthContextType {
