@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { createContext, FunctionComponent, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import axios, { AxiosInstance } from "axios";
 
 const ApiPrefix = "/api/identity";
@@ -6,7 +6,8 @@ const ApiPrefix = "/api/identity";
 export const ApiPaths = {
     Register: `${ApiPrefix}/register`,
     Login: `${ApiPrefix}/login`,
-    Refresh: `${ApiPrefix}/refresh`
+    Refresh: `${ApiPrefix}/refresh`,
+    Info: `${ApiPrefix}/manage/info`
 }
 
 interface ApiErrorResult {
@@ -21,11 +22,19 @@ interface AuthResult {
     data: ApiErrorResult | null
 }
 
+export interface UserInfoType {
+    id: string,
+    name: string,
+    email: string
+}
+
 export interface AuthContextType {
     register: (email: string, password: string) => Promise<AuthResult>,
     login: (email: string, password: string) => Promise<AuthResult>,
     refresh: () => Promise<AuthResult>,
     logout: () => void,
+    updateUserInfo: () => Promise<AuthResult>,
+    userInfo: UserInfoType | null,
     isAuthorized: boolean,
     authAxios: AxiosInstance
 }
@@ -64,21 +73,24 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [isAuthorized, setAuthorized] = useState<boolean>(false);
+    const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
     
-    const instance = axios.create();
+    const instance = useMemo(() => {
+        const instance = axios.create();
+        instance.interceptors.request.use(async (request) => {
+            const expiration = getStoredexpiration();
+            if (expiration && expiration < Date.now()) {
+                await refresh(getStoredRefreshToken() ?? "");
+            }
 
-    instance.interceptors.request.use(async (request) => {
-        const expiration = getStoredexpiration();
-        if (expiration && expiration < Date.now()) {
-            await refresh(getStoredRefreshToken() ?? "");
-        }
-
-        const token = getStoredAccessToken();
-        if (token) {
-            request.headers.Authorization = `Bearer ${token}`;
-        }
-        return request;
-    });
+            const token = getStoredAccessToken();
+            if (token) {
+                request.headers.Authorization = `Bearer ${token}`;
+            }
+            return request;
+        });
+        return instance;
+    }, []);
 
     const register = (email: string, password: string): Promise<AuthResult> => {
         return axios.post(ApiPaths.Register, {
@@ -136,12 +148,44 @@ export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children })
         setAuthorized(false);
     }
 
-    const token = getStoredRefreshToken();
+    const updateUserInfo = useCallback((): Promise<AuthResult> => {
+        return instance.get(ApiPaths.Info)
+            .then(response => response.data)
+            .then(({ email, claims }) => {
+                setUserInfo({
+                    id: claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
+                    name: claims["https://localhost:7000/swagger/index.html#:~:text=http%3A//schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+                    email
+                } as UserInfoType);
+                return { status: 200 } as AuthResult;
+            })
+            .catch(error => {
+                console.log(`>> Refresh error: ${error}.`);
+                return { status: error.response?.status ?? 200, data: error.response?.data } as AuthResult;
+            });
+    }, [instance]);
+
     useEffect(() => {
+        const token = getStoredRefreshToken();
         refresh(token ?? "");
-    }, [token]);
+        updateUserInfo();
+    }, [updateUserInfo]);
     
-    const contextValue = useMemo(() => ({ register, login, refresh, logout, isAuthorized, authAxios: instance } as AuthContextType), [isAuthorized, instance]);
+    const contextValue = useMemo(() => ({
+        register,
+        login,
+        refresh,
+        logout,
+        updateUserInfo,
+        userInfo,
+        isAuthorized,
+        authAxios: instance
+    } as AuthContextType), [
+        updateUserInfo,
+        userInfo,
+        isAuthorized,
+        instance
+    ]);
     
     return (
         <AuthContext.Provider value={contextValue}>

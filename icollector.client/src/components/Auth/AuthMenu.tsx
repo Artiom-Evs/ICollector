@@ -15,7 +15,7 @@ function AuthMenu() {
     const renderAuthorized = () =>
         <Fragment>
             <NavbarText>
-                <FormattedMessage id="helloUser" values={{ n: "User" }} />
+                <FormattedMessage id="helloUser" values={{ n: auth.userInfo?.email }} />
             </NavbarText>
             <NavItem className="ms-1 d-flex align-items-center">
                 <Button size="sm" onClick={handleLogout}>
