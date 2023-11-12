@@ -54,6 +54,7 @@ namespace ICollector.Server.Controllers
                 ?? throw new InvalidOperationException();
 
             userCollection.AuthorId = user.Id;
+            userCollection.Created = userCollection.Edited = DateTime.Now;
 
             await _context.CreateAsync(userCollection);
             await _context.SaveChangesAsync();
@@ -72,7 +73,7 @@ namespace ICollector.Server.Controllers
 
             var storedCollection = await _context.GetAsync(item => item.Id == userCollection.Id);
 
-            if (storedCollection == null || storedCollection.AuthorId != userCollection.AuthorId)
+            if (storedCollection == null)
             {
                 return BadRequest();
             }
@@ -85,9 +86,18 @@ namespace ICollector.Server.Controllers
                 return Forbid();
             }
 
-            storedCollection = null;
+            if (storedCollection.Name != userCollection.Name)
+            {
+                storedCollection.Name = userCollection.Name;
+            }
 
-            await _context.UpdateAsync(userCollection);
+            if (storedCollection.Description != userCollection.Description)
+            {
+                storedCollection.Description = userCollection.Description;
+            }
+
+            storedCollection.Edited = DateTime.Now;
+            await _context.UpdateAsync(storedCollection);
             await _context.SaveChangesAsync();
 
             return NoContent();
