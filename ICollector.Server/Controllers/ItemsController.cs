@@ -68,6 +68,7 @@ namespace ICollector.Server.Controllers
                 return Forbid();
             }
 
+            collectionItem.Created = collectionItem.Edited = DateTime.Now;
             await _items.CreateAsync(collectionItem);
             await _items.SaveChangesAsync();
             
@@ -98,7 +99,20 @@ namespace ICollector.Server.Controllers
                 return Forbid();
             }
 
-            await _items.UpdateAsync(collectionItem);
+            var storedItem = await _items.GetAsync(item => item.Id == collectionItem.Id);
+
+            if (storedItem == null)
+            {
+                return NotFound(); ;
+            }
+
+            if (storedItem.Name != collectionItem.Name)
+            {
+                storedItem.Name = collectionItem.Name;
+            }
+
+            storedItem.Edited = DateTime.Now;
+            await _items.UpdateAsync(storedItem);
             await _items.SaveChangesAsync();
 
             return NoContent();
