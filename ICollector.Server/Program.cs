@@ -1,4 +1,5 @@
 using ICollector.Server.Data;
+using ICollector.Server.Extensions;
 using ICollector.Server.Models;
 using ICollector.Server.Services;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,9 @@ app.MapGet("/weatherforecast", () =>
 
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
+
+app.SeedUsersData();
+app.SeedCollectionsData();
 
 app.Run();
 
