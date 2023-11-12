@@ -6,7 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("mssql")
-        ?? throw new InvalidOperationException("The 'mssql' connection string not found.")));
+        ?? throw new InvalidOperationException("Connection string not found.")));
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("mssql")
+        ?? throw new InvalidOperationException("Connection string not found.")));
 
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddRoles<AppRole>()
