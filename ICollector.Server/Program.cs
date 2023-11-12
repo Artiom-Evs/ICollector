@@ -1,5 +1,6 @@
 using ICollector.Server.Data;
 using ICollector.Server.Models;
+using ICollector.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,9 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IDataRepository<UserCollection>, EFDataRepository<UserCollection>>();
+builder.Services.AddScoped<IDataRepository<CollectionItem>, EFDataRepository<CollectionItem>>();
 
 var app = builder.Build();
 
