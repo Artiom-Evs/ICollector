@@ -87,3 +87,9 @@ Application project for managing public personal collections (books, stamps, whi
 *   Functionality of adding a set of additional fields to items is desirable.. 
 *   Maximum functionality should be implemented using ready-made external or built-in functions (full text search, tag cloud, Markdown editor and etc.).
 
+## Start the project #
+
+Run the following commands to create the database schema:
+
+    dotnet ef database update -c AppIdentityDbContext
+    dotnet ef database update -c ApplicationDbContext 
