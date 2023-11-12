@@ -44,8 +44,8 @@ jobs:
 
     - name: Generate migration scripts
       run: |
-        dotnet ef migrations script --output "${{ env.WORKING_DIRECTORY }}/Migrations/script1.sql" -c AppIdentityDbContext --idempotent --no-build
-        dotnet ef migrations script --output "${{ env.WORKING_DIRECTORY }}/Migrations/script2.sql" -c ApplicationDbContext --idempotent --no-build
+        dotnet ef migrations script --output "${{ env.WORKING_DIRECTORY }}/Migrations/script1.sql" -p "${{ env.WORKING_DIRECTORY }}" -c AppIdentityDbContext --idempotent --no-build
+        dotnet ef migrations script --output "${{ env.WORKING_DIRECTORY }}/Migrations/script2.sql" -p "${{ env.WORKING_DIRECTORY }}" -c ApplicationDbContext --idempotent --no-build
 
     - name: Migrate IdentityDB
       uses: Azure/sql-action@v2.2
