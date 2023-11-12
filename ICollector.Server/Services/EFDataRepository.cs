@@ -46,13 +46,6 @@ public class EFDataRepository<T> : IDataRepository<T>
 
     public Task UpdateAsync(T item)
     {
-        var tracked = _context.ChangeTracker.Entries<T>().FirstOrDefault(ti => ti.Entity.Id == item.Id);
-
-        if (tracked != null)
-        {
-            tracked.State = EntityState.Detached;
-        }
-
         _context.Set<T>().Attach(item);
         _context.Entry<T>(item).State = EntityState.Modified;
         return Task.CompletedTask;
