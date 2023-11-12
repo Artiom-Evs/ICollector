@@ -21,6 +21,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 builder.Services.AddScoped<IDataRepository<UserCollection>, EFDataRepository<UserCollection>>();
 builder.Services.AddScoped<IDataRepository<CollectionItem>, EFDataRepository<CollectionItem>>();
@@ -65,6 +66,7 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 app.Run();
