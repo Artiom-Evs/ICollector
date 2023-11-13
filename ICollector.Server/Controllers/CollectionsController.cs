@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ICollector.Server.Data;
+﻿using ICollector.Server.Extensions;
 using ICollector.Server.Models;
 using ICollector.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ICollector.Server.Controllers
 {
@@ -27,10 +22,23 @@ namespace ICollector.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserCollection>>> GetUserCollections()
+        public async Task<ActionResult<IEnumerable<UserCollection>>> GetUserCollections(string orderBy, bool descending, int page = 1, int pageSize = int.MaxValue)
         {
-            var items = await _context.GetAsync();
-            return Ok(items);
+            var items = _context.Query();
+
+            items = orderBy.ToLower() switch
+            {
+                "id" => items.OrderByWithDescending(i => i.Id, descending),
+                "name" => items.OrderByWithDescending(i => i.Name, descending),
+                "created" => items.OrderByWithDescending(i => i.Created, descending),
+                "edited" => items.OrderByWithDescending(i => i.Edited, descending),
+                _ => items
+            };
+            items = items
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            return Ok(await items.ToListAsync());
         }
 
         [HttpGet("{id}")]
@@ -121,7 +129,7 @@ namespace ICollector.Server.Controllers
             {
                 return Forbid();
             }
-            
+
             await _context.DeleteAsync(item => item.Id == id);
             await _context.SaveChangesAsync();
 

@@ -7,7 +7,7 @@ namespace ICollector.Server.Extensions;
 
 file record User(string Email, string Password);
 
-public static class InitialDataGenerationExtension
+public static class InitialDataGenerationExtensions
 {
     public static WebApplication SeedUsersData(this WebApplication app)
     {
