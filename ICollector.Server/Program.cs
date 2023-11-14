@@ -36,6 +36,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.SeedUsersData();
+    app.SeedCollectionsData();
 }
 
 app.UseHttpsRedirection();
@@ -48,8 +50,5 @@ app.UseAuthorization();
 app.MapGroup("/api/identity").MapIdentityApi<AppUser>();
 app.MapFallbackToFile("/index.html");
 app.MapControllers();
-
-app.SeedUsersData();
-app.SeedCollectionsData();
 
 app.Run();

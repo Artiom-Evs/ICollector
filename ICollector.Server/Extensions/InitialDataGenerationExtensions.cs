@@ -16,7 +16,7 @@ public static class InitialDataGenerationExtensions
         var users = app.Configuration
             .GetSection("InitialData:Users")
             .Get<User[]>()
-                ?? Array.Empty<User>();
+                ?? throw new InvalidOperationException("Users initial data not found in application configuration.");
 
         foreach (var user in users)
         {
@@ -39,11 +39,11 @@ public static class InitialDataGenerationExtensions
         var users = app.Configuration
             .GetSection("InitialData:Users")
             .Get<User[]>()
-                ?? Array.Empty<User>();
+                ?? throw new InvalidOperationException("Users initial data not found in application configuration.");
         var collections = app.Configuration
             .GetSection("InitialData:Collections")
             .Get<UserCollection[]>()
-                ?? Array.Empty<UserCollection>();
+                ?? throw new InvalidOperationException("User collections initial data not found in application configuration.");
 
         foreach (var collection in collections.Take(2))
         {
