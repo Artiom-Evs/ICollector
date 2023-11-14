@@ -1,62 +1,37 @@
 import { FunctionComponent, useState, useEffect } from "react";
-import { FormattedDate, FormattedMessage } from "react-intl";
-
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
-}
+import { FormattedMessage } from "react-intl";
+import { UserCollectionType } from "../../services/CollectionsDataService";
+import { useCollectionsApi } from "../../hooks/useCollectionsApi";
+import { HomeCollectionItem } from "./HomeCollectionItem";
 
 const Home: FunctionComponent = () => {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
-
+    const collectionsApi = useCollectionsApi();
+    const [collections, setCollections] = useState<UserCollectionType[]>();
+    
     useEffect(() => {
-        populateWeatherData();
-    }, []);
+        collectionsApi.getAll("created", true, 1, 5)
+            .then((response) => response.data)
+            .then((data: UserCollectionType[]) => {
+                setCollections(data);
+            });
+    }, [collectionsApi]);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tabelLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>
-                            <FormattedDate value={forecast.date} />
-                        </td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
-
+    const contents = collections === undefined
+        ? <p><em>Loading...</em></p>
+        : <div>
+            {collections.map(item =>
+                <HomeCollectionItem key={item.id} item={item} />
+            )}
+        </div>;
+    
     return (
         <div>
-            <h1 id="tabelLabel">
-                <FormattedMessage id="weather_forecast" />
+            <h1>
+                <FormattedMessage id="largest_collections" />
             </h1>
-            <p>
-                <FormattedMessage id="wf_description" />
-            </p>
             {contents}
         </div>
     );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
 }
 
 export default Home;

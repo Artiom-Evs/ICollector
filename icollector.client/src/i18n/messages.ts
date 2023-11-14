@@ -30,8 +30,13 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresLower: "Password must have at least one lowercase character.",
         passwordRequiresUpper: "Password must have at least one uppercase character.",
         
-        weather_forecast: "Weather forecast",
-        wf_description: "This component demonstrates fetching data from the server."
+        largest_collections: "Largest collections",
+
+        "created": "Created: { d, date }",
+        "edited": "Edited: { d, date }",
+        "likes": "{c, number} likes",
+        "comments": "{c, number} comments",
+        "items": "{c, number} items"
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -62,8 +67,13 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresLower: "Hasło musi mieć co najmniej jedną małą literę.",
         passwordRequiresUpper: "Hasło musi mieć co najmniej jedną dużą literę.",
 
-        weather_forecast: "Prognoza pogody",
-        wf_description: "Ten komponent demonstruje pobieranie danych z servera."
+        largest_collections: "Największe kolekcje",
+
+        "created": "Utworzone: { d, date }",
+        "edited": "Zmienione: { d, date }",
+        "likes": "{c, number} polubień",
+        "comments": "{c, number} komentarzy",
+        "items": "{c, number} elementów"
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -94,7 +104,12 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresLower: "Пароль должен иметь как минимум одну строчную букву.",
         passwordRequiresUpper: "Пароль должен иметь как минимум одну заглавную букву.",
         
-        weather_forecast: "Прогноз погоды",
-        wf_description: "Этот компонент демонстрирует получение данных с сервера."
+        largest_collections: "Самые большие коллекции",
+
+        "created": "Создано: { d, date }",
+        "edited": "Изменено: { d, date }",
+        "likes": "{c, number} лайков",
+        "comments": "{c, number} комментариев",
+        "items": "{c, number} элементов"
     }
 }
