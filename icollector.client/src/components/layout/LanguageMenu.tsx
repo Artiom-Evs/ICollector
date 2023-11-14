@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { DropdownMenu, DropdownItem, DropdownToggle, Dropdown } from "reactstrap"
-import { LOCALES } from '../i18n/locales';
+import { LOCALES } from '../../i18n/locales';
 import { FormattedMessage } from 'react-intl';
-import useLocale from '../hooks/useLocale';
+import useLocale from '../../hooks/useLocale';
 
 const languages: Record<LOCALES, string> = {
 	[LOCALES.ENGLISH]: "English",

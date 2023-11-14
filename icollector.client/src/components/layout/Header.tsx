@@ -4,7 +4,7 @@ import { Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } f
 import { Link } from 'react-router-dom';
 import LanguageMenu from "./LanguageMenu";
 import ThemeMenu from "./ThemeMenu";
-import AuthMenu from "./Auth/AuthMenu";
+import AuthMenu from "./AuthMenu";
 
 const Header = () => {
     const [collapsed, setCollapse] = useState<boolean>(true);
