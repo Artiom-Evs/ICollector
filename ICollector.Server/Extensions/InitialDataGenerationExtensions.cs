@@ -16,7 +16,7 @@ public static class InitialDataGenerationExtensions
         var users = app.Configuration
             .GetSection("InitialData:Users")
             .Get<User[]>()
-                ?? throw new InvalidOperationException("Users initial data not found in application configuration.");
+                ?? Array.Empty<User>();
 
         foreach (var user in users)
         {
@@ -39,29 +39,27 @@ public static class InitialDataGenerationExtensions
         var users = app.Configuration
             .GetSection("InitialData:Users")
             .Get<User[]>()
-                ?? throw new InvalidOperationException("Users initial data not found in application configuration.");
+                ?? Array.Empty<User>();
         var collections = app.Configuration
             .GetSection("InitialData:Collections")
             .Get<UserCollection[]>()
-                ?? throw new InvalidOperationException("User collections initial data not found in application configuration.");
+                ?? Array.Empty<UserCollection>();
 
-        var firstUser = users[0];
         foreach (var collection in collections.Take(2))
         {
             if (!appDbContext.AnyAsync(c => c.Name == collection.Name).Result)
             {
-                collection.AuthorId = userManager.FindByNameAsync(firstUser.Email).Result?.Id
+                collection.AuthorId = userManager.FindByNameAsync(users[0].Email).Result?.Id
                     ?? throw new InvalidOperationException();
                 appDbContext.CreateAsync(collection).Wait();
             }
         }
 
-        var secondUser = users[1];
         foreach (var collection in collections.Skip(2))
         {
             if (!appDbContext.AnyAsync(c => c.Name == collection.Name).Result)
             {
-                collection.AuthorId = userManager.FindByEmailAsync(secondUser.Email).Result?.Id
+                collection.AuthorId = userManager.FindByEmailAsync(users[1].Email).Result?.Id
                     ?? throw new InvalidOperationException();
                 appDbContext.CreateAsync(collection).Wait();
             }
