@@ -15,43 +15,43 @@ public class EFDataRepository<T> : IDataRepository<T>
         _context = context;
     }
 
-    public IQueryable<T> Query() => _context.Set<T>();
-    
-    public async Task SaveChangesAsync()
+    public virtual IQueryable<T> Query() => _context.Set<T>();
+
+    public virtual async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
     }
 
-    public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+    public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
     {
         return _context.Set<T>().AnyAsync(predicate);
     }
 
-    public async Task<IEnumerable<T>> GetAsync()
+    public virtual async Task<IEnumerable<T>> GetAsync()
     {
-        var items = await _context.Set<T>().ToListAsync();
+        var items = await this.Query().ToListAsync();
         return items;
     }
 
-    public Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+    public virtual Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
     {
         return _context.Set<T>().FirstOrDefaultAsync(predicate);
     }
 
-    public Task<T> CreateAsync(T item)
+    public virtual Task<T> CreateAsync(T item)
     {
         _context.Set<T>().Add(item);
         return Task.FromResult<T>(item);
     }
 
-    public Task UpdateAsync(T item)
+    public virtual Task UpdateAsync(T item)
     {
         _context.Set<T>().Attach(item);
         _context.Entry<T>(item).State = EntityState.Modified;
         return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task DeleteAsync(Expression<Func<T, bool>> predicate)
     {
         T? item = await this.GetAsync(predicate);
 

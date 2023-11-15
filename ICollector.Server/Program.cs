@@ -3,6 +3,7 @@ using ICollector.Server.Extensions;
 using ICollector.Server.Models;
 using ICollector.Server.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +23,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddScoped<IDataRepository<UserCollection>, EFDataRepository<UserCollection>>();
+builder.Services.AddScoped<IDataRepository<UserCollection>, EFCollectionsRepository>();
 builder.Services.AddScoped<IDataRepository<CollectionItem>, EFDataRepository<CollectionItem>>();
 
 var app = builder.Build();

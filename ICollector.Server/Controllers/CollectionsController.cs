@@ -22,7 +22,7 @@ namespace ICollector.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserCollection>>> GetUserCollections(string orderBy, bool descending, int page = 1, int pageSize = int.MaxValue)
+        public async Task<ActionResult<IEnumerable<UserCollection>>> GetUserCollections(string orderBy = "", bool descending = false, int page = 1, int pageSize = int.MaxValue)
         {
             var items = _context.Query();
 
@@ -32,6 +32,7 @@ namespace ICollector.Server.Controllers
                 "name" => items.OrderByWithDescending(i => i.Name, descending),
                 "created" => items.OrderByWithDescending(i => i.Created, descending),
                 "edited" => items.OrderByWithDescending(i => i.Edited, descending),
+                "itemscount" => items.OrderByWithDescending(i => i.Items.Count, descending),
                 _ => items
             };
             items = items

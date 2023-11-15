@@ -24,7 +24,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CollectionItem>>> GetItems(string orderBy, bool descending, int page = 1, int pageSize = int.MaxValue)
+    public async Task<ActionResult<IEnumerable<CollectionItem>>> GetItems(string orderBy = "", bool descending = false, int page = 1, int pageSize = int.MaxValue)
     {
         var items = _items.Query();
 
