@@ -31,6 +31,7 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresUpper: "Password must have at least one uppercase character.",
         
         largest_collections: "Largest collections",
+        lastAddedItems: "Last added items",
 
         "created": "Created: { d, date }",
         "edited": "Edited: { d, date }",
@@ -68,6 +69,7 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresUpper: "Hasło musi mieć co najmniej jedną dużą literę.",
 
         largest_collections: "Największe kolekcje",
+        lastAddedItems: "Ostatnio dodane itemy",
 
         "created": "Utworzone: { d, date }",
         "edited": "Zmienione: { d, date }",
@@ -105,6 +107,7 @@ export const messages: Record<string, Record<string, string>> = {
         passwordRequiresUpper: "Пароль должен иметь как минимум одну заглавную букву.",
         
         largest_collections: "Самые большие коллекции",
+        lastAddedItems: "Последние добавленные итемы",
 
         "created": "Создано: { d, date }",
         "edited": "Изменено: { d, date }",

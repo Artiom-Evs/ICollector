@@ -5,9 +5,11 @@ const apiPath = "/api/collections";
 export type UserCollectionType = {
     id: number,
     name: string,
+    description: string,
     created: string,
     edited: string,
-    authorId: string
+    authorId: string,
+    items: []
 }
 
 class CollectionsDataService {
