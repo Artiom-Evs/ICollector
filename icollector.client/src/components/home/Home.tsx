@@ -2,14 +2,14 @@ import { FunctionComponent, useState, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { UserCollectionType } from "../../services/CollectionsDataService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
-import { HomeCollectionItem } from "./HomeCollectionItem";
+import { HomeUserCollectionView } from "./HomeUserCollectionView";
 
 const Home: FunctionComponent = () => {
     const collectionsApi = useCollectionsApi();
     const [collections, setCollections] = useState<UserCollectionType[]>();
     
     useEffect(() => {
-        collectionsApi.getAll("created", true, 1, 5)
+        collectionsApi.getAll("itemscount", true, 1, 5)
             .then((response) => response.data)
             .then((data: UserCollectionType[]) => {
                 setCollections(data);
@@ -20,7 +20,7 @@ const Home: FunctionComponent = () => {
         ? <p><em>Loading...</em></p>
         : <div>
             {collections.map(item =>
-                <HomeCollectionItem key={item.id} item={item} />
+                <HomeUserCollectionView key={item.id} item={item} />
             )}
         </div>;
     
