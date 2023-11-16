@@ -1,5 +1,6 @@
 ﻿using ICollector.Server.Extensions;
 using ICollector.Server.Models;
+using ICollector.Server.Models.ApiModels;
 using ICollector.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CollectionItem>>> GetItems(string orderBy = "", bool descending = false, int page = 1, int pageSize = int.MaxValue)
+    public async Task<ActionResult<IEnumerable<ItemResponse>>> GetItems(string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
     {
         var items = _items.Query();
 
@@ -41,29 +42,63 @@ public class ItemsController : ControllerBase
             .Skip((page - 1) * pageSize)
             .Take(pageSize);
 
-        return Ok(await items.ToListAsync());
+        var responseItems = await items
+            .Select(i => i.ToApiResponse())
+            .ToArrayAsync();
+
+        var authorIds = responseItems
+            .Where(i => i.Collection != null)
+            .Select(i => i.Collection?.AuthorId ?? "")
+            .ToArray();
+        var authors = _userManager.Users
+            .Where(u => authorIds.Contains(u.Id))
+            .Select(u => new { u.Id, u.UserName })
+            .ToArray();
+
+        foreach (var item in responseItems)
+        {
+            if (item.Collection != null)
+            {
+                // TODO: determine the correct behavior in a situation when the author does not exist
+                item.Collection.AuthorName = authors.FirstOrDefault(a => a.Id == item.Collection.AuthorId)?.UserName ?? "unknown";
+                item.Collection.Items = [];
+            }               
+        }
+
+        return Ok(responseItems);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CollectionItem>> GetCollectionItem(int id)
+    public async Task<ActionResult<ItemResponse>> GetCollectionItem(int id)
     {
         var item = await _items.GetAsync(item => item.Id == id);
-
-
 
         if (item == null)
         {
             return NotFound();
         }
 
-        return Ok(item);
+        item.Collection = await _collections.GetAsync(c => c.Id == item.CollectionId);
+
+        var responseItem = item.ToApiResponse();
+
+        if (responseItem.Collection != null)
+        {
+            // TODO: determine the correct behavior in a situation when the author does not exist
+            var user = await _userManager.FindByIdAsync(responseItem.Collection.AuthorId);
+            responseItem.Collection.AuthorName = user?.UserName ?? "unknown";
+
+            responseItem.Collection.Items = [];
+        }
+
+        return Ok(responseItem);
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<CollectionItem>> PostCollectionItem(CollectionItem collectionItem)
+    public async Task<ActionResult<ItemResponse>> PostCollectionItem(ItemRequest request)
     {
-        var userCollection = await _collections.GetAsync(item => item.Id == collectionItem.CollectionId);
+        var userCollection = await _collections.GetAsync(item => item.Id == request.CollectionId);
 
         if (userCollection == null)
         {
@@ -78,23 +113,25 @@ public class ItemsController : ControllerBase
             return Forbid();
         }
 
-        collectionItem.Created = collectionItem.Edited = DateTime.Now;
-        await _items.CreateAsync(collectionItem);
+        var newItem = request.ToDomainModel();
+        newItem.Created = newItem.Edited = DateTime.Now;
+
+        await _items.CreateAsync(newItem);
         await _items.SaveChangesAsync();
 
-        return CreatedAtAction("GetCollectionItem", new { collectionItem.Id }, collectionItem);
+        return CreatedAtAction(nameof(GetCollectionItem), new { request.Id }, request);
     }
 
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCollectionItem(int id, CollectionItem collectionItem)
+    public async Task<IActionResult> PutCollectionItem(int id, ItemRequest request)
     {
-        if (id != collectionItem.Id)
+        if (id != request.Id)
         {
             return BadRequest();
         }
 
-        var userCollection = await _collections.GetAsync(item => item.Id == collectionItem.CollectionId);
+        var userCollection = await _collections.GetAsync(item => item.Id == request.CollectionId);
 
         if (userCollection == null)
         {
@@ -109,16 +146,16 @@ public class ItemsController : ControllerBase
             return Forbid();
         }
 
-        var storedItem = await _items.GetAsync(item => item.Id == collectionItem.Id);
+        var storedItem = await _items.GetAsync(item => item.Id == request.Id);
 
         if (storedItem == null)
         {
             return NotFound(); ;
         }
 
-        if (storedItem.Name != collectionItem.Name)
+        if (storedItem.Name != request.Name)
         {
-            storedItem.Name = collectionItem.Name;
+            storedItem.Name = request.Name;
         }
 
         storedItem.Edited = DateTime.Now;

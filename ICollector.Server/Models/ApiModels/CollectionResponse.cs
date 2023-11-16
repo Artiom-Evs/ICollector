@@ -11,5 +11,5 @@ public class CollectionResponse
     public DateTime Edited { get; set; }
     public string AuthorId { get; set; } = string.Empty;
     public string AuthorName { get; set; } = string.Empty;
-    public List<CollectionItem> Items { get; set; } = [];
+    public List<ItemResponse> Items { get; set; } = [];
 }
