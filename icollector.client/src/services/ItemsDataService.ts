@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { UserCollectionType } from "./CollectionsDataService";
 
 const apiPath = "/api/items";
 
@@ -7,7 +8,7 @@ export type CollectionItemType = {
     name: string,
     created: string,
     edited: string,
-    collectionId: string
+    collection: UserCollectionType
 }
 
 class ItemsDataService {

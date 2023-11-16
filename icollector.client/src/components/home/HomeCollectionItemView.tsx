@@ -20,6 +20,8 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
                     {props.item.name}
                 </div>
                 <div className="col-sm-3">
+                    <FormattedMessage id="author" values={{ a: props.item.collection.authorName }} />
+                    <br />
                     <FormattedMessage id="created" values={{ d: new Date(props.item.created) }} />
                     <br />
                     <FormattedMessage id="edited" values={{ d: new Date(props.item.edited) }} />
