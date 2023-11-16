@@ -1,140 +1,167 @@
 ﻿using ICollector.Server.Extensions;
 using ICollector.Server.Models;
+using ICollector.Server.Models.ApiModels;
 using ICollector.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ICollector.Server.Controllers
+namespace ICollector.Server.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class CollectionsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CollectionsController : ControllerBase
+    private readonly IDataRepository<UserCollection> _context;
+    private readonly UserManager<AppUser> _userManager;
+
+    public CollectionsController(IDataRepository<UserCollection> context, UserManager<AppUser> userManager)
     {
-        private readonly IDataRepository<UserCollection> _context;
-        private readonly UserManager<AppUser> _userManager;
+        _context = context;
+        _userManager = userManager;
+    }
 
-        public CollectionsController(IDataRepository<UserCollection> context, UserManager<AppUser> userManager)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CollectionResponse>>> GetUserCollections(string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
+    {
+        var items = _context.Query();
+
+        items = orderBy.ToLower() switch
         {
-            _context = context;
-            _userManager = userManager;
+            "id" => items.OrderByWithDescending(i => i.Id, descending),
+            "name" => items.OrderByWithDescending(i => i.Name, descending),
+            "created" => items.OrderByWithDescending(i => i.Created, descending),
+            "edited" => items.OrderByWithDescending(i => i.Edited, descending),
+            "itemscount" => items.OrderByWithDescending(i => i.Items.Count, descending),
+            _ => items
+        };
+
+        items = items
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize);
+
+        var responseItems = await items
+            .Select(i => i.ToApiResponse())
+            .ToArrayAsync();
+
+        var authorIds = responseItems.Select(i => i.AuthorId).ToArray();
+        var authors = await _userManager.Users
+            .Where(u => authorIds.Contains(u.Id))
+            .Select(u => new { u.Id, u.UserName })
+            .ToArrayAsync();
+
+        foreach (var item in responseItems)
+        {
+            // TODO: determine the correct behavior in a situation when the author does not exist
+            item.AuthorName = authors.FirstOrDefault(a => a.Id == item.AuthorId)?.UserName ?? "unknown";
+            item.Items.ForEach(i => i.Collection = null);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserCollection>>> GetUserCollections(string orderBy = "", bool descending = false, int page = 1, int pageSize = int.MaxValue)
+        return Ok(responseItems);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CollectionResponse>> GetUserCollection(int id)
+    {
+        var userCollection = await _context.Query().FirstOrDefaultAsync(item => item.Id == id);
+
+        if (userCollection == null)
         {
-            var items = _context.Query();
-
-            items = orderBy.ToLower() switch
-            {
-                "id" => items.OrderByWithDescending(i => i.Id, descending),
-                "name" => items.OrderByWithDescending(i => i.Name, descending),
-                "created" => items.OrderByWithDescending(i => i.Created, descending),
-                "edited" => items.OrderByWithDescending(i => i.Edited, descending),
-                "itemscount" => items.OrderByWithDescending(i => i.Items.Count, descending),
-                _ => items
-            };
-            items = items
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
-
-            return Ok(await items.ToListAsync());
+            return NotFound();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserCollection>> GetUserCollection(int id)
+        var responseItem = userCollection.ToApiResponse();
+        responseItem.Items.ForEach(i => i.Collection = null);
+
+        // TODO: determine the correct behavior in a situation when the author does not exist
+        var user = await _userManager.FindByIdAsync( responseItem.AuthorId);
+        responseItem.AuthorName = user?.UserName ?? "unknown";
+
+        return Ok(responseItem);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult<CollectionResponse>> PostUserCollection(CollectionRequest request)
+    {
+        var user = await _userManager.GetUserAsync(HttpContext.User)
+            ?? throw new InvalidOperationException();
+
+        UserCollection newCollection = request.ToDomainModel();
+
+        newCollection.AuthorId = user.Id;
+        newCollection.Created = newCollection.Edited = DateTime.Now;
+
+        await _context.CreateAsync(newCollection);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetUserCollection), new { id = request.Id }, request);
+    }
+
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutUserCollection(int id, CollectionRequest request)
+    {
+        if (id != request.Id)
         {
-            var userCollection = await _context.GetAsync(item => item.Id == id);
-
-            if (userCollection == null)
-            {
-                return NotFound();
-            }
-
-            return userCollection;
+            return BadRequest();
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<UserCollection>> PostUserCollection(UserCollection userCollection)
+        var storedCollection = await _context.GetAsync(item => item.Id == request.Id);
+
+        if (storedCollection == null)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User)
-                ?? throw new InvalidOperationException();
-
-            userCollection.AuthorId = user.Id;
-            userCollection.Created = userCollection.Edited = DateTime.Now;
-
-            await _context.CreateAsync(userCollection);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserCollection", new { id = userCollection.Id }, userCollection);
+            return BadRequest();
         }
 
-        [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserCollection(int id, UserCollection userCollection)
+        var user = await _userManager.GetUserAsync(HttpContext.User)
+            ?? throw new InvalidOperationException();
+
+        if (storedCollection.AuthorId != user.Id)
         {
-            if (id != userCollection.Id)
-            {
-                return BadRequest();
-            }
-
-            var storedCollection = await _context.GetAsync(item => item.Id == userCollection.Id);
-
-            if (storedCollection == null)
-            {
-                return BadRequest();
-            }
-
-            var user = await _userManager.GetUserAsync(HttpContext.User)
-                ?? throw new InvalidOperationException();
-
-            if (storedCollection.AuthorId != user.Id)
-            {
-                return Forbid();
-            }
-
-            if (storedCollection.Name != userCollection.Name)
-            {
-                storedCollection.Name = userCollection.Name;
-            }
-
-            if (storedCollection.Description != userCollection.Description)
-            {
-                storedCollection.Description = userCollection.Description;
-            }
-
-            storedCollection.Edited = DateTime.Now;
-            await _context.UpdateAsync(storedCollection);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Forbid();
         }
 
-        [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserCollection(int id)
+        if (storedCollection.Name != request.Name)
         {
-            var userCollection = await _context.GetAsync(item => item.Id == id);
-
-            if (userCollection == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.GetUserAsync(HttpContext.User)
-                ?? throw new InvalidOperationException();
-
-            if (userCollection.AuthorId != user.Id)
-            {
-                return Forbid();
-            }
-
-            await _context.DeleteAsync(item => item.Id == id);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            storedCollection.Name = request.Name;
         }
+
+        if (storedCollection.Description != request.Description)
+        {
+            storedCollection.Description = request.Description;
+        }
+
+        storedCollection.Edited = DateTime.Now;
+        await _context.UpdateAsync(storedCollection);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserCollection(int id)
+    {
+        var userCollection = await _context.GetAsync(item => item.Id == id);
+
+        if (userCollection == null)
+        {
+            return NotFound();
+        }
+
+        var user = await _userManager.GetUserAsync(HttpContext.User)
+            ?? throw new InvalidOperationException();
+
+        if (userCollection.AuthorId != user.Id)
+        {
+            return Forbid();
+        }
+
+        await _context.DeleteAsync(item => item.Id == id);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }
