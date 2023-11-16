@@ -9,6 +9,7 @@ export type UserCollectionType = {
     created: string,
     edited: string,
     authorId: string,
+    authorName: string,
     items: []
 }
 

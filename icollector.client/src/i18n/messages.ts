@@ -35,6 +35,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "created": "Created: { d, date }",
         "edited": "Edited: { d, date }",
+        "author": "Author: { a }",
         "likes": "{c, number} likes",
         "comments": "{c, number} comments",
         "items": "{c, number} items"
@@ -73,6 +74,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "created": "Utworzone: { d, date }",
         "edited": "Zmienione: { d, date }",
+        "author": "Autor: { a }",
         "likes": "{c, number} polubień",
         "comments": "{c, number} komentarzy",
         "items": "{c, number} elementów"
@@ -111,6 +113,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "created": "Создано: { d, date }",
         "edited": "Изменено: { d, date }",
+        "author": "Автор: { a }",
         "likes": "{c, number} лайков",
         "comments": "{c, number} комментариев",
         "items": "{c, number} элементов"
