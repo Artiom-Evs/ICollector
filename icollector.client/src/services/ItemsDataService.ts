@@ -27,7 +27,7 @@ class ItemsDataService {
     }
 
     get(id: number) {
-        return this.instance.get(`${apiPath}?id=${id}`);
+        return this.instance.get(`${apiPath}/${id}`);
     }
 
     post(data: CollectionItemType) {
@@ -35,11 +35,11 @@ class ItemsDataService {
     }
 
     update(id: number, data: CollectionItemType) {
-        return this.instance.put(`${apiPath}?id=${id}`, data);
+        return this.instance.put(`${apiPath}/${id}`, data);
     }
 
     delete(id: number) {
-        return this.instance.delete(`${apiPath}?id=${id}`);
+        return this.instance.delete(`${apiPath}/${id}`);
     }
 }
 

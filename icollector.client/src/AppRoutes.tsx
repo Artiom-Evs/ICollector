@@ -2,6 +2,7 @@ import Home from "./components/home/Home";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import { CollectionPage } from "./components/collection/CollectionPage";
+import { ItemPage } from "./components/item/ItemPage";
 
 const AppRoutes = [
     {
@@ -19,6 +20,10 @@ const AppRoutes = [
     {
         path: "/collection",
         element: <CollectionPage />
+    },
+    {
+        path: "/item",
+        element: <ItemPage />
     }
 ]
 
