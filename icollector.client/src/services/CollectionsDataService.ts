@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { CollectionItemType } from "./ItemsDataService";
 
 const apiPath = "/api/collections";
 
@@ -10,7 +11,7 @@ export type UserCollectionType = {
     edited: string,
     authorId: string,
     authorName: string,
-    items: []
+    items: CollectionItemType[]
 }
 
 class CollectionsDataService {
@@ -28,7 +29,7 @@ class CollectionsDataService {
     }
 
     get(id: number) {
-        return this.instance.get(`${apiPath}?id=${id}`);
+        return this.instance.get(`${apiPath}/${id}`);
     }
 
     post(data: UserCollectionType) {
@@ -36,11 +37,11 @@ class CollectionsDataService {
     }
 
     update(id: number, data: UserCollectionType) {
-        return this.instance.put(`${apiPath}?id=${id}`, data);
+        return this.instance.put(`${apiPath}/${id}`, data);
     }
 
     delete(id: number) {
-        return this.instance.delete(`${apiPath}?id=${id}`);
+        return this.instance.delete(`${apiPath}/${id}`);
     }
 }
 

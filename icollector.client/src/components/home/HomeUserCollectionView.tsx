@@ -1,11 +1,20 @@
 import { FormattedMessage } from "react-intl";
 import { UserCollectionType } from "../../services/CollectionsDataService";
+import { Link, useNavigate } from "react-router-dom";
+import { MouseEvent } from "react";
 
 interface HomeCollectionItemProps {
     item: UserCollectionType
 }
 
 export function HomeUserCollectionView(props: HomeCollectionItemProps) {
+    const navigate = useNavigate();
+
+    const handleCollectionClicked = (e: MouseEvent) => {
+        e.preventDefault();
+        navigate("/collection", { state: { id: props.item.id } });
+    }
+
     return (
         <div className="card mb-2">
             <div className="card-body row">
@@ -17,7 +26,9 @@ export function HomeUserCollectionView(props: HomeCollectionItemProps) {
                     <FormattedMessage id="comments" values={{ c: 0 }} />
                 </div>
                 <div className="col-sm-7">
-                    {props.item.name}
+                    <Link to="#" onClick={handleCollectionClicked}>
+                        {props.item.name}
+                    </Link>
                     <br />
                     {props.item.description}
                 </div>
