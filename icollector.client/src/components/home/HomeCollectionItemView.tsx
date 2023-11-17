@@ -29,7 +29,9 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
                     <Link to="#" onClick={handleItemClicked}>
                         {props.item.name}
                     </Link>
-                </div>
+                    <br />
+                    <FormattedMessage id="collection" values={{ c: props.item.collection.name }} />
+                    </div>
                 <div className="col-sm-3">
                     <FormattedMessage id="author" values={{ a: props.item.collection.authorName }} />
                     <br />
