@@ -27,7 +27,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddScoped<IDataRepository<UserCollection>, EFCollectionsRepository>();
-builder.Services.AddScoped<IDataRepository<CollectionItem>, EFDataRepository<CollectionItem>>();
+builder.Services.AddScoped<IDataRepository<CollectionItem>, EFItemsRepository>();
 
 var app = builder.Build();
 

@@ -71,14 +71,12 @@ public class ItemsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ItemResponse>> GetCollectionItem(int id)
     {
-        var item = await _items.GetAsync(item => item.Id == id);
+        var item = await _items.Query().FirstOrDefaultAsync(item => item.Id == id);
 
         if (item == null)
         {
             return NotFound();
         }
-
-        item.Collection = await _collections.GetAsync(c => c.Id == item.CollectionId);
 
         var responseItem = item.ToApiResponse();
 
