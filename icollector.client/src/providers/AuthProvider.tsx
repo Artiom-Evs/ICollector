@@ -1,42 +1,17 @@
 import { createContext, FunctionComponent, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import axios, { AxiosInstance } from "axios";
+import AuthApiService, { UserInfoType } from "../services/AuthApiService";
 
-const ApiPrefix = "/api/identity";
-
-export const ApiPaths = {
-    Register: `${ApiPrefix}/register`,
-    Login: `${ApiPrefix}/login`,
-    Refresh: `${ApiPrefix}/refresh`,
-    Info: `${ApiPrefix}/manage/info`
-}
-
-interface ApiErrorResult {
+export interface AuthErrorResult {
     status: number,
     title: string,
     detail: string,
     errors: Record<string, string[]>
 }
 
-interface AuthResult {
+export interface AuthResult {
     status: number,
-    data: ApiErrorResult | null
-}
-
-export interface UserInfoType {
-    id: string,
-    name: string,
-    email: string
-}
-
-export interface AuthContextType {
-    register: (email: string, password: string) => Promise<AuthResult>,
-    login: (email: string, password: string) => Promise<AuthResult>,
-    refresh: () => Promise<AuthResult>,
-    logout: () => void,
-    updateUserInfo: () => Promise<AuthResult>,
-    userInfo: UserInfoType | null,
-    isAuthorized: boolean,
-    authAxios: AxiosInstance
+    data: AuthErrorResult | null
 }
 
 function getStoredAccessToken(): string | null {
@@ -69,18 +44,41 @@ function setStoredExpiration(expiration: number | null): void {
         : localStorage.removeItem("access-token-expiration");
 }
 
+function setAuthState(accessToken: string | null, refreshToken: string | null, expireIn: number | null) {
+    setStoredRefreshToken(refreshToken);
+    setStoredAccessToken(accessToken);
+    setStoredExpiration(expireIn !== null ? Date.now() + expireIn * 1000 : null);
+}
+
+export interface AuthContextType {
+    register: (email: string, password: string) => Promise<AuthResult>,
+    login: (email: string, password: string) => Promise<AuthResult>,
+    refresh: () => Promise<AuthResult>,
+    updateUserInfo: () => Promise<AuthResult>,
+    logout: () => void,
+    userInfo: UserInfoType | null,
+    isAuthorized: boolean,
+    authAxios: AxiosInstance
+}
+
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [isAuthorized, setAuthorized] = useState<boolean>(false);
-    const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
+    const [userInfo, setUserInfo] = useState<UserInfoType| null>(null);
     
-    const instance = useMemo(() => {
+    const [instance, authApi] = useMemo(() => {
         const instance = axios.create();
+        const authApi = new AuthApiService(instance);
+
         instance.interceptors.request.use(async (request) => {
             const expiration = getStoredexpiration();
             if (expiration && expiration < Date.now()) {
-                await refresh(getStoredRefreshToken() ?? "");
+                await authApi.refresh(getStoredRefreshToken() ?? "")
+                    .then(response => response.data)
+                    .then(data => {
+                        setAuthState(data.accessToken, data.refreshToken, data.expireIn);
+                    });
             }
 
             const token = getStoredAccessToken();
@@ -89,88 +87,72 @@ export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children })
             }
             return request;
         });
-        return instance;
+        return [instance, authApi];
     }, []);
-
-    const register = (email: string, password: string): Promise<AuthResult> => {
-        return axios.post(ApiPaths.Register, {
-            email, password
-        })
+    
+    const register = useCallback((email: string, password: string): Promise<AuthResult> =>
+        authApi.register(email, password)
             .then(() => {
                 return { status: 200 } as AuthResult;
             })
             .catch(error => {
                 console.log(`>> Register error: ${error}.`);
                 return { status: error.response?.status ?? 200, data: error.response?.data } as AuthResult;
-            });
-    }
+            }), [authApi]);
 
-    const login = (email: string, password: string): Promise<AuthResult> => {
-        return axios.post(ApiPaths.Login, {
-            email, password
-        })
+    const login = useCallback((email: string, password: string): Promise<AuthResult> =>
+        authApi.login(email, password)
             .then(response => response.data)
-            .then(({ accessToken, refreshToken, expireIn }) => {
-                setStoredRefreshToken(refreshToken);
-                setStoredAccessToken(accessToken);
-                setStoredExpiration(Date.now() + expireIn * 1000);
+            .then(data => {
+                setAuthState(data.accessToken, data.refreshToken, data.expireIn);
                 setAuthorized(true);
                 return { status: 200 } as AuthResult;
             })
             .catch(error => {
                 console.log(`>> login error: ${error}.`);
                 return { status: error.response?.status ?? 200, data: error.response?.data } as AuthResult;
-            });
-    }
-
-    const refresh = (refreshToken: string): Promise<AuthResult> => {
-        return axios.post(ApiPaths.Refresh, {
-            refreshToken
-        })
+            }), [authApi]);
+    
+    const refresh = useCallback((refreshToken: string): Promise<AuthResult> =>
+        authApi.refresh(refreshToken)
             .then(response => response.data)
-            .then(({ accessToken, refreshToken, expireIn }) => {
-                setStoredRefreshToken(refreshToken);
-                setStoredAccessToken(accessToken);
-                setStoredExpiration(Date.now() + expireIn * 1000);
+            .then(data => {
+                setAuthState(data.accessToken, data.refreshToken, data.expireIn);
                 setAuthorized(true);
                 return { status: 200 } as AuthResult;
             })
             .catch(error => {
                 console.log(`>> Refresh error: ${error}.`);
                 return { status: error.response?.status ?? 200, data: error.response?.data } as AuthResult;
-            });
-    }
-
-    const logout = () => {
-        setStoredRefreshToken(null);
-        setStoredAccessToken(null);
-        setStoredExpiration(null);
-        setAuthorized(false);
-    }
+            }), [authApi]);
 
     const updateUserInfo = useCallback((): Promise<AuthResult> => {
-        return instance.get(ApiPaths.Info)
+            return authApi.getUserInfo()
             .then(response => response.data)
-            .then(({ email, claims }) => {
-                setUserInfo({
-                    id: claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
-                    name: claims["https://localhost:7000/swagger/index.html#:~:text=http%3A//schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
-                    email
-                } as UserInfoType);
+            .then(data => {
+                setUserInfo(data);
                 return { status: 200 } as AuthResult;
             })
             .catch(error => {
-                console.log(`>> Refresh error: ${error}.`);
+                console.log(`>> Refresh user info error: ${error}.`);
                 return { status: error.response?.status ?? 200, data: error.response?.data } as AuthResult;
             });
-    }, [instance]);
+    }, [authApi]);
+
+    const logout = () => {
+        setAuthState(null, null, null);
+        setAuthorized(false);
+    }
 
     useEffect(() => {
         const token = getStoredRefreshToken();
         refresh(token ?? "");
+    }, [updateUserInfo, refresh]);
+
+    useEffect(() => {
         updateUserInfo();
-    }, [updateUserInfo]);
-    
+    }, [updateUserInfo, isAuthorized]);
+
     const contextValue = useMemo(() => ({
         register,
         login,
@@ -181,6 +163,9 @@ export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children })
         isAuthorized,
         authAxios: instance
     } as AuthContextType), [
+        register,
+        login,
+        refresh,
         updateUserInfo,
         userInfo,
         isAuthorized,
