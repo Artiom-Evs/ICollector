@@ -24,8 +24,8 @@ Application project for managing public personal collections (books, stamps, whi
             *   Access to administration panel. 
     *   UI
         *  Application home page 
-            *   List of the last added collection items (name, collection, author).
-            *   List 5 largest collections. 
+            *   ✅ List of the last added collection items (name, collection, author).
+            *   ✅ List 5 largest collections. 
             *   Tag cloud. Search page opens after clicking on the tag. 
         *   Personal user page
             *   Provides interface to manage own collections. 
