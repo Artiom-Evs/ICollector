@@ -12,14 +12,13 @@ enum PageStates {
     Content
 }
 
-function renderToolbar(onAddClicked: (e: MouseEvent) => void, onEditClicked: (e: MouseEvent) => void, onDeleteClicked: (e: MouseEvent) => void) {
+function renderToolbar(onAddClicked: (e: MouseEvent) => void, onEditClicked: () => void, onDeleteClicked: () => void) {
     return (
         <div className="d-flex justify-content-end">
             <ButtonGroup>
                 <Button onClick={onAddClicked}>
                     <FormattedMessage id="add_new_item" />
                 </Button>
-
                 <Button onClick={onEditClicked}>
                     <FormattedMessage id="edit" />
                 </Button>
