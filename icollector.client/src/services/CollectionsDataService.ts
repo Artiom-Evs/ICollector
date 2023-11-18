@@ -21,10 +21,10 @@ class CollectionsDataService {
         this.instance = instance;
     }
 
-    getAll(orderBy: string = "", descending: boolean = false, page: number = 1, pageSize: number = 100) {
+    getAll(authorId: string, orderBy: string = "", descending: boolean = false, page: number = 1, pageSize: number = 100) {
         return this.instance.get(apiPath, {
             params: {
-                orderBy, descending, page, pageSize
+                authorId, orderBy, descending, page, pageSize
         }});
     }
 

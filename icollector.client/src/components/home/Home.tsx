@@ -14,7 +14,7 @@ const Home: FunctionComponent = () => {
     const [items, setItems] = useState<CollectionItemType[]>();
     
     useEffect(() => {
-        collectionsApi.getAll("itemscount", true, 1, 5)
+        collectionsApi.getAll("", "itemscount", true, 1, 5)
             .then((response) => response.data)
             .then((data: UserCollectionType[]) => {
                 setCollections(data);
