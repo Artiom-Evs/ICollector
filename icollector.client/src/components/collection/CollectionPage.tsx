@@ -6,11 +6,16 @@ import { FormattedMessage } from "react-intl";
 import { Button, ButtonGroup } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 
-function renderToolbar(onEditClicked: (e: MouseEvent) => void) {
+function renderToolbar(onEditClicked: (e: MouseEvent) => void, onDeleteClicked: (e: MouseEvent) => void) {
     return (
         <div className="d-flex justify-content-end">
             <ButtonGroup>
-                <Button onClick={onEditClicked}>Edit</Button>
+                <Button onClick={onEditClicked}>
+                    <FormattedMessage id="edit" />
+                </Button>
+                <Button onClick={onDeleteClicked}>
+                    <FormattedMessage id="delete" />
+                </Button>
             </ButtonGroup>
         </div>
     )
@@ -83,7 +88,15 @@ export function CollectionPage() {
                 id: collection?.id
         }});
     }
-    
+
+    function handleDeleteClicked() {
+        navigate("/collection/delete", {
+            state: {
+                id: collection?.id
+            }
+        });
+    }
+
     useEffect(() => {
         collectionsApi.get(parseInt(state.id ?? "0"))
             .then(response => response.data)
@@ -94,11 +107,11 @@ export function CollectionPage() {
     if (collection === undefined) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
-
+    
     return (
         <div>
             {userInfo?.id === collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}
-            {renderCollection(collection)}
+            {renderCollection(collection, handleItemClicked)}
         </div>
     )
 }

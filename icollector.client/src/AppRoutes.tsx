@@ -6,6 +6,7 @@ import { ItemPage } from "./components/item/ItemPage";
 import { PersonalPage } from "./components/personal/PersonalPage";
 import { CreateCollectionPage } from "./components/collection/CreateCollectionPage";
 import { EditCollectionPage } from "./components/collection/EditCollectionPage";
+import { DeleteCollectionPage } from "./components/collection/DeleteCollectionPage";
 
 const AppRoutes = [
     {
@@ -42,6 +43,11 @@ const AppRoutes = [
         path: "/collection/edit",
         requireAuth: true,
         element: <EditCollectionPage />
+    },
+    {
+        path: "/collection/delete",
+        requireAuth: true,
+        element: <DeleteCollectionPage />
     }
 ]
 

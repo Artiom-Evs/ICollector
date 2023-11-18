@@ -47,12 +47,20 @@ export const messages: Record<string, Record<string, string>> = {
         "description": "Description",
         "author": "Author",
         "save": "Save",
+        "create": "Create",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
         "loading": "Loading...",
 
         "create_new_collection": "Create new collection",
         "edit_collection": "Edit collection",
+        "delete_collection": "Delete collection",
         "collection_name": "Collection name",
         "collection_description": "Collection description",
+
+        "items_count": "Items count",
+        "warning_before_collection_deletion": "Are you sure you want to delete this collection?"
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -100,12 +108,20 @@ export const messages: Record<string, Record<string, string>> = {
         "description": "Opis",
         "author": "Autor",
         "save": "Zapisz",
+        "create": "Utwórż",
+        "edit": "Edytuj",
+        "delete": "Usuń",
+        "cancel": "Anuluj",
         "loading": "Ładowanie...",
 
         "create_new_collection": "Utwórz nową kolekcję",
         "edit_collection": "Edytuj kolekcję",
+        "delete_collection": "Usuń kolekcję",
         "collection_name": "Nazwa kolekcji",
         "collection_description": "Opis collekcji",
+
+        "items_count": "Ilość itemów",
+        "warning_before_collection_deletion": "Czy na pewno chcesz usunąć tę kolekcję?"
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -153,11 +169,19 @@ export const messages: Record<string, Record<string, string>> = {
         "description": "Описание",
         "author": "Автор",
         "save": "Сохранить",
+        "create": "Создать",
+        "edit": "Редактировать",
+        "delete": "Удалить",
         "loading": "Загрузка...",
 
         "create_new_collection": "Создать новую коллекцию",
         "edit_collection": "Изменить коллекцию",
+        "delete_collection": "Удалить коллекцию",
+        "cancel": "Отмена",
         "collection_name": "Название коллекции",
         "collection_description": "Описание коллекции",
+
+        "items_count": "Количество элементов",
+        "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?"
     }
 }
