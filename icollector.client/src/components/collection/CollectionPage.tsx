@@ -3,6 +3,18 @@ import { UserCollectionType } from "../../services/CollectionsApiService";
 import { MouseEvent, useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
+import { Button, ButtonGroup } from "reactstrap";
+import useAuth from "../../hooks/useAuth";
+
+function renderToolbar(onEditClicked: (e: MouseEvent) => void) {
+    return (
+        <div className="d-flex justify-content-end">
+            <ButtonGroup>
+                <Button onClick={onEditClicked}>Edit</Button>
+            </ButtonGroup>
+        </div>
+    )
+}
 
 function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void) {
     return (
@@ -55,6 +67,7 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
 
 export function CollectionPage() {
     const { state } = useLocation();
+    const { userInfo } = useAuth();
     const [collection, setCollection] = useState<UserCollectionType>();
     const collectionsApi = useCollectionsApi();
     const navigate = useNavigate();
@@ -64,6 +77,13 @@ export function CollectionPage() {
         navigate("/item", { state: { id: e.currentTarget.id } });
     }
 
+    function handleEditClicked() {
+        navigate("/collection/edit", {
+            state: {
+                id: collection?.id
+        }});
+    }
+    
     useEffect(() => {
         collectionsApi.get(parseInt(state.id ?? "0"))
             .then(response => response.data)
@@ -71,9 +91,14 @@ export function CollectionPage() {
             .catch(error => console.error(error));
     }, [collectionsApi, state]);
 
-    const content = collection === undefined
-        ? <p><em><FormattedMessage id="loading" /></em></p>
-        : renderCollection(collection, handleItemClicked);
+    if (collection === undefined) {
+        return <p><em><FormattedMessage id="loading" /></em></p>;
+    }
 
-    return content;
+    return (
+        <div>
+            {userInfo?.id === collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}
+            {renderCollection(collection)}
+        </div>
+    )
 }

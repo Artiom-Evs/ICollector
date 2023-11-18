@@ -50,6 +50,7 @@ export const messages: Record<string, Record<string, string>> = {
         "loading": "Loading...",
 
         "create_new_collection": "Create new collection",
+        "edit_collection": "Edit collection",
         "collection_name": "Collection name",
         "collection_description": "Collection description",
     }, 
@@ -94,7 +95,6 @@ export const messages: Record<string, Record<string, string>> = {
         "items_with_number": "{ n, number } elementów",
         "collection_with_name": "Kolekcja: { n }",
 
-
         "identifier": "ID",
         "name": "Nazwa",
         "description": "Opis",
@@ -103,6 +103,7 @@ export const messages: Record<string, Record<string, string>> = {
         "loading": "Ładowanie...",
 
         "create_new_collection": "Utwórz nową kolekcję",
+        "edit_collection": "Edytuj kolekcję",
         "collection_name": "Nazwa kolekcji",
         "collection_description": "Opis collekcji",
     },
@@ -155,6 +156,7 @@ export const messages: Record<string, Record<string, string>> = {
         "loading": "Загрузка...",
 
         "create_new_collection": "Создать новую коллекцию",
+        "edit_collection": "Изменить коллекцию",
         "collection_name": "Название коллекции",
         "collection_description": "Описание коллекции",
     }
