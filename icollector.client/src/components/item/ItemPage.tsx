@@ -25,13 +25,21 @@ function renderItem(item: CollectionItemType) {
     return (
         <div>
             <dl>
-                <dt>ID</dt>
+                <dt>
+                    <FormattedMessage id="identifier" />
+                </dt>
                 <dd>{item.id}</dd>
-                <dt>Name</dt>
+                <dt>
+                    <FormattedMessage id="name" />
+                </dt>
                 <dd>{item.name}</dd>
-                <dt>Author</dt>
+                <dt>
+                    <FormattedMessage id="author" />
+                </dt>
                 <dd>{item.collection.authorName}</dd>
-                <dt>Collection</dt>
+                <dt>
+                    <FormattedMessage id="collection" />
+                </dt>
                 <dd>{item.collection.name}</dd>
             </dl>
         </div>

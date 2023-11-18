@@ -190,7 +190,7 @@ export const messages: Record<string, Record<string, string>> = {
         "author": "Автор",
         "add": "Добавить",
         "create": "Создать",
-        "edit": "Редактировать",
+        "edit": "Изменить",
         "delete": "Удалить",
         "save": "Сохранить",
         "cancel": "Отмена",
