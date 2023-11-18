@@ -98,10 +98,10 @@ public class CollectionsController : ControllerBase
         newCollection.AuthorId = user.Id;
         newCollection.Created = newCollection.Edited = DateTime.Now;
 
-        await _context.CreateAsync(newCollection);
+        var createdCollection = await _context.CreateAsync(newCollection);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetUserCollection), new { id = request.Id }, request);
+        return CreatedAtAction(nameof(GetUserCollection), new { createdCollection.Id }, createdCollection);
     }
 
     [Authorize]
