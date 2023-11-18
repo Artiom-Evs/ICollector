@@ -11,10 +11,10 @@ Application project for managing public personal collections (books, stamps, whi
 *   Access
     *   ✅ Registration and authentication.
     *   Authorization by next roles:
-        *   Guests
-            *   Only view collections and collection items.
+        *   ✅ Guests
+            *   ✅ Only view collections and collection items.
         *   Registered users
-            *   View collections and collection items.
+            *   ✅ View collections and collection items.
             *   Writing comments.
             *   Managing own collections and their items. 
         *   Administrators 
@@ -30,7 +30,7 @@ Application project for managing public personal collections (books, stamps, whi
         *   Personal user page
             *   Provides interface to manage own collections. 
         *   Collection page 
-            *   Contains collection description and list of their items.
+            *   ✅ Contains collection description and list of their items.
             *   Provides ability to manage collection and their items for owner and administrators.
         *   Administration panel
             *   Available only for administrators.
@@ -43,7 +43,7 @@ Application project for managing public personal collections (books, stamps, whi
             *   ✅ Language settings are saved for each user. 
 *   Logical models
     *   Collection
-        *   Has ID, name and description. 
+        *   ✅ Has ID, name and description. 
         *   Description supports Markdown format. 
         *   Has theme field with a value from a fixed list of themes. Example: „Books”, „Signs”, „Silverware”, etc. 
         *   Has optional image (as image URL).
