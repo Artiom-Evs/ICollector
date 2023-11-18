@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
+import { UserCollectionListItem } from "./UserCollectionListItem";
 
 export function PersonalPage() {
     const [currentTab, setCurrentTab] = useState<string>("home-tab");
@@ -76,33 +77,4 @@ function UserCollectionsList(props: UserCollectionsListProps) {
         </div>;
     
     return content;
-}
-
-interface UserCollectionsListItemProps {
-    collection: UserCollectionType,
-    onCollectionClick: (e: MouseEvent) => void
-}
-
-function UserCollectionListItem(props: UserCollectionsListItemProps) {
-    return (
-        <div className="col">
-            <div className="card h-100">
-                <div className="card-header">
-                    <h5 className="card-title">
-                        <Link to="#" id={props.collection.id.toString()} onClick={props.onCollectionClick}>{props.collection.name}</Link>
-                    </h5>
-                </div>
-                <div className="card-body">
-                    <p className="card-text">{props.collection.description }</p>
-                    <br />
-                    <FormattedMessage id="items" values={{ c: props.collection.items.length }} />
-                </div>
-                <div className="card-footer">
-                    <FormattedMessage id="likes" values={{ c: 0 }} />
-                    <br />
-                    <FormattedMessage id="comments" values={{ c: 0 }} />
-                </div>
-            </div>
-        </div>
-    );
 }
