@@ -12,10 +12,14 @@ enum PageStates {
     Content
 }
 
-function renderToolbar(onEditClicked: (e: MouseEvent) => void, onDeleteClicked: (e: MouseEvent) => void) {
+function renderToolbar(onAddClicked: (e: MouseEvent) => void, onEditClicked: (e: MouseEvent) => void, onDeleteClicked: (e: MouseEvent) => void) {
     return (
         <div className="d-flex justify-content-end">
             <ButtonGroup>
+                <Button onClick={onAddClicked}>
+                    <FormattedMessage id="add_new_item" />
+                </Button>
+
                 <Button onClick={onEditClicked}>
                     <FormattedMessage id="edit" />
                 </Button>
@@ -117,6 +121,14 @@ export function CollectionPage() {
         navigate("/item", { state: { id: e.currentTarget.id } });
     }
 
+    function handleAddClicked() {
+        navigate("/item/create", {
+            state: {
+                collectionId: collection?.id
+            }
+        });
+    }
+
     function handleEditClicked() {
         navigate("/collection/edit", {
             state: {
@@ -145,7 +157,7 @@ export function CollectionPage() {
 
     return (
         <div>
-            {userInfo?.id === collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}
+            {userInfo?.id === collection.authorId && renderToolbar(handleAddClicked, handleEditClicked, handleDeleteClicked)}
             {renderCollection(collection, handleItemClicked)}
         </div>
     )
