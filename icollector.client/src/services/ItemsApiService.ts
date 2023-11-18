@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 import { UserCollectionType } from "./CollectionsApiService";
 
 const apiPath = "/api/items";
@@ -18,7 +18,7 @@ class ItemsApiService {
         this.instance = instance;
     }
 
-    getAll(orderBy: string = "", descending: boolean = false, page: number = 1, pageSize: number = 100) {
+    getAll(orderBy: string = "", descending: boolean = false, page: number = 1, pageSize: number = 100): Promise<AxiosResponse<CollectionItemType[]>> {
         return this.instance.get(apiPath, {
             params: {
                 orderBy, descending, page, pageSize
@@ -26,19 +26,19 @@ class ItemsApiService {
         });
     }
 
-    get(id: number) {
+    get(id: number): Promise<AxiosResponse<CollectionItemType>> {
         return this.instance.get(`${apiPath}/${id}`);
     }
 
-    post(data: CollectionItemType) {
+    post(data: CollectionItemType): Promise<AxiosResponse<CollectionItemType>> {
         return this.instance.post(apiPath, data);
     }
 
-    update(id: number, data: CollectionItemType) {
+    update(id: number, data: CollectionItemType): Promise<AxiosResponse> {
         return this.instance.put(`${apiPath}/${id}`, data);
     }
 
-    delete(id: number) {
+    delete(id: number): Promise<AxiosResponse> {
         return this.instance.delete(`${apiPath}/${id}`);
     }
 }
