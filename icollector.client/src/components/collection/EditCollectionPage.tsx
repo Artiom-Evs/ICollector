@@ -34,6 +34,7 @@ export function EditCollectionPage() {
         } as UserCollectionType)
             .then(() => {
                 navigate("/collection", {
+                    replace: true,
                     state: {
                         id
                     }
