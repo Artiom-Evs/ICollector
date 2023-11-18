@@ -6,12 +6,15 @@ import { FormattedMessage } from "react-intl";
 import { Button, ButtonGroup } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 
-function renderToolbar(onEditClicked: () => void) {
+function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
     return (
         <div className="d-flex justify-content-end">
             <ButtonGroup>
                 <Button onClick={onEditClicked}>
                     <FormattedMessage id="edit" />
+                </Button>
+                <Button onClick={onDeleteClicked}>
+                    <FormattedMessage id="delete" />
                 </Button>
             </ButtonGroup>
         </div>
@@ -57,13 +60,21 @@ export function ItemPage() {
         });
     }
 
+    function handleDeleteClicked() {
+        navigate("/item/delete", {
+            state: {
+                id: item?.id ?? 0
+            }
+        });
+    }
+
     if (item === undefined) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
 
     return (
         <div>
-            {userInfo?.id === item.collection.authorId && renderToolbar(handleEditClicked)}
+            {userInfo?.id === item.collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}
             {renderItem(item)}
         </div>
     );

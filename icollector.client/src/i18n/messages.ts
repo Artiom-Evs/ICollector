@@ -58,17 +58,19 @@ export const messages: Record<string, Record<string, string>> = {
         "create_new_collection": "Create new collection",
         "edit_collection": "Edit collection",
         "delete_collection": "Delete collection",
+        "collection": "Collection",
         "collection_name": "Collection name",
         "collection_description": "Collection description",
-
-        "add_new_item": "Add new item",
-        "edit_item": "Edit item",
-        "item_name": "Item name",
-
         "no_collections": "No collections.",
         "no_collection": "Collection not found.",
         "items_count": "Items count",
-        "warning_before_collection_deletion": "Are you sure you want to delete this collection?"
+        "warning_before_collection_deletion": "Are you sure you want to delete this collection?",
+
+        "add_new_item": "Add new item",
+        "edit_item": "Edit item",
+        "delete_item": "Delete item",
+        "item_name": "Item name",
+        "warning_before_item_deletion": "Are you sure you want to delete this item?",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -127,17 +129,19 @@ export const messages: Record<string, Record<string, string>> = {
         "create_new_collection": "Utwórz nową kolekcję",
         "edit_collection": "Edytuj kolekcję",
         "delete_collection": "Usuń kolekcję",
+        "collection": "Kolekcja",
         "collection_name": "Nazwa kolekcji",
         "collection_description": "Opis collekcji",
-
-        "add_new_item": "Dodaj nowy item",
-        "edit_item": "Edytuj item",
-        "item_name": "Nazwa itemu",
-
         "no_collections": "Brak kolekcji.",
         "no_collection": "Brak kolekcii.",
         "items_count": "Ilość itemów",
-        "warning_before_collection_deletion": "Czy na pewno chcesz usunąć tę kolekcję?"
+        "warning_before_collection_deletion": "Czy na pewno chcesz usunąć tę kolekcję?",
+
+        "add_new_item": "Dodaj nowy item",
+        "edit_item": "Edytuj item",
+        "delete_item": "Usuń item",
+        "item_name": "Nazwa itemu",
+        "warning_before_item_deletion": "Czy na pewno chcesz usunąć ten item?",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -196,16 +200,18 @@ export const messages: Record<string, Record<string, string>> = {
         "create_new_collection": "Создать новую коллекцию",
         "edit_collection": "Изменить коллекцию",
         "delete_collection": "Удалить коллекцию",
+        "collection": "Коллекция",
         "collection_name": "Название коллекции",
         "collection_description": "Описание коллекции",
-
-        "add_new_item": "Добавить новый итем",
-        "edit_item": "Изменить итем",
-        "item_name": "Название итема",
-
         "no_collections": "Коллекции отсутствуют.",
         "no_collection": "Коллекция отсутствует.",
         "items_count": "Количество элементов",
-        "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?"
+        "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?",
+
+        "add_new_item": "Добавить новый итем",
+        "edit_item": "Изменить итем",
+        "delete_item": "Удалить итем",
+        "item_name": "Название итема",
+        "warning_before_item_deletion": "Вы уверены, что хотите удалить этот итем?",
     }
 }
