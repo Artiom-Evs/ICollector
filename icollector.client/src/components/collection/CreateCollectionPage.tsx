@@ -20,6 +20,7 @@ export function CreateCollectionPage() {
             .then(response => response.data)
             .then(data => {
                 navigate("/collection", {
+                    replace: true,
                     state: {
                         id: data.id
                     }
