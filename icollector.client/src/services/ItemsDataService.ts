@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { UserCollectionType } from "./CollectionsDataService";
+import { UserCollectionType } from "./CollectionsApiService";
 
 const apiPath = "/api/items";
 

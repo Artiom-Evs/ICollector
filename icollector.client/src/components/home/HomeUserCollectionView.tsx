@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import { UserCollectionType } from "../../services/CollectionsDataService";
+import { UserCollectionType } from "../../services/CollectionsApiService";
 import { Link, useNavigate } from "react-router-dom";
 import { MouseEvent } from "react";
 

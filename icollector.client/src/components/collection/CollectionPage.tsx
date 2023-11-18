@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { UserCollectionType } from "../../services/CollectionsDataService";
+import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 

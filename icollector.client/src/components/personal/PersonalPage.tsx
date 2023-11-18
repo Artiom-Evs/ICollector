@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TabContent, TabPane } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
-import { UserCollectionType } from "../../services/CollectionsDataService";
+import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
 

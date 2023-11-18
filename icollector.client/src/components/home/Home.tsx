@@ -1,6 +1,6 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
-import { UserCollectionType } from "../../services/CollectionsDataService";
+import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { HomeUserCollectionView } from "./HomeUserCollectionView";
 import { useItemsApi } from "../../hooks/useItemsApi";

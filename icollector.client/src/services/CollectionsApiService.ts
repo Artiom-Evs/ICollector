@@ -14,7 +14,7 @@ export type UserCollectionType = {
     items: CollectionItemType[]
 }
 
-class CollectionsDataService {
+class CollectionsApiService {
     instance: AxiosInstance;
 
     constructor(instance: AxiosInstance) {
@@ -45,4 +45,4 @@ class CollectionsDataService {
     }
 }
 
-export default CollectionsDataService;
+export default CollectionsApiService;
