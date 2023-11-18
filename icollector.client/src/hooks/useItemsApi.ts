@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import ItemsDataService from "../services/ItemsDataService";
+import ItemsApiService from "../services/ItemsApiService";
 import useAuth from "./useAuth";
 
 export function useItemsApi() {
     const auth = useAuth();
 
-    return useMemo(() => new ItemsDataService(auth.authAxios), [auth]);
+    return useMemo(() => new ItemsApiService(auth.authAxios), [auth]);
 }

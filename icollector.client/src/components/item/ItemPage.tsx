@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CollectionItemType } from "../../services/ItemsDataService";
+import { CollectionItemType } from "../../services/ItemsApiService";
 import { useItemsApi } from "../../hooks/useItemsApi";
 
 function renderItem(item: CollectionItemType) {

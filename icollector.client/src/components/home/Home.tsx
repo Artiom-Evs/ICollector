@@ -4,7 +4,7 @@ import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { HomeUserCollectionView } from "./HomeUserCollectionView";
 import { useItemsApi } from "../../hooks/useItemsApi";
-import { CollectionItemType } from "../../services/ItemsDataService";
+import { CollectionItemType } from "../../services/ItemsApiService";
 import { HomeCollectionItemView } from "./HomeCollectionItemView";
 
 const Home: FunctionComponent = () => {
