@@ -3,11 +3,11 @@ import { UserCollectionType } from "../../services/CollectionsApiService";
 import { Link, useNavigate } from "react-router-dom";
 import { MouseEvent } from "react";
 
-interface HomeCollectionItemProps {
+interface HomeUserCollectionProps {
     item: UserCollectionType
 }
 
-export function HomeUserCollectionView(props: HomeCollectionItemProps) {
+export function HomeUserCollectionView(props: HomeUserCollectionProps) {
     const navigate = useNavigate();
 
     const handleCollectionClicked = (e: MouseEvent) => {
@@ -19,11 +19,11 @@ export function HomeUserCollectionView(props: HomeCollectionItemProps) {
         <div className="card mb-2">
             <div className="card-body row">
                 <div className="col-sm-2" style={{ textAlign: "right"}}>
-                    <FormattedMessage id="items" values={{ c: props.item.items.length }} />
+                    <FormattedMessage id="items_with_number" values={{ n: props.item.items.length }} />
                     <br />
-                    <FormattedMessage id="likes" values={{ c: 0 }} />
+                    <FormattedMessage id="likes_with_number" values={{ n: 0 }} />
                     <br />
-                    <FormattedMessage id="comments" values={{ c: 0 }} />
+                    <FormattedMessage id="comments_with_number" values={{ n: 0 }} />
                 </div>
                 <div className="col-sm-7">
                     <Link to="#" onClick={handleCollectionClicked}>
@@ -33,11 +33,11 @@ export function HomeUserCollectionView(props: HomeCollectionItemProps) {
                     {props.item.description}
                 </div>
                 <div className="col-sm-3">
-                    <FormattedMessage id="author" values={{ a: props.item.authorName }} />
+                    <FormattedMessage id="author_with_name" values={{ n: props.item.authorName }} />
                     <br />
-                    <FormattedMessage id="created"values={{ d: new Date(props.item.created) }} />
+                    <FormattedMessage id="created_with_date"values={{ d: new Date(props.item.created) }} />
                     <br />
-                    <FormattedMessage id="edited" values={{ d: new Date(props.item.edited) }} />
+                    <FormattedMessage id="edited_with_date" values={{ d: new Date(props.item.edited) }} />
                 </div>
             </div>
         </div>

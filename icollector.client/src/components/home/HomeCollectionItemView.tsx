@@ -20,9 +20,9 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
             <div className="card-body row">
                 <div className="col-sm-2" style={{ textAlign: "right" }}>
                     <p>
-                        <FormattedMessage id="likes" values={{ c: 0 }} />
+                        <FormattedMessage id="likes_with_number" values={{ n: 0 }} />
                         <br />
-                        <FormattedMessage id="comments" values={{ c: 0 }} />
+                        <FormattedMessage id="comments_with_number" values={{ n: 0 }} />
                     </p>
                 </div>
                 <div className="col-sm-7">
@@ -30,14 +30,14 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
                         {props.item.name}
                     </Link>
                     <br />
-                    <FormattedMessage id="collection" values={{ c: props.item.collection.name }} />
+                    <FormattedMessage id="collection_with_name" values={{ n: props.item.collection.name }} />
                     </div>
                 <div className="col-sm-3">
-                    <FormattedMessage id="author" values={{ a: props.item.collection.authorName }} />
+                    <FormattedMessage id="author_with_name" values={{ n: props.item.collection.authorName }} />
                     <br />
-                    <FormattedMessage id="created" values={{ d: new Date(props.item.created) }} />
+                    <FormattedMessage id="created_with_date" values={{ d: new Date(props.item.created) }} />
                     <br />
-                    <FormattedMessage id="edited" values={{ d: new Date(props.item.edited) }} />
+                    <FormattedMessage id="edited_with_date" values={{ d: new Date(props.item.edited) }} />
                 </div>
             </div>
         </div>
