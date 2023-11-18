@@ -1,9 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 
-function renderCollection(collection: UserCollectionType) {
+function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
@@ -27,7 +27,11 @@ function renderCollection(collection: UserCollectionType) {
                     <tbody>
                         {collection.items.map(item => <tr key={item.id}>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
+                            <td>
+                                <Link to="#" id={item.id.toString()} onClick={onItemClick}>
+                                    {item.name}
+                                </Link>
+                            </td>
                         </tr>)}
                     </tbody>
                 </table>
@@ -40,6 +44,12 @@ export function CollectionPage() {
     const { state } = useLocation();
     const [collection, setCollection] = useState<UserCollectionType>();
     const collectionsApi = useCollectionsApi();
+    const navigate = useNavigate();
+
+    function handleItemClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/item", { state: { id: e.currentTarget.id } });
+    }
 
     useEffect(() => {
         collectionsApi.get(parseInt(state.id ?? "0"))
@@ -50,7 +60,7 @@ export function CollectionPage() {
 
     const content = collection === undefined
         ? <p><em>Loading...</em></p>
-        : renderCollection(collection);
+        : renderCollection(collection, handleItemClicked);
 
     return content;
 }
