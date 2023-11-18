@@ -141,13 +141,14 @@ export const AuthProvider: FunctionComponent<PropsWithChildren> = ({ children })
 
     const logout = () => {
         setAuthState(null, null, null);
+        setUserInfo(null);
         setAuthorized(false);
     }
 
     useEffect(() => {
         const token = getStoredRefreshToken();
         refresh(token ?? "");
-    }, [updateUserInfo, refresh]);
+    }, [refresh]);
 
     useEffect(() => {
         updateUserInfo();
