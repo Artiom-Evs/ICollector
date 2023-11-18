@@ -114,10 +114,10 @@ public class ItemsController : ControllerBase
         var newItem = request.ToDomainModel();
         newItem.Created = newItem.Edited = DateTime.Now;
 
-        await _items.CreateAsync(newItem);
+        var createdItem = await _items.CreateAsync(newItem);
         await _items.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetCollectionItem), new { request.Id }, request);
+        return CreatedAtAction(nameof(GetCollectionItem), new { createdItem.Id }, createdItem);
     }
 
     [Authorize]
