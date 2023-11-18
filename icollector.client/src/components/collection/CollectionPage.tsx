@@ -6,6 +6,12 @@ import { FormattedMessage } from "react-intl";
 import { Button, ButtonGroup } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 
+enum PageStates {
+    Loading,
+    NotFound,
+    Content
+}
+
 function renderToolbar(onEditClicked: (e: MouseEvent) => void, onDeleteClicked: (e: MouseEvent) => void) {
     return (
         <div className="d-flex justify-content-end">
@@ -70,12 +76,41 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
     );
 }
 
+function renderNotFound(onBackClick: () => void) {
+    return (
+        <div>
+            <p><em><FormattedMessage id="no_collection" /></em></p>
+            <Button onClick={onBackClick}>
+                <FormattedMessage id="back" />
+            </Button>
+        </div>
+    )
+}
+
 export function CollectionPage() {
     const { state } = useLocation();
     const { userInfo } = useAuth();
+    const [pageState, setPageState] = useState<PageStates>(PageStates.Loading);
     const [collection, setCollection] = useState<UserCollectionType>();
     const collectionsApi = useCollectionsApi();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        collectionsApi.get(state?.id ?? "0")
+            .then(response => response.data)
+            .then((data: UserCollectionType) => {
+                setCollection(data);
+                setPageState(PageStates.Content);
+            })
+            .catch(error => {
+                if (error.response.status === 404) {
+                    setPageState(PageStates.NotFound);
+                }
+                else {
+                    console.error(error)
+                }
+            });
+    }, [collectionsApi, state]);
 
     function handleItemClicked(e: MouseEvent) {
         e.preventDefault();
@@ -97,17 +132,17 @@ export function CollectionPage() {
         });
     }
 
-    useEffect(() => {
-        collectionsApi.get(parseInt(state.id ?? "0"))
-            .then(response => response.data)
-            .then((data: UserCollectionType) => setCollection(data))
-            .catch(error => console.error(error));
-    }, [collectionsApi, state]);
+    function handleBackClicked() {
+        navigate(-1);
+    }
 
-    if (collection === undefined) {
+    if (pageState === PageStates.Loading) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
-    
+    else if (pageState === PageStates.NotFound || !collection) {
+        return renderNotFound(handleBackClicked);
+    }
+
     return (
         <div>
             {userInfo?.id === collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}

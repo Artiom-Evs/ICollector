@@ -51,6 +51,7 @@ export const messages: Record<string, Record<string, string>> = {
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
+        "back": "Back",
         "loading": "Loading...",
 
         "create_new_collection": "Create new collection",
@@ -59,7 +60,8 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_name": "Collection name",
         "collection_description": "Collection description",
 
-        "no_collections": "No collections",
+        "no_collections": "No collections.",
+        "no_collection": "Collection not found.",
         "items_count": "Items count",
         "warning_before_collection_deletion": "Are you sure you want to delete this collection?"
     }, 
@@ -113,6 +115,7 @@ export const messages: Record<string, Record<string, string>> = {
         "edit": "Edytuj",
         "delete": "Usuń",
         "cancel": "Anuluj",
+        "back": "Wrócić się",
         "loading": "Ładowanie...",
 
         "create_new_collection": "Utwórz nową kolekcję",
@@ -121,7 +124,8 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_name": "Nazwa kolekcji",
         "collection_description": "Opis collekcji",
 
-        "no_collections": "Brak kolekcji",
+        "no_collections": "Brak kolekcji.",
+        "no_collection": "Brak kolekcii.",
         "items_count": "Ilość itemów",
         "warning_before_collection_deletion": "Czy na pewno chcesz usunąć tę kolekcję?"
     },
@@ -180,10 +184,12 @@ export const messages: Record<string, Record<string, string>> = {
         "edit_collection": "Изменить коллекцию",
         "delete_collection": "Удалить коллекцию",
         "cancel": "Отмена",
+        "back": "Вернуться",
         "collection_name": "Название коллекции",
         "collection_description": "Описание коллекции",
 
         "no_collections": "Коллекции отсутствуют.",
+        "no_collection": "Коллекция отсутствует.",
         "items_count": "Количество элементов",
         "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?"
     }
