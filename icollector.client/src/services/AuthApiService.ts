@@ -6,7 +6,8 @@ export const ApiPaths = {
     Register: `${ApiPrefix}/register`,
     Login: `${ApiPrefix}/login`,
     Refresh: `${ApiPrefix}/refresh`,
-    Info: `${ApiPrefix}/manage/info`
+    Info: `${ApiPrefix}/manage/info`,
+    DetailedInfo: `${ApiPrefix}/manage/detailedInfo`
 }
 
 export interface RefreshResponseType {
@@ -22,6 +23,7 @@ export interface LoginResponseType {
 }
 
 export interface UserInfoType {
+    id: string,
     email: string,
     isEmailConfirmed: boolean
 }
@@ -52,7 +54,7 @@ class AuthApiService {
     }
 
     getUserInfo(): Promise<AxiosResponse<UserInfoType>> {
-        return this.instance.get(ApiPaths.Info);
+        return this.instance.get(ApiPaths.DetailedInfo);
     }
 }
 
