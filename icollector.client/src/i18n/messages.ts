@@ -3,6 +3,7 @@ import { LOCALES } from "./locales";
 export const messages: Record<string, Record<string, string>> = {
     [LOCALES.ENGLISH]: {
         home_page: "Home",
+        collections_page: "Collections",
 
         choose_language: "Choose language",
         choose_theme: "Choose theme",
@@ -43,6 +44,7 @@ export const messages: Record<string, Record<string, string>> = {
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
+        collections_page: "Kolekcje",
 
         choose_language: "Wybierz język",
         choose_theme: "Wybierz motyw",
@@ -83,6 +85,7 @@ export const messages: Record<string, Record<string, string>> = {
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
+        collections_page: "Коллекции",
 
         choose_language: "Выберите язык",
         choose_theme: "Выберите тему",
