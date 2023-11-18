@@ -2,26 +2,39 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { MouseEvent, useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
+import { FormattedMessage } from "react-intl";
 
 function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
-                <dt>ID</dt>
+                <dt>
+                    <FormattedMessage id="identifier" />
+                </dt>
                 <dd>{collection.id}</dd>
-                <dt>Name</dt>
+                <dt>
+                    <FormattedMessage id="name" />
+                </dt>
                 <dd>{collection.name}</dd>
-                <dt>Description</dt>
+                <dt>
+                    <FormattedMessage id="description" />
+                </dt>
                 <dd>{collection.description}</dd>
-                <dt>Author</dt>
+                <dt>
+                    <FormattedMessage id="author" />
+                </dt>
                 <dd>{collection.authorName}</dd>
             </dl>
             <div>
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
+                            <th>
+                                <FormattedMessage id="identifier" />
+                            </th>
+                            <th>
+                                <FormattedMessage id="name" />
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,7 +72,7 @@ export function CollectionPage() {
     }, [collectionsApi, state]);
 
     const content = collection === undefined
-        ? <p><em>Loading...</em></p>
+        ? <p><em><FormattedMessage id="loading" /></em></p>
         : renderCollection(collection, handleItemClicked);
 
     return content;
