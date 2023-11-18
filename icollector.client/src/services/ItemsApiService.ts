@@ -3,12 +3,18 @@ import { UserCollectionType } from "./CollectionsApiService";
 
 const apiPath = "/api/items";
 
-export type CollectionItemType = {
+export interface CollectionItemType {
     id: number,
     name: string,
     created: string,
     edited: string,
     collection: UserCollectionType
+}
+
+export interface CollectionItemRequestType {
+    id: number,
+    name: string,
+    collectionId: number
 }
 
 class ItemsApiService {
@@ -30,11 +36,11 @@ class ItemsApiService {
         return this.instance.get(`${apiPath}/${id}`);
     }
 
-    post(data: CollectionItemType): Promise<AxiosResponse<CollectionItemType>> {
+    post(data: CollectionItemRequestType): Promise<AxiosResponse<CollectionItemType>> {
         return this.instance.post(apiPath, data);
     }
 
-    update(id: number, data: CollectionItemType): Promise<AxiosResponse> {
+    put(id: number, data: CollectionItemRequestType): Promise<AxiosResponse> {
         return this.instance.put(`${apiPath}/${id}`, data);
     }
 
