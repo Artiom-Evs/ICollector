@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
-import { UserCollectionListItem } from "./UserCollectionListItem";
+import { UserCollectionsList } from "./UserCollectionsList";
 
 export function PersonalPage() {
     const [currentTab, setCurrentTab] = useState<string>("home-tab");
@@ -60,21 +60,4 @@ export function PersonalPage() {
             </div>
         </div>
     )
-}
-
-interface UserCollectionsListProps {
-    collections: UserCollectionType[],
-    onCollectionClick: (e: MouseEvent) => void
-}
-
-function UserCollectionsList(props: UserCollectionsListProps) {
-    const content = props.collections === undefined || props.collections.length === 0
-        ? <p><em> No props.collections.</em></p>
-        : <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {props.collections.map(collection =>
-                <UserCollectionListItem key={collection.id} collection={collection} onCollectionClick={props.onCollectionClick} />
-            )}
-        </div>;
-    
-    return content;
 }
