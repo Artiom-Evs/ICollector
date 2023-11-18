@@ -3,7 +3,7 @@ import { CollectionItemType } from "./ItemsApiService";
 
 const apiPath = "/api/collections";
 
-export type UserCollectionType = {
+export interface UserCollectionType {
     id: number,
     name: string,
     description: string,
@@ -36,7 +36,7 @@ class CollectionsApiService {
         return this.instance.post(apiPath, data);
     }
 
-    update(id: number, data: UserCollectionType): Promise<AxiosResponse> {
+    put(id: number, data: UserCollectionType): Promise<AxiosResponse> {
         return this.instance.put(`${apiPath}/${id}`, data);
     }
 

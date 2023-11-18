@@ -29,7 +29,7 @@ export function EditCollectionPage() {
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        collectionsApi.update(id, {
+        collectionsApi.put(id, {
             id, name, description
         } as UserCollectionType)
             .then(() => {
