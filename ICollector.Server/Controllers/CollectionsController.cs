@@ -23,9 +23,14 @@ public class CollectionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CollectionResponse>>> GetUserCollections(string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
+    public async Task<ActionResult<IEnumerable<CollectionResponse>>> GetUserCollections(string authorId = "", string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
     {
         var items = _context.Query();
+
+        if (!string.IsNullOrWhiteSpace(authorId))
+        {
+            items = items.Where(i => i.AuthorId == authorId);
+        }
 
         items = orderBy.ToLower() switch
         {
