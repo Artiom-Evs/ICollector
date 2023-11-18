@@ -3,6 +3,7 @@ import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import { CollectionPage } from "./components/collection/CollectionPage";
 import { ItemPage } from "./components/item/ItemPage";
+import { PersonalPage } from "./components/personal/PersonalPage";
 
 const AppRoutes = [
     {
@@ -24,6 +25,11 @@ const AppRoutes = [
     {
         path: "/item",
         element: <ItemPage />
+    },
+    {
+        path: "/personal",
+        requireAuth: true,
+        element: <PersonalPage />
     }
 ]
 

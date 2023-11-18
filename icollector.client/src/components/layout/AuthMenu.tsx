@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { Button, NavItem, NavbarText } from "reactstrap";
+import { Button, NavItem, NavLink } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 function AuthMenu() {
@@ -14,9 +14,9 @@ function AuthMenu() {
 
     const renderAuthorized = () =>
         <Fragment>
-            <NavbarText>
+            <NavLink tag={Link} to="/personal">
                 <FormattedMessage id="helloUser" values={{ n: auth.userInfo?.email }} />
-            </NavbarText>
+            </NavLink>
             <NavItem className="ms-1 d-flex align-items-center">
                 <Button size="sm" onClick={handleLogout}>
                     <FormattedMessage id="logout" />
