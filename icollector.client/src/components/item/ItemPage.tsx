@@ -1,7 +1,22 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { useItemsApi } from "../../hooks/useItemsApi";
+import { FormattedMessage } from "react-intl";
+import { Button, ButtonGroup } from "reactstrap";
+import useAuth from "../../hooks/useAuth";
+
+function renderToolbar(onEditClicked: () => void) {
+    return (
+        <div className="d-flex justify-content-end">
+            <ButtonGroup>
+                <Button onClick={onEditClicked}>
+                    <FormattedMessage id="edit" />
+                </Button>
+            </ButtonGroup>
+        </div>
+    )
+}
 
 function renderItem(item: CollectionItemType) {
     return (
@@ -22,6 +37,8 @@ function renderItem(item: CollectionItemType) {
 
 export function ItemPage() {
     const { state } = useLocation();
+    const { userInfo } = useAuth();
+    const navigate = useNavigate();
     const [item, setItem] = useState<CollectionItemType>();
     const itemsApi = useItemsApi();
 
@@ -32,9 +49,22 @@ export function ItemPage() {
             .catch(error => console.error(error));
     }, [itemsApi, state]);
 
-    const content = item === undefined
-        ? <p><em>Loading...</em></p>
-        : renderItem(item);
+    function handleEditClicked() {
+        navigate("/item/edit", {
+            state: {
+                id: item?.id ?? 0
+            }
+        });
+    }
 
-    return content;
+    if (item === undefined) {
+        return <p><em><FormattedMessage id="loading" /></em></p>;
+    }
+
+    return (
+        <div>
+            {userInfo?.id === item.collection.authorId && renderToolbar(handleEditClicked)}
+            {renderItem(item)}
+        </div>
+    );
 }
