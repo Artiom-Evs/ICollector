@@ -50,6 +50,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGroup("/api/identity").MapIdentityApi<AppUser>();
+app.MapGroup("/api/identity/manage").MapCustomIdentityApi();
 app.MapFallbackToFile("/index.html");
 app.MapControllers();
 
