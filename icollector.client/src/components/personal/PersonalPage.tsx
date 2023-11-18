@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { TabContent, TabPane } from "reactstrap";
+import { Button, TabContent, TabPane } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
@@ -32,6 +32,10 @@ export function PersonalPage() {
         navigate("/collection", { state: { id: e.currentTarget.id } });
     }
 
+    const handleCreateCollectionClicked = () => {
+        navigate("/collection/create");
+    }
+
     return (
         <div className="row">
             <div className="col-sm-3">
@@ -44,6 +48,11 @@ export function PersonalPage() {
             <div className="col-sm-9">
                 <TabContent activeTab={currentTab}>
                     <TabPane tabId="home-tab">
+                        <div className="d-flex justify-content-end mb-3">
+                            <Button onClick={handleCreateCollectionClicked}>
+                                <FormattedMessage id="create_new_collection" />
+                            </Button>
+                        </div>
                         <UserCollectionsList collections={userCollections} onCollectionClick={handleCollectionClicked} />
                     </TabPane>
                 </TabContent>

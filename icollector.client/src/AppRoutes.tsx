@@ -4,6 +4,7 @@ import Login from "./components/Auth/Login";
 import { CollectionPage } from "./components/collection/CollectionPage";
 import { ItemPage } from "./components/item/ItemPage";
 import { PersonalPage } from "./components/personal/PersonalPage";
+import { CreateCollectionPage } from "./components/collection/CreateCollectionPage";
 
 const AppRoutes = [
     {
@@ -30,6 +31,11 @@ const AppRoutes = [
         path: "/personal",
         requireAuth: true,
         element: <PersonalPage />
+    },
+    {
+        path: "/collection/create",
+        requireAuth: true,
+        element: <CreateCollectionPage />
     }
 ]
 

@@ -40,7 +40,15 @@ export const messages: Record<string, Record<string, string>> = {
         "likes": "{ c, number } likes",
         "comments": "{ c, number } comments",
         "items": "{ c, number } items",
-        "collection": "Collection: { c }"
+        "collection": "Collection: { c }",
+
+        "name": "Name",
+        "description": "Description",
+        "save": "Save",
+
+        "create_new_collection": "Create new collection",
+        "collection_name": "Collection name",
+        "collection_description": "Collection description",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -81,7 +89,16 @@ export const messages: Record<string, Record<string, string>> = {
         "likes": "{ c, number } polubień",
         "comments": "{ c, number } komentarzy",
         "items": "{ c, number } elementów",
-        "collection": "Kolekcja: { c }"
+        "collection": "Kolekcja: { c }",
+
+
+        "name": "Nazwa",
+        "description": "Opis",
+        "save": "Zapisz",
+
+        "create_new_collection": "Utwórz nową kolekcję",
+        "collection_name": "Nazwa kolekcji",
+        "collection_description": "Opis collekcji",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -122,6 +139,15 @@ export const messages: Record<string, Record<string, string>> = {
         "likes": "{ c, number } лайков",
         "comments": "{ c, number } комментариев",
         "items": "{ c, number } элементов",
-        "collection": "Коллекция: { c }"
+        "collection": "Коллекция: { c }",
+
+
+        "name": "Название",
+        "description": "Описание",
+        "save": "Сохранить",
+
+        "create_new_collection": "Создать новую коллекцию",
+        "collection_name": "Название коллекции",
+        "collection_description": "Описание коллекции",
     }
 }
