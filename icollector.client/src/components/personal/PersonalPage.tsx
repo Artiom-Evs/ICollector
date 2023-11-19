@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { Fragment, MouseEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, TabContent, TabPane } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
@@ -6,6 +6,23 @@ import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
 import { UserCollectionsList } from "./UserCollectionsList";
+import { UserManagement } from "./UserManagement";
+
+function renderAdminLinks(currentTab: string, onTabChanged: (e: MouseEvent) => void) {
+    return (<Fragment>
+        <Link to="#" className={currentTab === "user-management-tab" ? "list-group-item active" : "list-group-item"} id="user-management-tab" role="tab" onClick={onTabChanged}>
+            <FormattedMessage id="user_management" />
+        </Link>
+    </Fragment>)
+}
+
+function renderAdminTabs() {
+    return (<Fragment>
+        <TabPane tabId="user-management-tab">
+            <UserManagement />
+        </TabPane>
+    </Fragment>)
+}
 
 export function PersonalPage() {
     const [currentTab, setCurrentTab] = useState<string>("home-tab");
@@ -44,6 +61,7 @@ export function PersonalPage() {
                     <Link to="#" className={currentTab === "home-tab" ? "list-group-item active" : "list-group-item"} id="home-tab" role="tab" onClick={handleTabChanged}>
                         <FormattedMessage id="collections_page" />
                     </Link>
+                    {userInfo?.roles.includes("admin") && renderAdminLinks(currentTab, handleTabChanged)}
                 </div>
             </div>
             <div className="col-sm-9">
@@ -56,6 +74,7 @@ export function PersonalPage() {
                         </div>
                         <UserCollectionsList collections={userCollections} onCollectionClick={handleCollectionClicked} />
                     </TabPane>
+                    {userInfo?.roles.includes("admin") && renderAdminTabs()}
                 </TabContent>
             </div>
         </div>
