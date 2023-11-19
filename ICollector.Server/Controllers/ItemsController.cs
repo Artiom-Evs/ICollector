@@ -106,7 +106,7 @@ public class ItemsController : ControllerBase
         var user = await _userManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException();
 
-        if (userCollection.AuthorId != user.Id)
+        if (userCollection.AuthorId != user.Id && !this.User.IsInRole("admin"))
         {
             return Forbid();
         }
@@ -139,7 +139,7 @@ public class ItemsController : ControllerBase
         var user = await _userManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException();
 
-        if (userCollection.AuthorId != user.Id)
+        if (userCollection.AuthorId != user.Id && !this.User.IsInRole("admin"))
         {
             return Forbid();
         }
@@ -184,7 +184,7 @@ public class ItemsController : ControllerBase
         var user = await _userManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException();
 
-        if (userCollection.AuthorId != user.Id)
+        if (userCollection.AuthorId != user.Id && !this.User.IsInRole("admin"))
         {
             return Forbid();
         }

@@ -86,7 +86,6 @@ public class CollectionsController : ControllerBase
         return Ok(responseItem);
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<ActionResult<CollectionResponse>> PostUserCollection(CollectionRequest request)
     {
@@ -123,7 +122,7 @@ public class CollectionsController : ControllerBase
         var user = await _userManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException();
 
-        if (storedCollection.AuthorId != user.Id)
+        if (storedCollection.AuthorId != user.Id && !this.User.IsInRole("admin"))
         {
             return Forbid();
         }
@@ -159,7 +158,7 @@ public class CollectionsController : ControllerBase
         var user = await _userManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException();
 
-        if (userCollection.AuthorId != user.Id)
+        if (userCollection.AuthorId != user.Id && !this.User.IsInRole("admin"))
         {
             return Forbid();
         }
