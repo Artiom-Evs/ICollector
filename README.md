@@ -34,10 +34,10 @@ Application project for managing public personal collections (books, stamps, whi
             *   ✅ Provides ability to manage collection and their items for owner and administrators.
             *   Has filters for the items list.
             *   Has sorters for the items list. 
-        *   Administration panel
-            *   Available only for administrators.
-            *   Allows to block and unblock other users.
-            *   Allows to give and remove administrator rules.
+        *   ✅ Administration panel
+            *   ✅ Available only for administrators.
+            *   ✅ Allows to block and unblock other users.
+            *   ✅ Allows to give and remove administrator rules.
         *   ✅ Color schemes
             *   ✅ Web application should support light and dark color schemes..
             *   ✅ Theme settings are saved for each user. 
