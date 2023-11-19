@@ -16,11 +16,11 @@ Application project for managing public personal collections (books, stamps, whi
         *   Registered users
             *   ✅ View collections and collection items.
             *   Writing comments.
-            *   Managing own collections and their items. 
+            *   ✅ Managing own collections and their items. 
         *   Administrators 
-            *   Access to all collections and items as owner
+            *   ✅ Access to all collections and items as owner
             *   Writing comments. 
-            *   Managing own collections and their items
+            *   ✅ Managing own collections and their items
             *   Access to administration panel. 
     *   UI
         *  Application home page 
@@ -28,13 +28,16 @@ Application project for managing public personal collections (books, stamps, whi
             *   ✅ List 5 largest collections. 
             *   Tag cloud. Search page opens after clicking on the tag. 
         *   Personal user page
-            *   Provides interface to manage own collections. 
-        *   Collection page 
+            *   ✅ Provides interface to manage own collections. 
+        *   ✅ Collection page 
             *   ✅ Contains collection description and list of their items.
-            *   Provides ability to manage collection and their items for owner and administrators.
+            *   ✅ Provides ability to manage collection and their items for owner and administrators.
+            *   Has filters for the items list.
+            *   Has sorters for the items list. 
         *   Administration panel
             *   Available only for administrators.
-            *   Provides ability to manage application users and administrators. 
+            *   Allows to block and unblock other users.
+            *   Allows to give and remove administrator rules.
         *   ✅ Color schemes
             *   ✅ Web application should support light and dark color schemes..
             *   ✅ Theme settings are saved for each user. 
