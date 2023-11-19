@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
 
 const ApiPrefix = "api/Admin/Users";
 const ApiPaths = {
-    Users: `${ApiPrefix}/Users`,
+    Users: `${ApiPrefix}`,
     BlockUser: `${ApiPrefix}/BlockUser`,
     UnblockUser: `${ApiPrefix}/UnblockUser`,
     AddUserToRole: `${ApiPrefix}/AddUserToRole`,
@@ -28,11 +28,15 @@ export class UsersApiService {
         this.instance = instance;
     }
 
-    getUsers(props?: PaginationProps): Promise<AxiosResponse<UserResponseType[]>> {
+    getAll(props?: PaginationProps): Promise<AxiosResponse<UserResponseType[]>> {
         return this.instance.get(ApiPaths.Users, { params: {
             page: props?.page,
             pageSize: props?.pageSize
         }});
+    }
+
+    get(id: string): Promise<AxiosResponse<UserResponseType>> {
+        return this.instance.get(`${ApiPaths.Users}/${id}`);
     }
 
     blockUser(props: { userId: string, blockUntill?: Date | null }) {

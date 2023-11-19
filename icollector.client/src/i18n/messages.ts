@@ -73,11 +73,18 @@ export const messages: Record<string, Record<string, string>> = {
         "warning_before_item_deletion": "Are you sure you want to delete this item?",
 
         "user_management": "User management",
-        "status": "Status",
+        "state": "State",
         "block": "Block",
         "unblock": "Unblock",
         "blocked_untill_with_date": "Blocked untill { d, date }",
-        "active": "Active"
+        "active": "Active",
+
+        "collections_count": "Collections count",
+        "collections": "Collections",
+        "total_items_count": "Total items count",
+        "status": "Status",
+        "admin": "Admin",
+        "user": "User",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -151,11 +158,18 @@ export const messages: Record<string, Record<string, string>> = {
         "warning_before_item_deletion": "Czy na pewno chcesz usunąć ten item?",
 
         "user_management": "Zarządzanie użytkownikami",
-        "status": "Stan",
+        "state": "Stan",
         "block": "Zablokuj",
         "unblock": "Razblokuj",
         "blocked_untill_with_date": "Zablokowany do { d, date }",
-        "active": "Aktywny"
+        "active": "Aktywny",
+
+        "collections_count": "Liczba kolekcji",
+        "collections": "Kolekcje",
+        "total_items_count": "Łączna liczba elementów",
+        "status": "Status",
+        "admin": "Administrator",
+        "user": "Użytkownik",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -219,7 +233,7 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_description": "Описание коллекции",
         "no_collections": "Коллекции отсутствуют.",
         "no_collection": "Коллекция отсутствует.",
-        "items_count": "Количество элементов",
+        "items_count": "Количество итемов",
         "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?",
 
         "add_new_item": "Добавить новый итем",
@@ -229,10 +243,17 @@ export const messages: Record<string, Record<string, string>> = {
         "warning_before_item_deletion": "Вы уверены, что хотите удалить этот итем?",
 
         "user_management": "Управление пользователями",
-        "status": "Состояние",
+        "state": "Состояние",
         "block": "Заблокировать",
         "unblock": "Разблокировать",
         "blocked_untill_with_date": "Заблокирован до { d, date }",
-        "active": "Активен"
+        "active": "Активен",
+
+        "collections_count": "Количество коллекций",
+        "collections": "Коллекции",
+        "total_items_count": "Общее количество итемов",
+        "status": "Статус",
+        "admin": "Администратор",
+        "user": "Пользователь",
     }
 }
