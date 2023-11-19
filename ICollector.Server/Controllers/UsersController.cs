@@ -41,6 +41,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<UserResponse[]>> GetUser(string Id)
     {
         var user = await _userManager.FindByIdAsync(Id);
