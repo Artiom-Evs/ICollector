@@ -154,9 +154,13 @@ export function CollectionPage() {
         return renderNotFound(handleBackClicked);
     }
 
+    const toolbar = userInfo?.id === collection.authorId || userInfo?.roles.includes("admin")
+        ? renderToolbar(handleAddClicked, handleEditClicked, handleDeleteClicked)
+        : <span />;
+
     return (
         <div>
-            {userInfo?.id === collection.authorId && renderToolbar(handleAddClicked, handleEditClicked, handleDeleteClicked)}
+            {toolbar}
             {renderCollection(collection, handleItemClicked)}
         </div>
     )

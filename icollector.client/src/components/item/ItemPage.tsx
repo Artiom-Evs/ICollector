@@ -80,9 +80,13 @@ export function ItemPage() {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
 
+    const toolbar = userInfo?.id === item.collection.authorId || userInfo?.roles.includes("admin")
+        ? renderToolbar(handleEditClicked, handleDeleteClicked)
+        : <span />;
+
     return (
         <div>
-            {userInfo?.id === item.collection.authorId && renderToolbar(handleEditClicked, handleDeleteClicked)}
+            {toolbar}
             {renderItem(item)}
         </div>
     );

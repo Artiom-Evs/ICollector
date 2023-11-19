@@ -25,7 +25,8 @@ export interface LoginResponseType {
 export interface UserInfoType {
     id: string,
     email: string,
-    isEmailConfirmed: boolean
+    isEmailConfirmed: boolean,
+    roles: string[]
 }
 
 class AuthApiService {
