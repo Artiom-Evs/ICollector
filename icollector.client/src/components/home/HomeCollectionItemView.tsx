@@ -19,7 +19,12 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
         e.preventDefault();
         navigate("/user", { state: { id: props.item.collection.authorId } });
     }
-    
+
+    function handleCollectionClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/collection", { state: { id: props.item.collection.id } });
+    }
+
     return (
         <div className="card mb-2">
             <div className="card-body row">
@@ -35,8 +40,12 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
                         {props.item.name}
                     </Link>
                     <br />
-                    <FormattedMessage id="collection_with_name" values={{ n: props.item.collection.name }} />
-                    </div>
+                    <FormattedMessage id="collection_with_name" values={{ n: "" }} />
+                    <Link to="#" onClick={handleCollectionClicked}>
+                        {props.item.collection.name}
+                    </Link>
+
+                </div>
                 <div className="col-sm-3">
                     <FormattedMessage id="author_with_name" values={{ n: "" }} />
                     <Link to="#" onClick={handleUserClicked}>

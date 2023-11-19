@@ -1,6 +1,6 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
 import { useUsersApi } from "../../hooks/useUsersApi";
@@ -15,7 +15,7 @@ function getTotalItems(collections: UserCollectionType[]) {
     return collections.map(c => c.items.length).reduce((prev, curr) => prev + curr)
 }
 
-function renderUser(user: UserResponseType, collections: UserCollectionType[]) {
+function renderUser(user: UserResponseType, collections: UserCollectionType[], onCollectionClick: (e: MouseEvent) => void) {
     return (
         <div>
             <h1>{user.email}</h1>
@@ -77,7 +77,11 @@ function renderUser(user: UserResponseType, collections: UserCollectionType[]) {
                 <tbody>
                     {collections.map(c => <tr key={c.id}>
                         <td>{c.id}</td>
-                        <td>{c.name}</td>
+                        <td>
+                            <Link to="#" id={c.id.toString()} onClick={onCollectionClick}>
+                                {c.name}
+                            </Link>
+                        </td>
                         <td>{c.items.length}</td>
                     </tr>)}
                 </tbody>
@@ -92,7 +96,8 @@ export function UserPage() {
     const [userCollections, setUserCollections] = useState<UserCollectionType[]>();
     const collectionsApi = useCollectionsApi();
     const usersApi = useUsersApi();
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
         if (!state)
             return;
@@ -108,8 +113,15 @@ export function UserPage() {
             .catch(error => console.error(error));
     }, [collectionsApi, usersApi, state]);
 
+    function handleCollectionClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/collection", { state: {
+            id: e.currentTarget.id
+        }});
+    }
+
     const content = !!user && !!userCollections
-        ? renderUser(user, userCollections)
+        ? renderUser(user, userCollections, handleCollectionClicked)
         : <p><em><FormattedMessage id="loading" /></em></p>
 
     return content;

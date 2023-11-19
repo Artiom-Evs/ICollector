@@ -21,7 +21,7 @@ function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
     )
 }
 
-function renderItem(item: CollectionItemType, onUserClick: (e: MouseEvent) => void) {
+function renderItem(item: CollectionItemType, onUserClick: (e: MouseEvent) => void, onCollectionClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
@@ -44,7 +44,11 @@ function renderItem(item: CollectionItemType, onUserClick: (e: MouseEvent) => vo
                 <dt>
                     <FormattedMessage id="collection" />
                 </dt>
-                <dd>{item.collection.name}</dd>
+                <dd>
+                    <Link to="#" onClick={onCollectionClick}>
+                        {item.collection.name}
+                    </Link>
+                </dd>
             </dl>
         </div>
     );
@@ -87,6 +91,13 @@ export function ItemPage() {
         }});
     }
 
+    function handleCollectionClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/collection", { state: {
+            id: item?.collection.id
+        }});
+    }
+
     if (item === undefined) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
@@ -98,7 +109,7 @@ export function ItemPage() {
     return (
         <div>
             {toolbar}
-            {renderItem(item, handleUserClicked)}
+            {renderItem(item, handleUserClicked, handleCollectionClicked)}
         </div>
     );
 }
