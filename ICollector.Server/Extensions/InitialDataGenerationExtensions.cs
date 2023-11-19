@@ -5,14 +5,35 @@ using System;
 
 namespace ICollector.Server.Extensions;
 
-file record User(string Email, string Password);
+file record User(string Email, string Password, string[]? Roles);
 
 public static class InitialDataGenerationExtensions
 {
+    public static WebApplication SeedRolesData(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        using var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+        var roles = app.Configuration
+            .GetSection("InitialData:Roles")
+            .Get<string[]>()
+                ?? throw new InvalidOperationException("Roles initial data not found in application configuration.");
+
+        foreach (var role in roles)
+        {
+            if (roleManager.FindByNameAsync(role).Result == null)
+            {
+                roleManager.CreateAsync(new AppRole { Name = role }).Wait();
+            }
+        }
+
+        return app;
+    }
+
     public static WebApplication SeedUsersData(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+        using var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
         var users = app.Configuration
             .GetSection("InitialData:Users")
             .Get<User[]>()
@@ -23,10 +44,11 @@ public static class InitialDataGenerationExtensions
             if (userManager.FindByNameAsync(user.Email).Result == null)
             {
                 AppUser newUser = new() { Email = user.Email, UserName = user.Email };
-                var result = userManager.CreateAsync(newUser, user.Password).Result;
+                userManager.CreateAsync(newUser, user.Password).Wait();
+                if (user.Roles != null)
+                    userManager.AddToRolesAsync(newUser, user.Roles).Wait();
             }
         }
-
 
         return app;
     }

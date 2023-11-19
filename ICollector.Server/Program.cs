@@ -38,8 +38,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.SeedUsersData();
-    app.SeedCollectionsData();
+    app.SeedRolesData()
+       .SeedUsersData()
+       .SeedCollectionsData();
 }
 
 app.UseHttpsRedirection();
