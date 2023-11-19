@@ -23,11 +23,14 @@ public static class IdentityApiExtensions
             return TypedResults.Unauthorized();
         }
 
+        var roles = await userManager.GetRolesAsync(user);
+        
         return TypedResults.Ok(new DetailedInfoResponse()
         {
             Id = user.Id,
             Email = user.Email ?? "",
-            IsConfirmedEmail = user.EmailConfirmed
+            IsConfirmedEmail = user.EmailConfirmed,
+            Roles = roles.ToArray()
         });
     }
 }
