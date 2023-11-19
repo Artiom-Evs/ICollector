@@ -10,9 +10,14 @@ interface HomeUserCollectionProps {
 export function HomeUserCollectionView(props: HomeUserCollectionProps) {
     const navigate = useNavigate();
 
-    const handleCollectionClicked = (e: MouseEvent) => {
+    function handleCollectionClicked(e: MouseEvent) {
         e.preventDefault();
         navigate("/collection", { state: { id: props.item.id } });
+    }
+
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: { id: props.item.authorId } });
     }
 
     return (
@@ -33,7 +38,10 @@ export function HomeUserCollectionView(props: HomeUserCollectionProps) {
                     {props.item.description}
                 </div>
                 <div className="col-sm-3">
-                    <FormattedMessage id="author_with_name" values={{ n: props.item.authorName }} />
+                    <FormattedMessage id="author_with_name" values={{ n: "" }} />
+                    <Link to="#" onClick={handleUserClicked}>
+                        {props.item.authorName}
+                    </Link>
                     <br />
                     <FormattedMessage id="created_with_date"values={{ d: new Date(props.item.created) }} />
                     <br />

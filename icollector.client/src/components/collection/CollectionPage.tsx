@@ -30,7 +30,7 @@ function renderToolbar(onAddClicked: (e: MouseEvent) => void, onEditClicked: () 
     )
 }
 
-function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void) {
+function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void, onUserClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
@@ -49,7 +49,11 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
                 <dt>
                     <FormattedMessage id="author" />
                 </dt>
-                <dd>{collection.authorName}</dd>
+                <dd>
+                    <Link to="#" id={collection.authorId} onClick={onUserClick}>
+                        {collection.authorName}
+                    </Link>
+                </dd>
             </dl>
             <div>
                 <table className="table">
@@ -120,6 +124,12 @@ export function CollectionPage() {
         navigate("/item", { state: { id: e.currentTarget.id } });
     }
 
+
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: { id: e.currentTarget.id } });
+    }
+
     function handleAddClicked() {
         navigate("/item/create", {
             state: {
@@ -161,7 +171,7 @@ export function CollectionPage() {
     return (
         <div>
             {toolbar}
-            {renderCollection(collection, handleItemClicked)}
+            {renderCollection(collection, handleItemClicked, handleUserClicked)}
         </div>
     )
 }

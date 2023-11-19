@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { MouseEvent, useEffect, useState } from "react";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { useItemsApi } from "../../hooks/useItemsApi";
 import { FormattedMessage } from "react-intl";
@@ -21,7 +21,7 @@ function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
     )
 }
 
-function renderItem(item: CollectionItemType) {
+function renderItem(item: CollectionItemType, onUserClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
@@ -36,7 +36,11 @@ function renderItem(item: CollectionItemType) {
                 <dt>
                     <FormattedMessage id="author" />
                 </dt>
-                <dd>{item.collection.authorName}</dd>
+                <dd>
+                    <Link to="#" onClick={onUserClick}>
+                        {item.collection.authorName}
+                    </Link>
+                </dd>
                 <dt>
                     <FormattedMessage id="collection" />
                 </dt>
@@ -76,6 +80,13 @@ export function ItemPage() {
         });
     }
 
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: {
+            id: item?.collection.authorId
+        }});
+    }
+
     if (item === undefined) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
@@ -87,7 +98,7 @@ export function ItemPage() {
     return (
         <div>
             {toolbar}
-            {renderItem(item)}
+            {renderItem(item, handleUserClicked)}
         </div>
     );
 }
