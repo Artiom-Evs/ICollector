@@ -5,6 +5,8 @@ import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
 import { useUsersApi } from "../../hooks/useUsersApi";
 import { UserResponseType } from "../../services/UsersApiService";
+import { Button, ButtonGroup } from "reactstrap";
+import useAuth from "../../hooks/useAuth";
 
 function isUserBlocked(user: UserResponseType): boolean {
     return !!user.blockedUntil && new Date(user.blockedUntil).getTime() > Date.now();
@@ -13,6 +15,30 @@ function isUserBlocked(user: UserResponseType): boolean {
 function getTotalItems(collections: UserCollectionType[]) {
     if (collections.length === 0) return 0;
     return collections.map(c => c.items.length).reduce((prev, curr) => prev + curr)
+}
+
+function renderAdminToolbar(user: UserResponseType, onGiveRigthsClick: () => void, onRemoveRigthsClick: () => void, onBlockClick: () => void, onUnblockClick: () => void) {
+    return (
+        <div className="d-flex justify-content-end">
+            <ButtonGroup>
+                {user.roles.includes("admin")
+                ? <Button onClick={onRemoveRigthsClick}>
+                        <FormattedMessage id="remove_admin_rigths" />
+                </Button>
+                : <Button onClick={onGiveRigthsClick}>
+                    <FormattedMessage id="give_admin_rigths" />
+                </Button>
+                    }
+                {isUserBlocked(user)
+                    ? <Button onClick={onUnblockClick}>
+                        <FormattedMessage id="unblock" />
+                    </Button>
+                    : <Button onClick={onBlockClick}>
+                        <FormattedMessage id="block" />
+                    </Button>}
+            </ButtonGroup>
+        </div>
+    );
 }
 
 function renderUser(user: UserResponseType, collections: UserCollectionType[], onCollectionClick: (e: MouseEvent) => void) {
@@ -94,6 +120,8 @@ export function UserPage() {
     const { state } = useLocation();
     const [user, setUser] = useState<UserResponseType>();
     const [userCollections, setUserCollections] = useState<UserCollectionType[]>();
+    const [rerender, setRerender] = useState<boolean>(false);
+    const { userInfo } = useAuth();
     const collectionsApi = useCollectionsApi();
     const usersApi = useUsersApi();
     const navigate = useNavigate();
@@ -111,7 +139,7 @@ export function UserPage() {
             .then(response => response.data)
             .then(data => setUserCollections(data))
             .catch(error => console.error(error));
-    }, [collectionsApi, usersApi, state]);
+    }, [collectionsApi, usersApi, state, rerender]);
 
     function handleCollectionClicked(e: MouseEvent) {
         e.preventDefault();
@@ -120,9 +148,42 @@ export function UserPage() {
         }});
     }
 
-    const content = !!user && !!userCollections
-        ? renderUser(user, userCollections, handleCollectionClicked)
-        : <p><em><FormattedMessage id="loading" /></em></p>
+    function handleGiveRigthsClick() {
+        usersApi.addUserToRole({ userId: user?.id ?? "", roleName: "admin" })
+            .then(() => setRerender(prev => !prev))
+            .catch(error => console.error(error));
+    }
 
-    return content;
+    function handleRemoveRigthsClick() {
+        usersApi.removeUserFromRole({ userId: user?.id ?? "", roleName: "admin" })
+            .then(() => setRerender(prev => !prev))
+            .catch(error => console.error(error));
+    }
+
+    function handleBlockClick() {
+        usersApi.blockUser({ userId: user?.id ?? "" })
+            .then(() => setRerender(prev => !prev))
+            .catch(error => console.error(error));
+    }
+
+    function handleUnblockClick() {
+        usersApi.unblockUser({ userId: user?.id ?? "" })
+            .then(() => setRerender(prev => !prev))
+            .catch(error => console.error(error));
+    }
+
+    if (user === undefined || userCollections === undefined) {
+        return <p><em><FormattedMessage id="loading" /></em></p>;
+    }
+    
+    const adminToolbar = userInfo?.roles.includes("admin")
+        ? renderAdminToolbar(user, handleGiveRigthsClick, handleRemoveRigthsClick, handleBlockClick, handleUnblockClick )
+        : <span />;
+
+    return (
+        <div>
+            {adminToolbar}
+            {renderUser(user, userCollections, handleCollectionClicked)}
+        </div>
+    )
 }

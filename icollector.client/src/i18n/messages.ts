@@ -85,6 +85,9 @@ export const messages: Record<string, Record<string, string>> = {
         "status": "Status",
         "admin": "Admin",
         "user": "User",
+
+        "give_admin_rigths": "Give admin rigths",
+        "remove_admin_rigths": "Remove admin rigths",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -170,6 +173,9 @@ export const messages: Record<string, Record<string, string>> = {
         "status": "Status",
         "admin": "Administrator",
         "user": "Użytkownik",
+
+        "give_admin_rigths": "Nadaj uprawnienia administratora",
+        "remove_admin_rigths": "Zabierz uprawnienia administratora",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -255,5 +261,8 @@ export const messages: Record<string, Record<string, string>> = {
         "status": "Статус",
         "admin": "Администратор",
         "user": "Пользователь",
+
+        "give_admin_rigths": "Дать права администратора",
+        "remove_admin_rigths": "Забрать права администратора",
     }
 }
