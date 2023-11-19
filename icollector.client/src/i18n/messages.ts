@@ -71,6 +71,13 @@ export const messages: Record<string, Record<string, string>> = {
         "delete_item": "Delete item",
         "item_name": "Item name",
         "warning_before_item_deletion": "Are you sure you want to delete this item?",
+
+        "user_management": "User management",
+        "status": "Status",
+        "block": "Block",
+        "unblock": "Unblock",
+        "blocked_untill_with_date": "Blocked untill { d, date }",
+        "active": "Active"
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -142,6 +149,13 @@ export const messages: Record<string, Record<string, string>> = {
         "delete_item": "Usuń item",
         "item_name": "Nazwa itemu",
         "warning_before_item_deletion": "Czy na pewno chcesz usunąć ten item?",
+
+        "user_management": "Zarządzanie użytkownikami",
+        "status": "Stan",
+        "block": "Zablokuj",
+        "unblock": "Razblokuj",
+        "blocked_untill_with_date": "Zablokowany do { d, date }",
+        "active": "Aktywny"
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -213,5 +227,12 @@ export const messages: Record<string, Record<string, string>> = {
         "delete_item": "Удалить итем",
         "item_name": "Название итема",
         "warning_before_item_deletion": "Вы уверены, что хотите удалить этот итем?",
+
+        "user_management": "Управление пользователями",
+        "status": "Состояние",
+        "block": "Заблокировать",
+        "unblock": "Разблокировать",
+        "blocked_untill_with_date": "Заблокирован до { d, date }",
+        "active": "Активен"
     }
 }
