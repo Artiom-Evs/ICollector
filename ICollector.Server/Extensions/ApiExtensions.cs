@@ -47,4 +47,10 @@ public static class ApiExtensions
         CollectionId = item.CollectionId
     };
 
+    public static UserResponse ToApiResponse(this AppUser user) => new()
+    {
+        Id = user.Id,
+        Email = user.Email ?? "",
+        BlockedUntil = user.LockoutEnd
+    };
 }

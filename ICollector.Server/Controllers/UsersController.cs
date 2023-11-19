@@ -1,4 +1,5 @@
-﻿using ICollector.Server.Models;
+﻿using ICollector.Server.Extensions;
+using ICollector.Server.Models;
 using ICollector.Server.Models.ApiModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,18 +23,12 @@ public class UsersController : Controller
     }
 
     [HttpGet]
-    [Route("Users")]
     public async Task<ActionResult<UserResponse[]>> GetUsers(int page = 1, int pageSize = 100)
     {
         var users = await _userManager.Users
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(u => new UserResponse()
-            {
-                Id = u.Id,
-                Email = u.Email ?? "",
-                BlockedUntil = u.LockoutEnd
-            })
+            .Select(u => u.ToApiResponse())
             .ToArrayAsync();
 
         foreach (var u in users)
@@ -43,6 +38,23 @@ public class UsersController : Controller
         }
 
         return Ok(users);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserResponse[]>> GetUser(string Id)
+    {
+        var user = await _userManager.FindByIdAsync(Id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var response = user.ToApiResponse();
+        var roles = await _userManager.GetRolesAsync(user);
+        response.Roles = roles.ToArray();
+
+        return Ok(response);
     }
 
     [HttpGet]
