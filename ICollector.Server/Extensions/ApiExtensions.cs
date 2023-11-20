@@ -20,7 +20,11 @@ public static class ApiExtensions
             Created = collection.Created,
             Edited = collection.Edited,
             AuthorId = collection.AuthorId,
-            Items = collection.Items?.Select(i => i.ToApiResponse())?.ToList() ?? []
+            Items = collection.Items?.Select(i => i.ToApiResponse())?.ToList() ?? [],
+
+            Number1Name = collection.Number1Name,
+            Number2Name = collection.Number2Name,
+            Number3Name = collection.Number3Name
         };
     }
 
@@ -28,7 +32,11 @@ public static class ApiExtensions
     {
         Id = request.Id,
         Name = request.Name,
-        Description = request.Description
+        Description = request.Description,
+
+        Number1Name = request.Number1Name,
+        Number2Name = request.Number2Name,
+        Number3Name = request.Number3Name
     };
 
     public static ItemResponse ToApiResponse(this CollectionItem item) => new()

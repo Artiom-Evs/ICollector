@@ -11,5 +11,10 @@ public class CollectionResponse
     public DateTime Edited { get; set; }
     public string AuthorId { get; set; } = string.Empty;
     public string AuthorName { get; set; } = string.Empty;
+
     public List<ItemResponse> Items { get; set; } = [];
+
+    public string? Number1Name { get; set; }
+    public string? Number2Name { get; set; }
+    public string? Number3Name { get; set; }
 }
