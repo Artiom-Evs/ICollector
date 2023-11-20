@@ -45,14 +45,22 @@ public static class ApiExtensions
         Name = item.Name,
         Created = item.Created,
         Edited = item.Edited,
-        Collection = item.Collection?.ToApiResponse()
+        Collection = item.Collection?.ToApiResponse(),
+
+        Number1 = item.Number1,
+        Number2 = item.Number2,
+        Number3 = item.Number3
     };
 
     public static CollectionItem ToDomainModel(this ItemRequest item) => new()
     {
         Id = item.Id,
         Name = item.Name,
-        CollectionId = item.CollectionId
+        CollectionId = item.CollectionId,
+
+        Number1 = item.Number1,
+        Number2 = item.Number2,
+        Number3 = item.Number3
     };
 
     public static UserResponse ToApiResponse(this AppUser user) => new()

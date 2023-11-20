@@ -7,4 +7,8 @@ public class ItemResponse
     public DateTime Created { get; set; }
     public DateTime Edited { get; set; }
     public CollectionResponse? Collection { get; set; }
+
+    public int? Number1 { get; set; }
+    public int? Number2 { get; set; }
+    public int? Number3 { get; set; }
 }
