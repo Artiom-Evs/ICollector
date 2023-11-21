@@ -88,6 +88,12 @@ export const messages: Record<string, Record<string, string>> = {
 
         "give_admin_rigths": "Give admin rigths",
         "remove_admin_rigths": "Remove admin rigths",
+
+
+        "field_name": "Field name",
+        "numeric_field_1": "Numeric field 1",
+        "numeric_field_2": "Numeric field 2",
+        "numeric_field_3": "Numeric field 3",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -176,6 +182,11 @@ export const messages: Record<string, Record<string, string>> = {
 
         "give_admin_rigths": "Nadaj uprawnienia administratora",
         "remove_admin_rigths": "Zabierz uprawnienia administratora",
+
+        "field_name": "Nazwa pola",
+        "numeric_field_1": "Numeryczne pole 1",
+        "numeric_field_2": "Numeryczne pole 2",
+        "numeric_field_3": "Numeryczne pole 3",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -264,5 +275,10 @@ export const messages: Record<string, Record<string, string>> = {
 
         "give_admin_rigths": "Дать права администратора",
         "remove_admin_rigths": "Забрать права администратора",
+
+        "field_name": "Название поля",
+        "numeric_field_1": "Числовое поле 1",
+        "numeric_field_2": "Числовое поле 2",
+        "numeric_field_3": "Числовое поле 3",
     }
 }

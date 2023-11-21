@@ -11,7 +11,11 @@ export interface UserCollectionType {
     edited: string,
     authorId: string,
     authorName: string,
-    items: CollectionItemType[]
+    items: CollectionItemType[],
+
+    number1Name: string | null,
+    number2Name: string | null,
+    number3Name: string | null
 }
 
 class CollectionsApiService {
