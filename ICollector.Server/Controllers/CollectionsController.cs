@@ -1,4 +1,5 @@
-﻿using ICollector.Server.Extensions;
+﻿using Azure.Core;
+using ICollector.Server.Extensions;
 using ICollector.Server.Models;
 using ICollector.Server.Models.ApiModels;
 using ICollector.Server.Services;
@@ -127,18 +128,14 @@ public class CollectionsController : ControllerBase
             return Forbid();
         }
 
-        if (storedCollection.Name != request.Name)
-        {
-            storedCollection.Name = request.Name;
-        }
+        // TODO: analyze the difference between change tracking and copying data to a new object
+        var updatedCollection = request.ToDomainModel();
 
-        if (storedCollection.Description != request.Description)
-        {
-            storedCollection.Description = request.Description;
-        }
+        updatedCollection.AuthorId = storedCollection.AuthorId;
+        updatedCollection.Created = storedCollection.Created;
+        updatedCollection.Edited = DateTime.Now;
 
-        storedCollection.Edited = DateTime.Now;
-        await _context.UpdateAsync(storedCollection);
+        await _context.UpdateAsync(updatedCollection);
         await _context.SaveChangesAsync();
 
         return NoContent();

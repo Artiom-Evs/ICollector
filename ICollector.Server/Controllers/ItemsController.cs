@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ICollector.Server.Controllers;
 
@@ -151,12 +152,13 @@ public class ItemsController : ControllerBase
             return NotFound(); ;
         }
 
-        if (storedItem.Name != request.Name)
-        {
-            storedItem.Name = request.Name;
-        }
+        // TODO: analyze the difference between change tracking and copying data to a new object
+        var updatedItem = request.ToDomainModel();
 
-        storedItem.Edited = DateTime.Now;
+        updatedItem.CollectionId = storedItem.CollectionId;
+        updatedItem.Created = storedItem.Created;
+        updatedItem.Edited = DateTime.Now;
+
         await _items.UpdateAsync(storedItem);
         await _items.SaveChangesAsync();
 
