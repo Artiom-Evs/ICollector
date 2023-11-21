@@ -115,6 +115,7 @@ export function CollectionDynamicForm(props: CollectionDynamicFormProps) {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const collection = extractCollectionFromForm(e.currentTarget);
+        collection.id = props.collection.id;
         props.onSubmit(collection);
     }
 
@@ -130,7 +131,6 @@ export function CollectionDynamicForm(props: CollectionDynamicFormProps) {
 
     return (
         <Form onSubmit={handleSubmit}>
-
             {optionalFieldsSelector}
 
             {fields.filter(f => f.value != null || f.required).map(field => {

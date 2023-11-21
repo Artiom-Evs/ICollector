@@ -1,18 +1,15 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { CollectionDynamicForm } from "./CollectionDynamicForm";
 
 export function EditCollectionPage() {
-    const { formatMessage } = useIntl();
     const { state } = useLocation();
     const navigate = useNavigate();
     const collectionsApi = useCollectionsApi();
-    const [id, setId] = useState<number>(0);
-    const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
+    const [collection, setCollection] = useState<UserCollectionType>();
     
 
     useEffect(() => {
@@ -21,34 +18,32 @@ export function EditCollectionPage() {
         collectionsApi.get(state.id)
             .then(response => response.data)
             .then(data => {
-                setId(data.id);
-                setName(data.name);
-                setDescription(data.description);
+                setCollection(data);
             });
     }, [state, collectionsApi]);
 
-    function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        collectionsApi.put(id, {
-            id, name, description
-        } as UserCollectionType)
+    function handleSubmit(updatedCollection: UserCollectionType) {
+        collectionsApi.put(collection?.id ?? 0, updatedCollection)
             .then(() => {
                 navigate("/collection", {
                     replace: true,
-                    state: {
-                        id
-                    }
+                    state: { id: updatedCollection.id }
                 });
             })
     }
 
-    function handleNameChanged(e: ChangeEvent<HTMLInputElement>) {
-        setName(e.currentTarget.value);
+    function handleCancel() {
+        navigate(-1);
     }
 
-    function handleDescriptionChanged(e: ChangeEvent<HTMLInputElement>) {
-        setDescription(e.currentTarget.value);
-    }
+    if (collection === undefined)
+        return <p><em><FormattedMessage id="loading" /></em></p>;
+
+    const collectionForm = (
+        <CollectionDynamicForm
+            collection={collection}
+            onSubmit={handleSubmit}
+            onCancel={handleCancel} />);
 
     return (
         <div>
@@ -59,37 +54,7 @@ export function EditCollectionPage() {
                     </h1>
                 </div>
                 <div className="card-body">
-                    <Form onSubmit={handleSubmit}>
-                        <FormGroup floating>
-                            <Input id="collection-name"
-                                name="name"
-                                placeholder={formatMessage({ id: "collection_name" }) }
-                                required
-                                value={name}
-                                onChange={handleNameChanged}
-                            />
-                            <Label for="collection-name">
-                                <FormattedMessage id="name" />
-                            </Label>
-                        </FormGroup>
-
-                        <FormGroup floating>
-                            <Input id="collection-description"
-                                name="description"
-                                placeholder={formatMessage({ id: "collection_description" })}
-                                required
-                                value={description}
-                                onChange={handleDescriptionChanged}
-                            />
-                            <Label for="collection-description">
-                                <FormattedMessage id="description" />
-                            </Label>
-                        </FormGroup>
-
-                        <Button type="submit">
-                            <FormattedMessage id="save" />
-                        </Button>
-                    </Form>
+                    {collectionForm}
                 </div>
             </div>
         </div>
