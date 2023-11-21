@@ -1,40 +1,36 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { CollectionDynamicForm } from "./CollectionDynamicForm";
 
 export function CreateCollectionPage() {
-    const { formatMessage } = useIntl();
     const navigate = useNavigate();
     const collectionsApi = useCollectionsApi();
-    const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-
-    function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        collectionsApi.post({
-            name, description
-        } as UserCollectionType)
+    const [collection, ] = useState<UserCollectionType>({} as UserCollectionType);
+    
+    function handleSubmit(collection: UserCollectionType) {
+        collectionsApi.post(collection)
             .then(response => response.data)
             .then(data => {
                 navigate("/collection", {
                     replace: true,
-                    state: {
-                        id: data.id
-                    }
+                    state: { id: data.id }
                 });
             })
+            .catch(error => console.error(error));
     }
 
-    function handleNameChanged(e: ChangeEvent<HTMLInputElement>) {
-        setName(e.currentTarget.value);
+    function handleCancel() {
+        navigate(-1);
     }
 
-    function handleDescriptionChanged(e: ChangeEvent<HTMLInputElement>) {
-        setDescription(e.currentTarget.value);
-    }
+    const collectionForm = (
+        <CollectionDynamicForm
+            collection={collection}
+            onSubmit={handleSubmit}
+            onCancel={handleCancel} /> );
 
     return (
         <div>
@@ -45,37 +41,7 @@ export function CreateCollectionPage() {
                     </h1>
                 </div>
                 <div className="card-body">
-                    <Form onSubmit={handleSubmit}>
-                        <FormGroup floating>
-                            <Input id="collection-name"
-                                name="name"
-                                placeholder={formatMessage({ id: "collection_name" })}
-                                required
-                                value={name}
-                                onChange={handleNameChanged}
-                            />
-                            <Label for="collection-name">
-                                <FormattedMessage id="name" />
-                            </Label>
-                        </FormGroup>
-
-                        <FormGroup floating>
-                            <Input id="collection-description"
-                                name="description"
-                                placeholder={formatMessage({ id: "collection_description" })}
-                                required
-                                value={description}
-                                onChange={handleDescriptionChanged}
-                            />
-                            <Label for="collection-description">
-                                <FormattedMessage id="description" />
-                            </Label>
-                        </FormGroup>
-
-                        <Button type="submit">
-                            <FormattedMessage id="save" />
-                        </Button>
-                    </Form>
+                    {collectionForm}
                 </div>
             </div>
         </div>
