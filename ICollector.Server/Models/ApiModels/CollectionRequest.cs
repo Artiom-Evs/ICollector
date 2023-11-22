@@ -1,4 +1,6 @@
-﻿namespace ICollector.Server.Models.ApiModels;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ICollector.Server.Models.ApiModels;
 
 public class CollectionRequest
 {
@@ -13,4 +15,8 @@ public class CollectionRequest
     public string? Text1Name { get; set; }
     public string? Text2Name { get; set; }
     public string? Text3Name { get; set; }
+
+    public string? Multiline1Name { get; set; }
+    public string? Multiline2Name { get; set; }
+    public string? Multiline3Name { get; set; }
 }

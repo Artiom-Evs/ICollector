@@ -25,4 +25,11 @@ public class UserCollection : ModelBase
     public string? Text2Name { get; set; }
     [StringLength(255)]
     public string? Text3Name { get; set; }
+
+    [StringLength(255)]
+    public string? Multiline1Name { get; set; }
+    [StringLength(255)]
+    public string? Multiline2Name { get; set; }
+    [StringLength(255)]
+    public string? Multiline3Name { get; set; }
 }

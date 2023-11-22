@@ -28,7 +28,11 @@ public static class ApiExtensions
 
             Text1Name = collection.Text1Name,
             Text2Name = collection.Text2Name,
-            Text3Name = collection.Text3Name
+            Text3Name = collection.Text3Name,
+
+            Multiline1Name = collection.Multiline1Name,
+            Multiline2Name = collection.Multiline2Name,
+            Multiline3Name = collection.Multiline3Name,
         };
     }
 
@@ -44,7 +48,11 @@ public static class ApiExtensions
 
         Text1Name = request.Text1Name,
         Text2Name = request.Text2Name,
-        Text3Name = request.Text3Name
+        Text3Name = request.Text3Name,
+
+        Multiline1Name = request.Multiline1Name,
+        Multiline2Name = request.Multiline2Name,
+        Multiline3Name = request.Multiline3Name,
     };
 
     public static ItemResponse ToApiResponse(this CollectionItem item) => new()

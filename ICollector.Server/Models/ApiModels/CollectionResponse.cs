@@ -21,4 +21,8 @@ public class CollectionResponse
     public string? Text1Name { get; set; }
     public string? Text2Name { get; set; }
     public string? Text3Name { get; set; }
+
+    public string? Multiline1Name { get; set; }
+    public string? Multiline2Name { get; set; }
+    public string? Multiline3Name { get; set; }
 }
