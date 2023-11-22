@@ -124,7 +124,7 @@ function initializeFields(collection: UserCollectionType) {
     defaultFields[7].value = collection.text3Name;
     defaultFields[8].value = collection.multiline1Name;
     defaultFields[9].value = collection.multiline2Name;
-    defaultFields[10].value = collection.multiline3Name;
+    defaultFields[10].value = collection.multiline3Name; 
 }
 
 function extractCollectionFromForm(form: HTMLFormElement) {

@@ -18,7 +18,10 @@ export interface UserCollectionType {
     number3Name: string | null,
     text1Name: string | null,
     text2Name: string | null,
-    text3Name: string | null
+    text3Name: string | null,
+    multiline1Name: string | null,
+    multiline2Name: string | null,
+    multiline3Name: string | null,
 }
 
 class CollectionsApiService {

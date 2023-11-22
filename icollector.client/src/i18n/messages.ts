@@ -100,6 +100,10 @@ export const messages: Record<string, Record<string, string>> = {
         "text_field_2": "Text field 2",
         "text_field_3": "Text field 3",
         "text_value": "Text value",
+
+        "multiline_field_1": "Multiline text 1",
+        "multiline_field_2": "Multiline text 2",
+        "multiline_field_3": "Multiline text 3",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -199,6 +203,10 @@ export const messages: Record<string, Record<string, string>> = {
         "text_field_2": "Pole tekstowe 2",
         "text_field_3": "Pole tekstowe 3",
         "text_value": "Wartość tekstowa",
+
+        "multiline_field_1": "Wielowierszowe pole 1",
+        "multiline_field_2": "Wielowierszowe pole 2",
+        "multiline_field_3": "Wielowierszowe pole 3",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -299,5 +307,9 @@ export const messages: Record<string, Record<string, string>> = {
         "text_field_2": "Текстовое поле 2",
         "text_field_3": "Текстовое поле 3",
         "text_value": "Текстовое значение",
+        
+        "multiline_field_1": "Многострочное поле 1",
+        "multiline_field_2": "Многострочное поле 2",
+        "multiline_field_3": "Многострочное поле 3",
     }
 }
