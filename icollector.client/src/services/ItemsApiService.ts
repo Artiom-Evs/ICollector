@@ -8,13 +8,19 @@ export interface CollectionItemType {
     name: string,
     created: string,
     edited: string,
-    collection: UserCollectionType
+    collection: UserCollectionType,
+    number1: number | null,
+    number2: number | null,
+    number3: number | null
 }
 
 export interface CollectionItemRequestType {
     id: number,
     name: string,
-    collectionId: number
+    collectionId: number,
+    number1: number | null,
+    number2: number | null,
+    number3: number | null
 }
 
 class ItemsApiService {
