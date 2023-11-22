@@ -12,7 +12,7 @@ interface TextFieldProps {
 export function TextField(props: TextFieldProps) {
     const [value, setValue] = useState<string>(props.value ?? "");
     const { formatMessage } = useIntl();
-    
+
     function handleValueChange(e: ChangeEvent<HTMLInputElement>) {
         setValue(e.currentTarget.value);
     }
