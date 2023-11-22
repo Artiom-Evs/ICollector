@@ -5,8 +5,10 @@ import { FormGroup, Input, Label } from "reactstrap";
 interface TextFieldProps {
     name: string,
     value: string | null,
-    labelId: string,
-    placeholderId: string,
+    labelId?: string,
+    placeholderId?: string,
+    labelText?: string,
+    placeholderText?: string
 }
 
 export function TextField(props: TextFieldProps) {
@@ -24,11 +26,15 @@ export function TextField(props: TextFieldProps) {
                 type="text"
                 value={value}
                 onChange={handleValueChange}
-                placeholder={formatMessage({ id: props.placeholderId })}
+                placeholder={props.placeholderId
+                    ? formatMessage({ id: props.placeholderId })
+                    : props.placeholderText}
                 required
             />
             <Label for={props.name}>
-                <FormattedMessage id={props.labelId} />
+                {props.labelId
+                    ? <FormattedMessage id={props.labelId} />
+                    : props.labelText}
             </Label>
         </FormGroup>
     );

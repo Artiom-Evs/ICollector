@@ -12,7 +12,6 @@ interface CollectionDynamicFormProps {
 
 interface FieldDeclarationType {
     name: string,
-    type: "text",
     value: string | null,
     labelId: string,
     placeholderId: string,
@@ -22,7 +21,6 @@ interface FieldDeclarationType {
 const defaultFields: FieldDeclarationType[] = [
     {
         name: "name",
-        type: "text",
         value: "",
         labelId: "name",
         placeholderId: "collection_name",
@@ -30,7 +28,6 @@ const defaultFields: FieldDeclarationType[] = [
     },
     {
         name: "description",
-        type: "text",
         value: "",
         labelId: "description",
         placeholderId: "collection_description",
@@ -38,23 +35,56 @@ const defaultFields: FieldDeclarationType[] = [
     },
     {
         name: "number1Name",
-        type: "text",
         value: null,
         labelId: "numeric_field_1",
         placeholderId: "field_name",
     },
     {
         name: "number2Name",
-        type: "text",
         value: null,
         labelId: "numeric_field_2",
         placeholderId: "field_name",
     },
     {
         name: "number3Name",
-        type: "text",
         value: null,
         labelId: "numeric_field_3",
+        placeholderId: "field_name",
+    },
+    {
+        name: "text1Name",
+        value: null,
+        labelId: "text_field_1",
+        placeholderId: "field_name",
+    },
+    {
+        name: "text2Name",
+        value: null,
+        labelId: "text_field_2",
+        placeholderId: "field_name",
+    },
+    {
+        name: "text3Name",
+        value: null,
+        labelId: "text_field_3",
+        placeholderId: "field_name",
+    },
+    {
+        name: "multiline1Name",
+        value: null,
+        labelId: "multiline_field_1",
+        placeholderId: "field_name",
+    },
+    {
+        name: "multiline2Name",
+        value: null,
+        labelId: "multiline_field_2",
+        placeholderId: "field_name",
+    },
+    {
+        name: "multiline3Name",
+        value: null,
+        labelId: "multiline_field_3",
         placeholderId: "field_name",
     }
 ];
@@ -89,6 +119,12 @@ function initializeFields(collection: UserCollectionType) {
     defaultFields[2].value = collection.number1Name;
     defaultFields[3].value = collection.number2Name;
     defaultFields[4].value = collection.number3Name;
+    defaultFields[5].value = collection.text1Name;
+    defaultFields[6].value = collection.text2Name;
+    defaultFields[7].value = collection.text3Name;
+    defaultFields[8].value = collection.multiline1Name;
+    defaultFields[9].value = collection.multiline2Name;
+    defaultFields[10].value = collection.multiline3Name;
 }
 
 function extractCollectionFromForm(form: HTMLFormElement) {
@@ -100,6 +136,12 @@ function extractCollectionFromForm(form: HTMLFormElement) {
     obj.number1Name = data.get("number1Name")?.toString() ?? null;
     obj.number2Name = data.get("number2Name")?.toString() ?? null;
     obj.number3Name = data.get("number3Name")?.toString() ?? null;
+    obj.text1Name = data.get("text1Name")?.toString() ?? null;
+    obj.text2Name = data.get("text2Name")?.toString() ?? null;
+    obj.text3Name = data.get("text3Name")?.toString() ?? null;
+    obj.multiline1Name = data.get("multiline1Name")?.toString() ?? null;
+    obj.multiline2Name = data.get("multiline2Name")?.toString() ?? null;
+    obj.multiline3Name = data.get("multiline3Name")?.toString() ?? null;
 
     return obj;
 }
@@ -133,10 +175,9 @@ export function CollectionDynamicForm(props: CollectionDynamicFormProps) {
         <Form onSubmit={handleSubmit}>
             {optionalFieldsSelector}
 
-            {fields.filter(f => f.value != null || f.required).map(field => {
-                if (field.type === "text") return <TextField key={field.name} {...field} />;
-                else return <span />;
-            })}
+            {fields.filter(f => f.value != null || f.required).map(field => 
+                <TextField key={field.name} {...field} />
+            )}
 
             <ButtonGroup>
                 <Button type="submit">

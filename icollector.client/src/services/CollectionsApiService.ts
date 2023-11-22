@@ -15,7 +15,10 @@ export interface UserCollectionType {
 
     number1Name: string | null,
     number2Name: string | null,
-    number3Name: string | null
+    number3Name: string | null,
+    text1Name: string | null,
+    text2Name: string | null,
+    text3Name: string | null
 }
 
 class CollectionsApiService {

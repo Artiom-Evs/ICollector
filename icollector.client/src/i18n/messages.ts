@@ -95,6 +95,11 @@ export const messages: Record<string, Record<string, string>> = {
         "numeric_field_2": "Numeric field 2",
         "numeric_field_3": "Numeric field 3",
         "numeric_value": "Numeric value",
+
+        "text_field_1": "Text field 1",
+        "text_field_2": "Text field 2",
+        "text_field_3": "Text field 3",
+        "text_value": "Text value",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -189,6 +194,11 @@ export const messages: Record<string, Record<string, string>> = {
         "numeric_field_2": "Numeryczne pole 2",
         "numeric_field_3": "Numeryczne pole 3",
         "numeric_value": "Wartość numeryczna",
+
+        "text_field_1": "Pole tekstowe 1",
+        "text_field_2": "Pole tekstowe 2",
+        "text_field_3": "Pole tekstowe 3",
+        "text_value": "Wartość tekstowa",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -282,6 +292,12 @@ export const messages: Record<string, Record<string, string>> = {
         "numeric_field_1": "Числовое поле 1",
         "numeric_field_2": "Числовое поле 2",
         "numeric_field_3": "Числовое поле 3",
+
         "numeric_value": "Числовое значение",
+
+        "text_field_1": "Текстовое поле 1",
+        "text_field_2": "Текстовое поле 2",
+        "text_field_3": "Текстовое поле 3",
+        "text_value": "Текстовое значение",
     }
 }
