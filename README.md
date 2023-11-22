@@ -50,12 +50,12 @@ Application project for managing public personal collections (books, stamps, whi
         *   Description supports Markdown format. 
         *   Has theme field with a value from a fixed list of themes. Example: „Books”, „Signs”, „Silverware”, etc. 
         *   Has optional image (as image URL).
-        *   Allows to dynamically configure a set of additional item fields. 
+        *   ✅ Allows to dynamically configure a set of additional item fields. 
     *   Item
         *   Has ID, name and list of the tags.
-        *   Contains a dynamic set of additional fields from the list of available properties. For example: number, string, multiline text, date, time, checkbox, etc.
-        *   Names of additional fields are specified by the user. 
-        *   Available adding no more then 3 fields of each field type. 
+        *   ✅ Contains a dynamic set of additional fields from the list of available properties. For example: number, string, multiline text, date, time, checkbox, etc.
+        *   ✅ Names of additional fields are specified by the user. 
+        *   ✅ Available adding no more then 3 fields of each field type. 
     *   Tags
         *   Autocomplete support when writing tags. 
     *   Comments
