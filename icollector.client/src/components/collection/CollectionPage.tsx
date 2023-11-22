@@ -7,6 +7,8 @@ import { Button, ButtonGroup, Table } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 import { CollectionItemType } from "../../services/ItemsApiService";
 
+const TABLE_MULTILINE_TEXT_LENGTH = 30;
+
 enum PageStates {
     Loading,
     NotFound,
@@ -40,10 +42,19 @@ function renderTableAdditionalHeaders(collection: UserCollectionType) {
         {collection.text1Name && <th>{collection.text1Name}</th>}
         {collection.text2Name && <th>{collection.text2Name}</th>}
         {collection.text3Name && <th>{collection.text3Name}</th>}
+
+        {collection.multiline1Name && <th>{collection.multiline1Name}</th>}
+        {collection.multiline2Name && <th>{collection.multiline2Name}</th>}
+        {collection.multiline3Name && <th>{collection.multiline3Name}</th>}
     </Fragment>)
 }
 
 function renderRowAdditionalColumns(item: CollectionItemType, collection: UserCollectionType) {
+    function formatLongText(text: string) {
+        if (text.length <= TABLE_MULTILINE_TEXT_LENGTH) return text;
+        return text.slice(0, TABLE_MULTILINE_TEXT_LENGTH) + "...";
+    }
+
     return (<Fragment>
         {collection.number1Name && <td>{item.number1}</td>}
         {collection.number2Name && <td>{item.number2}</td>}
@@ -52,6 +63,10 @@ function renderRowAdditionalColumns(item: CollectionItemType, collection: UserCo
         {collection.text1Name && <td>{item.text1}</td>}
         {collection.text2Name && <td>{item.text2}</td>}
         {collection.text3Name && <td>{item.text3}</td>}
+
+        {collection.multiline1Name && <td>{formatLongText(item.multiline1 ?? "")}</td>}
+        {collection.multiline2Name && <td>{formatLongText(item.multiline2 ?? "")}</td>}
+        {collection.multiline3Name && <td>{formatLongText(item.multiline3 ?? "")}</td>}
     </Fragment>)
 }
 
