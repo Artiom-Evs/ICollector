@@ -1,50 +1,50 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useItemsApi } from "../../hooks/useItemsApi";
-import { CollectionItemRequestType } from "../../services/ItemsApiService";
+import { CollectionItemRequestType, CollectionItemType } from "../../services/ItemsApiService";
+import { ItemDynamicForm } from "./ItemDynamicForm";
 
 export function EditItemPage() {
-    const { formatMessage } = useIntl();
     const { state } = useLocation();
     const navigate = useNavigate();
     const itemsApi = useItemsApi();
-    const [id, setId] = useState<number>(0);
-    const [name, setName] = useState<string>("");
-    const [collectionId, setCollectionId] = useState<number>();
-
+    const [item, setItem] = useState<CollectionItemType>();
+    
     useEffect(() => {
         if (!state?.id)
             return;
         itemsApi.get(state.id)
             .then(response => response.data)
-            .then(data => {
-                setId(data.id);
-                setName(data.name);
-                setCollectionId(data.collection.id);
-            });
+            .then(data => setItem(data))
+            .catch(error => console.error(error));
     }, [state, itemsApi]);
 
-    function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        itemsApi.put(id, {
-            id, name, collectionId
-        } as CollectionItemRequestType)
+    function handleSubmit(item: CollectionItemRequestType) {
+        itemsApi.put(state.id, item)
             .then(() => {
                 navigate("/item", {
                     replace: true,
-                    state: {
-                        id
-                    }
+                    state: { id: state.id }
                 });
             })
             .catch(error => console.error(error));
     }
 
-    function handleNameChanged(e: ChangeEvent<HTMLInputElement>) {
-        setName(e.currentTarget.value);
+    function handleCancel() {
+        navigate(-1);
     }
+
+    if (item === undefined)
+        return <p><em><FormattedMessage id="loading" /></em></p>;
+
+    const itemForm = (
+        <ItemDynamicForm
+            item={item}
+            collection={item.collection}
+            onSubmit={handleSubmit}
+            onCancel={handleCancel} />
+    )
     
     return (
         <div>
@@ -55,24 +55,7 @@ export function EditItemPage() {
                     </h1>
                 </div>
                 <div className="card-body">
-                    <Form onSubmit={handleSubmit}>
-                        <FormGroup floating>
-                            <Input id="collection-name"
-                                name="name"
-                                placeholder={formatMessage({ id: "item_name" }) }
-                                required
-                                value={name}
-                                onChange={handleNameChanged}
-                            />
-                            <Label for="collection-name">
-                                <FormattedMessage id="name" />
-                            </Label>
-                        </FormGroup>
-
-                        <Button type="submit">
-                            <FormattedMessage id="save" />
-                        </Button>
-                    </Form>
+                    {itemForm}
                 </div>
             </div>
         </div>
