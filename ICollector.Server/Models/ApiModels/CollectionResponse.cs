@@ -17,4 +17,8 @@ public class CollectionResponse
     public string? Number1Name { get; set; }
     public string? Number2Name { get; set; }
     public string? Number3Name { get; set; }
+
+    public string? Text1Name { get; set; }
+    public string? Text2Name { get; set; }
+    public string? Text3Name { get; set; }
 }

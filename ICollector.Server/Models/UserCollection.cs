@@ -18,4 +18,11 @@ public class UserCollection : ModelBase
     public string? Number2Name { get; set; }
     [StringLength(255)]
     public string? Number3Name { get; set; }
+
+    [StringLength(255)]
+    public string? Text1Name { get; set; }
+    [StringLength(255)]
+    public string? Text2Name { get; set; }
+    [StringLength(255)]
+    public string? Text3Name { get; set; }
 }
