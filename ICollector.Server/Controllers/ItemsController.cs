@@ -159,7 +159,7 @@ public class ItemsController : ControllerBase
         updatedItem.Created = storedItem.Created;
         updatedItem.Edited = DateTime.Now;
 
-        await _items.UpdateAsync(storedItem);
+        await _items.UpdateAsync(updatedItem);
         await _items.SaveChangesAsync();
 
         return NoContent();
