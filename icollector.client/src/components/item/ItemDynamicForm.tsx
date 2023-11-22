@@ -21,6 +21,9 @@ function extractItemFromForm(form: HTMLFormElement) {
     item.number1 = parseInt(data.get("number1")?.toString() ?? "0");
     item.number2 = parseInt(data.get("number2")?.toString() ?? "0");
     item.number3 = parseInt(data.get("number3")?.toString() ?? "0");
+    item.text1 = data.get("text1")?.toString() ?? null;
+    item.text2 = data.get("text2")?.toString() ?? null;
+    item.text3 = data.get("text3")?.toString() ?? null;
 
     return item;
 }
@@ -47,6 +50,29 @@ function renderNumericFields(item: CollectionItemType, collection: UserCollectio
     </Fragment>);
 }
 
+function renderTextFields(item: CollectionItemType, collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.text1Name && <TextField
+            name="text1"
+            value={item.text1}
+            labelText={collection.text1Name}
+            placeholderId="text_value" />}
+
+        {collection.text2Name && <TextField
+            name="text2"
+            value={item.text2}
+            labelText={collection.text2Name}
+            placeholderId="text_value" />}
+
+        {collection.text3Name && <TextField
+            name="text3"
+            value={item.text3}
+            labelText={collection.text3Name}
+            placeholderId="text_value" />}
+
+    </Fragment>);
+}
+
 export function ItemDynamicForm(props: ItemDynamicFormProps) {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -64,6 +90,7 @@ export function ItemDynamicForm(props: ItemDynamicFormProps) {
     }
 
     const numericFields = renderNumericFields(props.item, props.collection);
+    const textFields = renderTextFields(props.item, props.collection);
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -74,6 +101,7 @@ export function ItemDynamicForm(props: ItemDynamicFormProps) {
                 placeholderId="item_name" />
 
             {numericFields}
+            {textFields}
 
             <Button type="submit">
                 <FormattedMessage id="save" />
