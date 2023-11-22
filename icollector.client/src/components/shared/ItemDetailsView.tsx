@@ -28,6 +28,44 @@ function renderNumericDetails(item: CollectionItemType, collection: UserCollecti
     </Fragment>);
 }
 
+function renderTextDetails(item: CollectionItemType, collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.text1Name && <Fragment>
+            <dt>{collection.text1Name}</dt>
+            <dd>{item.text1}</dd>
+        </Fragment>}
+
+        {collection.text2Name && <Fragment>
+            <dt>{collection.text2Name}</dt>
+            <dd>{item.text2}</dd>
+        </Fragment>}
+
+        {collection.text3Name && <Fragment>
+            <dt>{collection.text3Name}</dt>
+            <dd>{item.text3}</dd>
+        </Fragment>}
+    </Fragment>);
+}
+
+function renderMultilineDetails(item: CollectionItemType, collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.multiline1Name && <Fragment>
+            <dt>{collection.multiline1Name}</dt>
+            <dd>{item.multiline1}</dd>
+        </Fragment>}
+
+        {collection.multiline2Name && <Fragment>
+            <dt>{collection.multiline2Name}</dt>
+            <dd>{item.multiline2}</dd>
+        </Fragment>}
+
+        {collection.multiline3Name && <Fragment>
+            <dt>{collection.multiline3Name}</dt>
+            <dd>{item.multiline3}</dd>
+        </Fragment>}
+    </Fragment>);
+}
+
 export function ItemDetailsView({ item, collection }: ItemDetailsViewProps) {
     const navigate = useNavigate();
 
@@ -46,6 +84,8 @@ export function ItemDetailsView({ item, collection }: ItemDetailsViewProps) {
     }
 
     const numericDetails = renderNumericDetails(item, collection);
+    const textDetails = renderTextDetails(item, collection);
+    const multilineDetails = renderMultilineDetails(item, collection);
 
     return (
         <div>
@@ -75,6 +115,8 @@ export function ItemDetailsView({ item, collection }: ItemDetailsViewProps) {
                     </Link>
                 </dd>
                 {numericDetails}
+                {textDetails}
+                {multilineDetails}
             </dl>
         </div>
     );
