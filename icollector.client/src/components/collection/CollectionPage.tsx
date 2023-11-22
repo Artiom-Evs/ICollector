@@ -36,6 +36,10 @@ function renderTableAdditionalHeaders(collection: UserCollectionType) {
         {collection.number1Name && <th>{collection.number1Name}</th>}
         {collection.number2Name && <th>{collection.number2Name}</th>}
         {collection.number3Name && <th>{collection.number3Name}</th>}
+
+        {collection.text1Name && <th>{collection.text1Name}</th>}
+        {collection.text2Name && <th>{collection.text2Name}</th>}
+        {collection.text3Name && <th>{collection.text3Name}</th>}
     </Fragment>)
 }
 
@@ -44,6 +48,10 @@ function renderRowAdditionalColumns(item: CollectionItemType, collection: UserCo
         {collection.number1Name && <td>{item.number1}</td>}
         {collection.number2Name && <td>{item.number2}</td>}
         {collection.number3Name && <td>{item.number3}</td>}
+
+        {collection.text1Name && <td>{item.text1}</td>}
+        {collection.text2Name && <td>{item.text2}</td>}
+        {collection.text3Name && <td>{item.text3}</td>}
     </Fragment>)
 }
 
