@@ -1,10 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { MouseEvent, useEffect, useState } from "react";
+import { Fragment, MouseEvent, useEffect, useState } from "react";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
-import { Button, ButtonGroup } from "reactstrap";
+import { Button, ButtonGroup, Table } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
+import { CollectionItemType } from "../../services/ItemsApiService";
 
 enum PageStates {
     Loading,
@@ -28,6 +29,22 @@ function renderToolbar(onAddClicked: (e: MouseEvent) => void, onEditClicked: () 
             </ButtonGroup>
         </div>
     )
+}
+
+function renderTableAdditionalHeaders(collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.number1Name && <th>{collection.number1Name}</th>}
+        {collection.number2Name && <th>{collection.number2Name}</th>}
+        {collection.number3Name && <th>{collection.number3Name}</th>}
+    </Fragment>)
+}
+
+function renderRowAdditionalColumns(item: CollectionItemType, collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.number1Name && <td>{item.number1}</td>}
+        {collection.number2Name && <td>{item.number2}</td>}
+        {collection.number3Name && <td>{item.number3}</td>}
+    </Fragment>)
 }
 
 function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void, onUserClick: (e: MouseEvent) => void) {
@@ -56,7 +73,7 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
                 </dd>
             </dl>
             <div>
-                <table className="table">
+                <Table className="table" responsive>
                     <thead>
                         <tr>
                             <th>
@@ -65,6 +82,7 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
                             <th>
                                 <FormattedMessage id="name" />
                             </th>
+                            {renderTableAdditionalHeaders(collection)}
                         </tr>
                     </thead>
                     <tbody>
@@ -75,9 +93,10 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
                                     {item.name}
                                 </Link>
                             </td>
+                            {renderRowAdditionalColumns(item, collection)}
                         </tr>)}
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     );
