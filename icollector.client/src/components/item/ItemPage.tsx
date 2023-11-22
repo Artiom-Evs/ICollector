@@ -1,10 +1,11 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { MouseEvent, useEffect, useState } from "react";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { useItemsApi } from "../../hooks/useItemsApi";
 import { FormattedMessage } from "react-intl";
 import { Button, ButtonGroup } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
+import { ItemDetailsView } from "../shared/ItemDetailsView";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
     return (
@@ -19,39 +20,6 @@ function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
             </ButtonGroup>
         </div>
     )
-}
-
-function renderItem(item: CollectionItemType, onUserClick: (e: MouseEvent) => void, onCollectionClick: (e: MouseEvent) => void) {
-    return (
-        <div>
-            <dl>
-                <dt>
-                    <FormattedMessage id="identifier" />
-                </dt>
-                <dd>{item.id}</dd>
-                <dt>
-                    <FormattedMessage id="name" />
-                </dt>
-                <dd>{item.name}</dd>
-                <dt>
-                    <FormattedMessage id="author" />
-                </dt>
-                <dd>
-                    <Link to="#" onClick={onUserClick}>
-                        {item.collection.authorName}
-                    </Link>
-                </dd>
-                <dt>
-                    <FormattedMessage id="collection" />
-                </dt>
-                <dd>
-                    <Link to="#" onClick={onCollectionClick}>
-                        {item.collection.name}
-                    </Link>
-                </dd>
-            </dl>
-        </div>
-    );
 }
 
 export function ItemPage() {
@@ -84,20 +52,6 @@ export function ItemPage() {
         });
     }
 
-    function handleUserClicked(e: MouseEvent) {
-        e.preventDefault();
-        navigate("/user", { state: {
-            id: item?.collection.authorId
-        }});
-    }
-
-    function handleCollectionClicked(e: MouseEvent) {
-        e.preventDefault();
-        navigate("/collection", { state: {
-            id: item?.collection.id
-        }});
-    }
-
     if (item === undefined) {
         return <p><em><FormattedMessage id="loading" /></em></p>;
     }
@@ -109,7 +63,9 @@ export function ItemPage() {
     return (
         <div>
             {toolbar}
-            {renderItem(item, handleUserClicked, handleCollectionClicked)}
+            <ItemDetailsView
+                item={item}
+                collection={item.collection} />
         </div>
     );
 }

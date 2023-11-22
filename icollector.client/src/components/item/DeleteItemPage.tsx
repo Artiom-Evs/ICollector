@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { useItemsApi } from "../../hooks/useItemsApi";
+import { ItemDetailsView } from "../shared/ItemDetailsView";
 
 export function DeleteItemPage() {
     const { state } = useLocation();
@@ -37,24 +38,9 @@ export function DeleteItemPage() {
                 <FormattedMessage id="delete_item" />
             </h1>
 
-            <dl>
-                <dt>
-                    <FormattedMessage id="identifier" />
-                </dt>
-                <dd>{item.id}</dd>
-                <dt>
-                    <FormattedMessage id="name" />
-                </dt>
-                <dd>{item.name}</dd>
-                <dt>
-                    <FormattedMessage id="author" />
-                </dt>
-                <dd>{item.collection.authorName}</dd>
-                <dt>
-                    <FormattedMessage id="collection" />
-                </dt>
-                <dd>{item.collection.name}</dd>
-            </dl>
+            <ItemDetailsView
+                item={item}
+                collection={item.collection} />
 
             <p>
                 <FormattedMessage id="warning_before_item_deletion" />
