@@ -14,7 +14,10 @@ export interface CollectionItemType {
     number3: number | null
     text1: string | null,
     text2: string | null,
-    text3: string | null
+    text3: string | null,
+    multiline1: string | null,
+    multiline2: string | null,
+    multiline3: string | null
 }
 
 export interface CollectionItemRequestType {
@@ -26,7 +29,10 @@ export interface CollectionItemRequestType {
     number3: number | null
     text1: string | null,
     text2: string | null,
-    text3: string | null
+    text3: string | null,
+    multiline1: string | null,
+    multiline2: string | null,
+    multiline3: string | null
 }
 
 class ItemsApiService {

@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { NumericField } from "../shared/NumericField";
 import { TextField } from "../shared/TextField";
+import { MultilineTextField } from "../shared/MultilineTextField";
 
 interface ItemDynamicFormProps {
     item: CollectionItemType,
@@ -24,7 +25,10 @@ function extractItemFromForm(form: HTMLFormElement) {
     item.text1 = data.get("text1")?.toString() ?? null;
     item.text2 = data.get("text2")?.toString() ?? null;
     item.text3 = data.get("text3")?.toString() ?? null;
-
+    item.multiline1 = data.get("multiline1")?.toString() ?? null;
+    item.multiline2 = data.get("multiline2")?.toString() ?? null;
+    item.multiline3 = data.get("multiline3")?.toString() ?? null;
+    
     return item;
 }
 
@@ -73,6 +77,29 @@ function renderTextFields(item: CollectionItemType, collection: UserCollectionTy
     </Fragment>);
 }
 
+function renderMultilineFields(item: CollectionItemType, collection: UserCollectionType) {
+    return (<Fragment>
+        {collection.multiline1Name && <MultilineTextField
+            name="multiline1"
+            value={item.multiline1}
+            labelText={collection.multiline1Name}
+            placeholderId="text_value" />}
+
+        {collection.multiline2Name && <MultilineTextField
+            name="multiline2"
+            value={item.multiline2}
+            labelText={collection.multiline2Name}
+            placeholderId="text_value" />}
+
+        {collection.multiline3Name && <MultilineTextField
+            name="multiline3"
+            value={item.multiline3}
+            labelText={collection.multiline3Name}
+            placeholderId="text_value" />}
+
+    </Fragment>);
+}
+
 export function ItemDynamicForm(props: ItemDynamicFormProps) {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -91,6 +118,7 @@ export function ItemDynamicForm(props: ItemDynamicFormProps) {
 
     const numericFields = renderNumericFields(props.item, props.collection);
     const textFields = renderTextFields(props.item, props.collection);
+    const multilineFields = renderMultilineFields(props.item, props.collection);
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -102,6 +130,7 @@ export function ItemDynamicForm(props: ItemDynamicFormProps) {
 
             {numericFields}
             {textFields}
+            {multilineFields}
 
             <Button type="submit">
                 <FormattedMessage id="save" />
