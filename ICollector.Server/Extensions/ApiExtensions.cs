@@ -57,7 +57,11 @@ public static class ApiExtensions
 
         Number1 = item.Number1,
         Number2 = item.Number2,
-        Number3 = item.Number3
+        Number3 = item.Number3,
+
+        Text1 = item.Text1,
+        Text2 = item.Text2,
+        Text3 = item.Text3,
     };
 
     public static CollectionItem ToDomainModel(this ItemRequest item) => new()
@@ -68,7 +72,11 @@ public static class ApiExtensions
 
         Number1 = item.Number1,
         Number2 = item.Number2,
-        Number3 = item.Number3
+        Number3 = item.Number3,
+
+        Text1 = item.Text1,
+        Text2 = item.Text2,
+        Text3 = item.Text3,
     };
 
     public static UserResponse ToApiResponse(this AppUser user) => new()

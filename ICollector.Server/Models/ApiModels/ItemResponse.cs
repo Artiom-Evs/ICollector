@@ -11,4 +11,8 @@ public class ItemResponse
     public int? Number1 { get; set; }
     public int? Number2 { get; set; }
     public int? Number3 { get; set; }
+
+    public string? Text1 { get; set; }
+    public string? Text2 { get; set; }
+    public string? Text3 { get; set; }
 }
