@@ -15,4 +15,8 @@ public class ItemResponse
     public string? Text1 { get; set; }
     public string? Text2 { get; set; }
     public string? Text3 { get; set; }
+
+    public string? Multiline1 { get; set; }
+    public string? Multiline2 { get; set; }
+    public string? Multiline3 { get; set; }
 }

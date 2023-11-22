@@ -70,6 +70,10 @@ public static class ApiExtensions
         Text1 = item.Text1,
         Text2 = item.Text2,
         Text3 = item.Text3,
+
+        Multiline1 = item.Multiline1,
+        Multiline2 = item.Multiline2,
+        Multiline3 = item.Multiline3
     };
 
     public static CollectionItem ToDomainModel(this ItemRequest item) => new()
@@ -85,6 +89,10 @@ public static class ApiExtensions
         Text1 = item.Text1,
         Text2 = item.Text2,
         Text3 = item.Text3,
+
+        Multiline1 = item.Multiline1,
+        Multiline2 = item.Multiline2,
+        Multiline3 = item.Multiline3
     };
 
     public static UserResponse ToApiResponse(this AppUser user) => new()
