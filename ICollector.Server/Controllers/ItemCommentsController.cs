@@ -1,10 +1,12 @@
 ﻿using ICollector.Server.Extensions;
+using ICollector.Server.Hubs;
 using ICollector.Server.Models;
 using ICollector.Server.Models.ApiModels;
 using ICollector.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ICollector.Server.Controllers;
@@ -17,12 +19,14 @@ public class ItemCommentsController : ControllerBase
     private readonly IDataRepository<CollectionItem> _items;
     private readonly IDataRepository<ItemComment> _comments;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IHubContext<CommentNotificationsHub, ICommentNotificationsHub> _notificator;
 
-    public ItemCommentsController(IDataRepository<CollectionItem> items, IDataRepository<ItemComment> comments, UserManager<AppUser> userManager)
+    public ItemCommentsController(IDataRepository<CollectionItem> items, IDataRepository<ItemComment> comments, UserManager<AppUser> userManager, IHubContext<CommentNotificationsHub, ICommentNotificationsHub> notificator)
     {
         _items = items;
         _comments = comments;
         _userManager = userManager;
+        _notificator = notificator;
     }
 
     [AllowAnonymous]
@@ -102,6 +106,10 @@ public class ItemCommentsController : ControllerBase
         var createdComment = await _comments.CreateAsync(newComment);
         await _comments.SaveChangesAsync();
 
+        var responseComment = createdComment.ToApiResponse();
+        responseComment.AuthorName = user.UserName ?? "unknown";
+
+        await _notificator.Clients.Group($"item-{item.Id}").ReceiveItemComment(responseComment);
         return CreatedAtAction(nameof(GetItemComment), new { createdComment.Id }, createdComment);
     }
 
