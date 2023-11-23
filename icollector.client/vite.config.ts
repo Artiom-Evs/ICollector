@@ -53,6 +53,11 @@ export default defineConfig({
             '^/api': {
                 target: 'https://localhost:7000/',
                 secure: false
+            },
+            '^/_hubs': {
+                target: 'https://localhost:7000/',
+                secure: false,
+                ws: true
             }
         },
         port: 5173,
