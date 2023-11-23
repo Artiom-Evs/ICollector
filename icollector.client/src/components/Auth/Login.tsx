@@ -37,7 +37,7 @@ function Login() {
     return (
         <div className="d-flex justify-content-center mt-5">
             <div className="card">
-                <div className="card-header">
+                <div className="card-header text-center">
                     <h1>
                         <FormattedMessage id="loginHeader" />
                     </h1>

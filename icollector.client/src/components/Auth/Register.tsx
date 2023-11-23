@@ -30,7 +30,7 @@ function Register() {
         console.log(registerResult);
 
         if (registerResult.status === 200) {
-            navigate("/");
+            navigate("/login");
         }
         else if (registerResult.data?.errors != null) {
             const errorIds = Object.keys(registerResult.data.errors).map((e: string) => formatToI18nId(e));
@@ -41,7 +41,7 @@ function Register() {
     return (
         <div className="d-flex justify-content-center mt-5">
             <div className="card">
-                <div className="card-header">
+                <div className="card-header text-center">
                     <h1>
                         <FormattedMessage id="registrationHeader" />
                     </h1>
