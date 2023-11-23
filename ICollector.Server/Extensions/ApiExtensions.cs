@@ -20,7 +20,7 @@ public static class ApiExtensions
             Created = collection.Created,
             Edited = collection.Edited,
             AuthorId = collection.AuthorId,
-            Items = collection.Items?.Select(i => i.ToApiResponse())?.ToList() ?? [],
+            Items = collection.Items?.Select(i => i.ToApiResponse()).ToList() ?? [],
 
             Number1Name = collection.Number1Name,
             Number2Name = collection.Number2Name,
@@ -35,26 +35,6 @@ public static class ApiExtensions
             Multiline3Name = collection.Multiline3Name,
         };
     }
-
-    public static UserCollection ToDomainModel(this CollectionRequest request) => new()
-    {
-        Id = request.Id,
-        Name = request.Name,
-        Description = request.Description,
-
-        Number1Name = request.Number1Name,
-        Number2Name = request.Number2Name,
-        Number3Name = request.Number3Name,
-
-        Text1Name = request.Text1Name,
-        Text2Name = request.Text2Name,
-        Text3Name = request.Text3Name,
-
-        Multiline1Name = request.Multiline1Name,
-        Multiline2Name = request.Multiline2Name,
-        Multiline3Name = request.Multiline3Name,
-    };
-
     public static ItemResponse ToApiResponse(this CollectionItem item) => new()
     {
         Id = item.Id,
@@ -75,7 +55,39 @@ public static class ApiExtensions
         Multiline2 = item.Multiline2,
         Multiline3 = item.Multiline3
     };
+    public static ItemCommentResponse ToApiResponse(this ItemComment comment) => new()
+    {
+        Id = comment.Id,
+        ItemId = comment.ItemId,
+        AuthorId = comment.AuthorId,
+        Created = comment.Created,
+        Text = comment.Text
+    };
+    public static UserResponse ToApiResponse(this AppUser user) => new()
+    {
+        Id = user.Id,
+        Email = user.Email ?? "",
+        BlockedUntil = user.LockoutEnd
+    };
 
+    public static UserCollection ToDomainModel(this CollectionRequest request) => new()
+    {
+        Id = request.Id,
+        Name = request.Name,
+        Description = request.Description,
+
+        Number1Name = request.Number1Name,
+        Number2Name = request.Number2Name,
+        Number3Name = request.Number3Name,
+
+        Text1Name = request.Text1Name,
+        Text2Name = request.Text2Name,
+        Text3Name = request.Text3Name,
+
+        Multiline1Name = request.Multiline1Name,
+        Multiline2Name = request.Multiline2Name,
+        Multiline3Name = request.Multiline3Name,
+    };
     public static CollectionItem ToDomainModel(this ItemRequest item) => new()
     {
         Id = item.Id,
@@ -94,11 +106,11 @@ public static class ApiExtensions
         Multiline2 = item.Multiline2,
         Multiline3 = item.Multiline3
     };
-
-    public static UserResponse ToApiResponse(this AppUser user) => new()
+    public static ItemComment ToDomainModel(this ItemCommentRequest comment) => new()
     {
-        Id = user.Id,
-        Email = user.Email ?? "",
-        BlockedUntil = user.LockoutEnd
+        Id = comment.Id,
+        ItemId = comment.ItemId,
+        Text = comment.Text
     };
+
 }
