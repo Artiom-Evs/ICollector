@@ -8,28 +8,28 @@ Application project for managing public personal collections (books, stamps, whi
 
 ### Functional requirements #
 
-*   Access
+*   ✅ Access
     *   ✅ Registration and authentication.
-    *   Authorization by next roles:
+    *   ✅ Authorization by next roles:
         *   ✅ Guests
             *   ✅ Only view collections and collection items.
-        *   Registered users
+        *   ✅ Registered users
             *   ✅ View collections and collection items.
-            *   Writing comments.
+            *   ✅ Writing comments.
             *   ✅ Managing own collections and their items. 
-        *   Administrators 
+        *   ✅ Administrators 
             *   ✅ Access to all collections and items as owner
-            *   Writing comments. 
+            *   ✅ Writing comments. 
             *   ✅ Managing own collections and their items
-            *   Access to administration panel. 
+            *   ✅ Access to administration panel. 
     *   UI
         *  Application home page 
             *   ✅ List of the last added collection items (name, collection, author).
             *   ✅ List 5 largest collections. 
             *   Tag cloud. Search page opens after clicking on the tag. 
-        *   Personal user page
+        *   ✅ Personal user page
             *   ✅ Provides interface to manage own collections. 
-        *   ✅ Collection page 
+        *   Collection page 
             *   ✅ Contains collection description and list of their items.
             *   ✅ Provides ability to manage collection and their items for owner and administrators.
             *   Has filters for the items list.
@@ -58,10 +58,10 @@ Application project for managing public personal collections (books, stamps, whi
         *   ✅ Available adding no more then 3 fields of each field type. 
     *   Tags
         *   Autocomplete support when writing tags. 
-    *   Comments
-        *   Displayed at the bottom of the item page. 
-        *   Comments are linear (add only on the bottom of the list of comments).
-        *   List of comments should update automatically (at least once every 5 seconds) without page reload. 
+    *   ✅ Comments
+        *   ✅ Displayed at the bottom of the item page. 
+        *   ✅ Comments are linear (add only on the bottom of the list of comments).
+        *   ✅ List of comments should update automatically (at least once every 5 seconds) without page reload. 
     *   Likes
         *   Added for items.
         *   Given only by registered users or administrators. 
@@ -87,7 +87,7 @@ Application project for managing public personal collections (books, stamps, whi
 ## Notes #
 
 *   ✅ Local storage of authorization data is desirable. 
-*   Functionality of adding a set of additional fields to items is desirable.. 
+*   ✅ Functionality of adding a set of additional fields to items is desirable.. 
 *   Maximum functionality should be implemented using ready-made external or built-in functions (full text search, tag cloud, Markdown editor and etc.).
 
 ## Start the project #
