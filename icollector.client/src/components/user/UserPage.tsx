@@ -5,7 +5,7 @@ import { useCollectionsApi } from "../../hooks/useCollectionsApi";
 import { FormattedMessage } from "react-intl";
 import { useUsersApi } from "../../hooks/useUsersApi";
 import { UserResponseType } from "../../services/UsersApiService";
-import { Button, ButtonGroup } from "reactstrap";
+import { Button, ButtonGroup, Table } from "reactstrap";
 import useAuth from "../../hooks/useAuth";
 
 function isUserBlocked(user: UserResponseType): boolean {
@@ -41,10 +41,8 @@ function renderAdminToolbar(user: UserResponseType, onGiveRigthsClick: () => voi
     );
 }
 
-function renderUser(user: UserResponseType, collections: UserCollectionType[], onCollectionClick: (e: MouseEvent) => void) {
+function renderUserDetails(user: UserResponseType, collections: UserCollectionType[]) {
     return (
-        <div>
-            <h1>{user.email}</h1>
             <dl>
                 <dt>
                     <FormattedMessage id="identifier" />
@@ -81,39 +79,40 @@ function renderUser(user: UserResponseType, collections: UserCollectionType[], o
                     {getTotalItems(collections)}
                 </dd>
             </dl>
-
-            <h2>
-                <FormattedMessage id="collections" />
-            </h2>
-
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>
-                            <FormattedMessage id="identifier" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="name" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="items_count" />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {collections.map(c => <tr key={c.id}>
-                        <td>{c.id}</td>
-                        <td>
-                            <Link to="#" id={c.id.toString()} onClick={onCollectionClick}>
-                                {c.name}
-                            </Link>
-                        </td>
-                        <td>{c.items.length}</td>
-                    </tr>)}
-                </tbody>
-            </table>
-        </div>
     );
+}
+
+function renderUsersList(collections: UserCollectionType[], onCollectionClick: (e: MouseEvent) => void) {
+    if (collections.length === 0)
+        return <p><em><FormattedMessage id="no_collections" /></em></p>;
+
+    return (
+        <Table responsive className="table">
+            <thead>
+                <tr>
+                    <th>
+                        <FormattedMessage id="identifier" />
+                    </th>
+                    <th>
+                        <FormattedMessage id="name" />
+                    </th>
+                    <th>
+                        <FormattedMessage id="items_count" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {collections.map(c => <tr key={c.id}>
+                    <td>{c.id}</td>
+                    <td>
+                        <Link to="#" id={c.id.toString()} onClick={onCollectionClick}>
+                            {c.name}
+                        </Link>
+                    </td>
+                    <td>{c.items.length}</td>
+                </tr>)}
+            </tbody>
+        </Table>);
 }
 
 export function UserPage() {
@@ -183,7 +182,17 @@ export function UserPage() {
     return (
         <div>
             {adminToolbar}
-            {renderUser(user, userCollections, handleCollectionClicked)}
+
+            <h1>{user.email}</h1>
+
+            {renderUserDetails(user, userCollections)}
+            <br />
+
+            <h2>
+                <FormattedMessage id="collections" />
+            </h2>
+
+            {renderUsersList(userCollections, handleCollectionClicked)}
         </div>
     )
 }
