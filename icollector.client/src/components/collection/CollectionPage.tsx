@@ -152,12 +152,8 @@ export function CollectionPage() {
                 setPageState(PageStates.Content);
             })
             .catch(error => {
-                if (error.response.status === 404) {
-                    setPageState(PageStates.NotFound);
-                }
-                else {
-                    console.error(error)
-                }
+                if (error.response.status === 404) setPageState(PageStates.NotFound);
+                else console.error(error);
             });
     }, [collectionsApi, state]);
 

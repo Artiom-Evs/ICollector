@@ -63,6 +63,7 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_description": "Collection description",
         "no_collections": "No collections.",
         "no_collection": "Collection not found.",
+        "item_not_found": "Item not found.",
         "items_count": "Items count",
         "warning_before_collection_deletion": "Are you sure you want to delete this collection?",
 
@@ -169,6 +170,7 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_description": "Opis collekcji",
         "no_collections": "Brak kolekcji.",
         "no_collection": "Brak kolekcii.",
+        "item_not_found": "Brak itemu.",
         "items_count": "Ilość itemów",
         "warning_before_collection_deletion": "Czy na pewno chcesz usunąć tę kolekcję?",
 
@@ -278,6 +280,7 @@ export const messages: Record<string, Record<string, string>> = {
         "collection_name": "Название коллекции",
         "collection_description": "Описание коллекции",
         "no_collections": "Коллекции отсутствуют.",
+        "item_not_found": "Итем не найден.",
         "no_collection": "Коллекция отсутствует.",
         "items_count": "Количество итемов",
         "warning_before_collection_deletion": "Вы уверены, что хотите удалить эту коллекцию?",
