@@ -132,7 +132,7 @@ export function ItemDynamicForm(props: ItemDynamicFormProps) {
             {textFields}
             {multilineFields}
 
-            <Button type="submit">
+            <Button type="submit" className="me-1">
                 <FormattedMessage id="save" />
             </Button>
 

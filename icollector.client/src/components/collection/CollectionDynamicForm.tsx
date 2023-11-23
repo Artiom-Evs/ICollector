@@ -174,19 +174,19 @@ export function CollectionDynamicForm(props: CollectionDynamicFormProps) {
     return (
         <Form onSubmit={handleSubmit}>
             {optionalFieldsSelector}
+            <br /> 
 
             {fields.filter(f => f.value != null || f.required).map(field => 
                 <TextField key={field.name} {...field} />
             )}
 
-            <ButtonGroup>
-                <Button type="submit">
-                    <FormattedMessage id="save" />
-                </Button>
-                <Button type="button" onClick={handleCancel}>
-                    <FormattedMessage id="cancel" />
-                </Button>
-            </ButtonGroup>
+            <Button type="submit" className="me-1">
+                <FormattedMessage id="save" />
+            </Button>
+
+            <Button type="button" onClick={handleCancel}>
+                <FormattedMessage id="cancel" />
+            </Button>
         </Form>
     );
 }
