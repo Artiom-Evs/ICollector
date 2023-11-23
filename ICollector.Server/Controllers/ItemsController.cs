@@ -16,17 +16,19 @@ public class ItemsController : ControllerBase
 {
     private readonly IDataRepository<UserCollection> _collections;
     private readonly IDataRepository<CollectionItem> _items;
+    private readonly IDataRepository<ItemComment> _comments;
     private readonly UserManager<AppUser> _userManager;
 
-    public ItemsController(IDataRepository<UserCollection> collections, IDataRepository<CollectionItem> items, UserManager<AppUser> userManager)
+    public ItemsController(IDataRepository<UserCollection> collections, IDataRepository<CollectionItem> items, IDataRepository<ItemComment> comments, UserManager<AppUser> userManager)
     {
         _collections = collections;
         _items = items;
+        _comments = comments;
         _userManager = userManager;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ItemResponse>>> GetItems(string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
+    public async Task<ActionResult<IEnumerable<ItemResponse>>> GetItems(string orderBy = "", bool descending = false, int page = 1, int pageSize = 0)
     {
         var items = _items.Query();
 
@@ -39,12 +41,26 @@ public class ItemsController : ControllerBase
             _ => items
         };
 
-        items = items
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize);
+        if (pageSize != 0)
+        {
+            items = items
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+        }
 
         var responseItems = await items
             .Select(i => i.ToApiResponse())
+            .ToArrayAsync();
+
+        var itemIds = responseItems.Select(ri => ri.Id).ToArray();
+        var itemCommentCounts = await _comments.Query()
+            .Where(comment => itemIds.Contains(comment.ItemId))
+            .GroupBy(comment => comment.ItemId)
+            .Select(group => new
+            {
+                ItemId = group.Key,
+                CommentsCount = group.Count()
+            })
             .ToArrayAsync();
 
         var authorIds = responseItems
@@ -62,6 +78,7 @@ public class ItemsController : ControllerBase
             {
                 // TODO: determine the correct behavior in a situation when the author does not exist
                 item.Collection.AuthorName = authors.FirstOrDefault(a => a.Id == item.Collection.AuthorId)?.UserName ?? "unknown";
+                item.CommentsCount = itemCommentCounts.FirstOrDefault(aggr => aggr.ItemId == item.Id)?.CommentsCount ?? 0;
                 item.Collection.Items = [];
             }               
         }
@@ -80,6 +97,9 @@ public class ItemsController : ControllerBase
         }
 
         var responseItem = item.ToApiResponse();
+        responseItem.CommentsCount = await _comments.Query()
+            .Where(comment => comment.ItemId == item.Id)
+            .CountAsync();
 
         if (responseItem.Collection != null)
         {

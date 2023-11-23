@@ -24,7 +24,7 @@ public class CollectionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CollectionResponse>>> GetUserCollections(string authorId = "", string orderBy = "", bool descending = false, int page = 1, int pageSize = 1000)
+    public async Task<ActionResult<IEnumerable<CollectionResponse>>> GetUserCollections(string authorId = "", string orderBy = "", bool descending = false, int page = 1, int pageSize = 0)
     {
         var items = _context.Query();
 
@@ -43,9 +43,12 @@ public class CollectionsController : ControllerBase
             _ => items
         };
 
-        items = items
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize);
+        if (pageSize != 0)
+        {
+            items = items
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+        }
 
         var responseItems = await items
             .Select(i => i.ToApiResponse())
