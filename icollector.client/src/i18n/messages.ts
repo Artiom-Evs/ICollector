@@ -106,7 +106,17 @@ export const messages: Record<string, Record<string, string>> = {
         "multiline_field_2": "Multiline text 2",
         "multiline_field_3": "Multiline text 3",
         "no_comments": "No comments.",
-        "only_authorized_users_can_write_comments": "Only authorized users can write comments."
+        "only_authorized_users_can_write_comments": "Only authorized users can write comments.",
+
+        "comments": "Comments",
+        "write_comment": "Write comment",
+        "your_comment": "Your comment",
+        "send": "Send",
+        "no_comments": "No comments.",
+        "only_authorized_users_can_write_comments": "Only authorized users can write comments.",
+
+        "items_list": "List of items",
+        "no_items": "No items.",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -217,7 +227,10 @@ export const messages: Record<string, Record<string, string>> = {
         "your_comment": "Twój komentarz",
         "send": "Wyślij",
         "no_comments": "Brak komentarzy.",
-        "only_authorized_users_can_write_comments": "Tylko autoryzowani użytkownicy mogą zamieszczać komentarze."
+        "only_authorized_users_can_write_comments": "Tylko autoryzowani użytkownicy mogą zamieszczać komentarze.",
+
+        "items_list": "List itemów",
+        "no_items": "Brak itemów.",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -329,6 +342,9 @@ export const messages: Record<string, Record<string, string>> = {
         "your_comment": "Ваш комментарий",
         "send": "Отправить",
         "no_comments": "Комментарии отсутствуют.",
-        "only_authorized_users_can_write_comments": "Только авторизованные пользователи могут писать комментарии."
+        "only_authorized_users_can_write_comments": "Только авторизованные пользователи могут писать комментарии.",
+
+        "items_list": "Список итемов",
+        "no_items": "Итемы отсутствуют.",
     }
 }

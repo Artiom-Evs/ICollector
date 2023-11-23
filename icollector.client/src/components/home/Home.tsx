@@ -27,7 +27,7 @@ const Home: FunctionComponent = () => {
     }, [collectionsApi, itemsApi]);
 
     const largestCollections = collections === undefined
-        ? <p><em>Loading...</em></p>
+        ? <p><em><FormattedMessage id="loading" /></em></p>
         : <div>
             {collections.map(item =>
                 <HomeUserCollectionView key={item.id} item={item} />
@@ -35,7 +35,7 @@ const Home: FunctionComponent = () => {
         </div>;
 
     const lastAddedItems = items === undefined
-        ? <p><em>Loading...</em></p>
+        ? <p><em><FormattedMessage id="loading" /></em></p>
         : <div>
             {items.map(item =>
                 <HomeCollectionItemView key={item.id} item={item} />
@@ -48,11 +48,14 @@ const Home: FunctionComponent = () => {
             <h2>
                 <FormattedMessage id="largest_collections" />
             </h2>
+
             {largestCollections}
+            <br />
 
             <h2>
                 <FormattedMessage id="lastAddedItems" />
             </h2>
+
             {lastAddedItems}
         </div>
     );
