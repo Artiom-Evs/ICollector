@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { ItemDetailsView } from "../shared/ItemDetailsView";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { CommentsPanel } from "../comments/ItemCommentsPanel";
 
 function renderToolbar(onEditClicked: () => void, onDeleteClicked: () => void) {
     return (
@@ -60,12 +61,20 @@ export function ItemPage() {
         ? renderToolbar(handleEditClicked, handleDeleteClicked)
         : <span />;
 
+    const commentsPanel = <CommentsPanel
+        itemId={item.id} />;
+
     return (
         <div>
             {toolbar}
             <ItemDetailsView
                 item={item}
                 collection={item.collection} />
+
+            <h2>
+                <FormattedMessage id="comments" />
+            </h2>
+            {commentsPanel}
         </div>
     );
 }
