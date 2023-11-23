@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { UserCollectionType } from "../../services/CollectionsApiService";
 import { useCollectionsApi } from "../../hooks/useCollectionsApi";
-import { HomeUserCollectionView } from "./HomeUserCollectionView";
+import { HomeUserCollectionView } from "../shared/HomeUserCollectionView";
 import { useItemsApi } from "../../hooks/useItemsApi";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { HomeCollectionItemView } from "./HomeCollectionItemView";
