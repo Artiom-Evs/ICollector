@@ -13,4 +13,5 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<UserCollection> Collections { get; set; }
     public DbSet<CollectionItem> Items { get; set; }
+    public DbSet<ItemComment> ItemComments { get; set; }
 }
