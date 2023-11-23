@@ -32,7 +32,7 @@ export function HomeCollectionItemView(props: HomeCollectionItemViewProps) {
                     <p>
                         <FormattedMessage id="likes_with_number" values={{ n: 0 }} />
                         <br />
-                        <FormattedMessage id="comments_with_number" values={{ n: 0 }} />
+                        <FormattedMessage id="comments_with_number" values={{ n: props.item.commentsCount }} />
                     </p>
                 </div>
                 <div className="col-sm-7">

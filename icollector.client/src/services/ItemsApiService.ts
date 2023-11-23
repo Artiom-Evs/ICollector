@@ -9,6 +9,7 @@ export interface CollectionItemType {
     created: string,
     edited: string,
     collection: UserCollectionType,
+    commentsCount: number,
     number1: number | null,
     number2: number | null,
     number3: number | null
