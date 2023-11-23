@@ -104,6 +104,8 @@ export const messages: Record<string, Record<string, string>> = {
         "multiline_field_1": "Multiline text 1",
         "multiline_field_2": "Multiline text 2",
         "multiline_field_3": "Multiline text 3",
+        "no_comments": "No comments.",
+        "only_authorized_users_can_write_comments": "Only authorized users can write comments."
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -207,6 +209,13 @@ export const messages: Record<string, Record<string, string>> = {
         "multiline_field_1": "Wielowierszowe pole 1",
         "multiline_field_2": "Wielowierszowe pole 2",
         "multiline_field_3": "Wielowierszowe pole 3",
+
+        "comments": "Komentarze",
+        "write_comment": "Dodaj komentarze",
+        "your_comment": "Twój komentarz",
+        "send": "Wyślij",
+        "no_comments": "Brak komentarzy.",
+        "only_authorized_users_can_write_comments": "Tylko autoryzowani użytkownicy mogą zamieszczać komentarze."
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -311,5 +320,12 @@ export const messages: Record<string, Record<string, string>> = {
         "multiline_field_1": "Многострочное поле 1",
         "multiline_field_2": "Многострочное поле 2",
         "multiline_field_3": "Многострочное поле 3",
+
+        "comments": "Комментарии",
+        "write_comment": "Написать комментарий",
+        "your_comment": "Ваш комментарий",
+        "send": "Отправить",
+        "no_comments": "Комментарии отсутствуют.",
+        "only_authorized_users_can_write_comments": "Только авторизованные пользователи могут писать комментарии."
     }
 }
