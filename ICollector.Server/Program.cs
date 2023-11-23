@@ -1,5 +1,6 @@
 using ICollector.Server.Data;
 using ICollector.Server.Extensions;
+using ICollector.Server.Hubs;
 using ICollector.Server.Models;
 using ICollector.Server.Services;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<IDataRepository<UserCollection>, EFCollectionsRepository>();
 builder.Services.AddScoped<IDataRepository<CollectionItem>, EFItemsRepository>();
@@ -55,5 +57,6 @@ app.MapGroup("/api/identity").MapIdentityApi<AppUser>();
 app.MapGroup("/api/identity/manage").MapCustomIdentityApi();
 app.MapFallbackToFile("/index.html");
 app.MapControllers();
+app.MapHub<CommentNotificationsHub>("/_hubs/comments");
 
 app.Run();
