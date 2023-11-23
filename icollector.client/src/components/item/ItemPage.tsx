@@ -96,13 +96,18 @@ export function ItemPage() {
     return (
         <div>
             {toolbar}
+
+            <h1>{item.name}</h1>
+
             <ItemDetailsView
                 item={item}
                 collection={item.collection} />
+            <br />
 
             <h2>
                 <FormattedMessage id="comments" />
             </h2>
+
             {commentsPanel}
         </div>
     );

@@ -70,7 +70,7 @@ function renderRowAdditionalColumns(item: CollectionItemType, collection: UserCo
     </Fragment>)
 }
 
-function renderCollection(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void, onUserClick: (e: MouseEvent) => void) {
+function renderCollection(collection: UserCollectionType, onUserClick: (e: MouseEvent) => void) {
     return (
         <div>
             <dl>
@@ -95,34 +95,40 @@ function renderCollection(collection: UserCollectionType, onItemClick: (e: Mouse
                     </Link>
                 </dd>
             </dl>
-            <div>
-                <Table className="table" responsive>
-                    <thead>
-                        <tr>
-                            <th>
-                                <FormattedMessage id="identifier" />
-                            </th>
-                            <th>
-                                <FormattedMessage id="name" />
-                            </th>
-                            {renderTableAdditionalHeaders(collection)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {collection.items.map(item => <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>
-                                <Link to="#" id={item.id.toString()} onClick={onItemClick}>
-                                    {item.name}
-                                </Link>
-                            </td>
-                            {renderRowAdditionalColumns(item, collection)}
-                        </tr>)}
-                    </tbody>
-                </Table>
-            </div>
         </div>
     );
+}
+
+function renderCollectionItems(collection: UserCollectionType, onItemClick: (e: MouseEvent) => void) {
+    if (collection.items.length === 0)
+        return <p><em><FormattedMessage id="no_items" /></em></p>;
+
+    return (<div>
+        <Table className="table" responsive>
+            <thead>
+                <tr>
+                    <th>
+                        <FormattedMessage id="identifier" />
+                    </th>
+                    <th>
+                        <FormattedMessage id="name" />
+                    </th>
+                    {renderTableAdditionalHeaders(collection)}
+                </tr>
+            </thead>
+            <tbody>
+                {collection.items.map(item => <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>
+                        <Link to="#" id={item.id.toString()} onClick={onItemClick}>
+                            {item.name}
+                        </Link>
+                    </td>
+                    {renderRowAdditionalColumns(item, collection)}
+                </tr>)}
+            </tbody>
+        </Table>
+    </div>);
 }
 
 function renderNotFound(onBackClick: () => void) {
@@ -209,7 +215,17 @@ export function CollectionPage() {
     return (
         <div>
             {toolbar}
-            {renderCollection(collection, handleItemClicked, handleUserClicked)}
+
+            <h1>{collection.name}</h1>
+
+            {renderCollection(collection, handleUserClicked)}
+            <br />
+
+            <h2>
+                <FormattedMessage id="items_list" />
+            </h2>
+
+            {renderCollectionItems(collection, handleItemClicked)}
         </div>
     )
 }
