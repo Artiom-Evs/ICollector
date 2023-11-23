@@ -5,6 +5,7 @@ import { ItemCommentRequestType, ItemCommentType } from "../../services/ItemComm
 import { CommentForm } from "./CommentForm";
 import useAuth from "../../hooks/useAuth";
 import { ItemCommentView } from "./ItemCommentView";
+import signalRService, { HubActions } from "../../services/SignalRService";
 
 interface CommentsPanelProps {
     itemId: number
@@ -27,18 +28,34 @@ export function CommentsPanel(props: CommentsPanelProps) {
     const { isAuthorized } = useAuth();
     const commentsApi = useItemCommentsApi();
     const [comments, setComments] = useState<ItemCommentType[]>();
-
+    
     useEffect(() => {
         commentsApi.getAll(props.itemId ?? 0)
             .then(response => response.data)
             .then(data => setComments(data))
             .catch(error => console.error(error));
+
+        signalRService.connection.send(HubActions.JoinToGroup, `item-${props.itemId}`)
+            .catch(error => console.error(error));
+
+        signalRService.connection.on(HubActions.ReceiveItemComment, (comment: ItemCommentType) => {
+            setComments(prev => {
+                if (prev) return [...prev, comment];
+                else return [comment];
+            });
+        });
     }, [commentsApi, props.itemId]);
+
+    useEffect(() => () => {
+        signalRService.connection.off(HubActions.ReceiveItemComment);
+        signalRService.connection.send(HubActions.RemoveFromGroup, `item-${props.itemId}`)
+            .catch(error => console.error(error));
+    }, [props.itemId]);
 
     function handleSendClick(message: string) {
         const newComment = { itemId: props.itemId, text: message };
         commentsApi.post(newComment as ItemCommentRequestType)
-            .catch(error => console.error(error));
+            .catch(error => console.error(error));    
     }
 
     if (comments === undefined)
