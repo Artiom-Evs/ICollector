@@ -66,17 +66,17 @@ Application project for managing public personal collections (books, stamps, whi
         *   Added for items.
         *   Given only by registered users or administrators. 
         *   Only one like for one item from one user. 
-*   Search
-    *   Located in the site header.
-    *   Search results are separated by categories: collections, items, comments.
-    *   Use search engine. 
+*   ✅ Search
+    *   ✅ Located in the site header.
+    *   ✅ Search results are separated by categories: collections, items, comments.
+    *   ✅ Use search engine. 
 
 ### Non-functional requirements #
 
 *   ✅ Use CSS framework (for example, bootstrap).
 *   ✅ Support for different screen resolutions, including mobiles (adaptive layout). 
 *   ✅ Use ORM as a data access layer. 
-*   Use full text search engine, external or built into database (DB cannot be scanned using SELECT’s for search purposes). Search engine examples: Lucen, Elastic Search.
+*   ✅ Use full text search engine, external or built into database (DB cannot be scanned using SELECT’s for search purposes). Search engine examples: Lucen, Elastic Search.
 
 ### Additional requirements (after completing the main) #
 
