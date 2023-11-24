@@ -1,0 +1,4 @@
+DROP FULLTEXT INDEX on dbo.Items;
+DROP FULLTEXT INDEX on dbo.ItemComments;
+DROP FULLTEXT INDEX on dbo.Collections;
+DROP FULLTEXT CATALOG FTCApplicationDB;
