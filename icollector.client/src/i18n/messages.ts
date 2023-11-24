@@ -112,9 +112,7 @@ export const messages: Record<string, Record<string, string>> = {
         "write_comment": "Write comment",
         "your_comment": "Your comment",
         "send": "Send",
-        "no_comments": "No comments.",
-        "only_authorized_users_can_write_comments": "Only authorized users can write comments.",
-
+        
         "items_list": "List of items",
         "no_items": "No items.",
     }, 
