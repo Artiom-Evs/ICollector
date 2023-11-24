@@ -31,6 +31,7 @@ builder.Services.AddSignalR();
 builder.Services.AddScoped<IDataRepository<UserCollection>, EFCollectionsRepository>();
 builder.Services.AddScoped<IDataRepository<CollectionItem>, EFItemsRepository>();
 builder.Services.AddScoped<IDataRepository<ItemComment>, EFDataRepository<ItemComment>>();
+builder.Services.AddScoped<ISearchService, EFSearchService>();
 
 var app = builder.Build();
 
