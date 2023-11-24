@@ -41,6 +41,11 @@ const Header = () => {
                             <FormattedMessage id="collections" />
                         </NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} to="/search">
+                            <FormattedMessage id="search" />
+                        </NavLink>
+                    </NavItem>
                     <AuthMenu />
                     <NavItem className="ms-1 d-flex align-items-center">
                         <ThemeMenu />

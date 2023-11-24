@@ -118,6 +118,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "items": "Items",
         "in_comments": "In comments",
+        "search": "Search",
         "search_something": "Search something",
         "enter_text_to_search": "Enter text to search",
     }, 
@@ -237,6 +238,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "items": "Itemy",
         "in_comments": "W komentarzach",
+        "search": "Szukaj",
         "search_something": "Szukaj czoś",
         "enter_text_to_search": "Wpisz tekst do szukania",
     },
@@ -357,6 +359,7 @@ export const messages: Record<string, Record<string, string>> = {
 
         "items": "Итемы",
         "in_comments": "В комментариях",
+        "search": "Поиск",
         "search_something": "Ищите что-нибудь",
         "enter_text_to_search": "Введите текст для поиска",
     }
