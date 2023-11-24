@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import { UserCollectionType } from "../../services/CollectionsApiService";
-import { Button, ButtonGroup, Form, FormGroup, Input, Label, } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label, } from "reactstrap";
 import { FormattedMessage } from "react-intl";
 import { TextField } from "../shared/TextField";
 
