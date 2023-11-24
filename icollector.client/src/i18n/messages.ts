@@ -115,6 +115,11 @@ export const messages: Record<string, Record<string, string>> = {
         
         "items_list": "List of items",
         "no_items": "No items.",
+
+        "items": "Items",
+        "in_comments": "In comments",
+        "search_something": "Search something",
+        "enter_text_to_search": "Enter text to search",
     }, 
     [LOCALES.POLISH]: {
         home_page: "Główna",
@@ -229,6 +234,11 @@ export const messages: Record<string, Record<string, string>> = {
 
         "items_list": "List itemów",
         "no_items": "Brak itemów.",
+
+        "items": "Itemy",
+        "in_comments": "W komentarzach",
+        "search_something": "Szukaj czoś",
+        "enter_text_to_search": "Wpisz tekst do szukania",
     },
     [LOCALES.RUSSIAN]: {
         home_page: "Главная",
@@ -344,5 +354,10 @@ export const messages: Record<string, Record<string, string>> = {
 
         "items_list": "Список итемов",
         "no_items": "Итемы отсутствуют.",
+
+        "items": "Итемы",
+        "in_comments": "В комментариях",
+        "search_something": "Ищите что-нибудь",
+        "enter_text_to_search": "Введите текст для поиска",
     }
 }

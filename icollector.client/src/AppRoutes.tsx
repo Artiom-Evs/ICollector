@@ -12,6 +12,7 @@ import { EditItemPage } from "./components/item/EditItemPage";
 import { DeleteItemPage } from "./components/item/DeleteItemPage";
 import { UserPage } from "./components/user/UserPage";
 import { CollectionsPage } from "./components/collection/CollectionsPage";
+import { SearchPage } from "./components/search/SearchPage";
 
 const AppRoutes = [
     {
@@ -76,6 +77,10 @@ const AppRoutes = [
     {
         path: "/user",
         element: <UserPage />
+    },
+    {
+        path: "/search",
+        element: <SearchPage />
     }
 ]
 
