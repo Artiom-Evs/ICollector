@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useSearchApi } from "../../hooks/UseSearchApi";
+import { useSearchApi } from "../../hooks/useSearchApi";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { ItemCommentType } from "../../services/ItemCommentsApiService";
