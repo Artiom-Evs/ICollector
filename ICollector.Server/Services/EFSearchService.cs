@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Xml.Linq;
 
 namespace ICollector.Server.Services;
 
@@ -34,12 +35,18 @@ ORDER BY FTS.RANK DESC
         _context = context;
     }
 
-    public      async Task<IEnumerable<CollectionItem>> SearchItemsAsync(string text, int page = 1, int pageSize = 0)
+    public async Task<IEnumerable<CollectionItem>> SearchItemsAsync(string text, int page = 1, int pageSize = 0)
     {
         var p1 = new SqlParameter("@text", text);
         var items = await _context.Items
             .FromSqlRaw(SELECT_ITEMS, p1)
-            .ToListAsync();
+        .ToListAsync();
+
+        var collectionIds = items.Select(i => i.CollectionId).ToArray();
+        var collections = await _context.Collections
+            .Where(c => collectionIds.Contains(c.Id))
+            .ToArrayAsync();
+        items.ForEach(i => i.Collection = collections.FirstOrDefault(c => c.Id == i.CollectionId));
 
         return items;
     }
