@@ -15,6 +15,11 @@ export function ItemCommentSearchResult(props: ItemCommentSearchResultProps) {
         navigate("/item", { state: { id: props.comment.item.id } });
     }
 
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: { id: props.comment.authorId } });
+    }
+
     return (
         <div className="card mb-2">
             <div className="card-body row">
@@ -27,6 +32,11 @@ export function ItemCommentSearchResult(props: ItemCommentSearchResultProps) {
                     {props.comment.text}
                 </div>
                 <div className="col-sm-4">
+                    <FormattedMessage id="author_with_name" values={{ n: "" }} />
+                    <Link to="#" onClick={handleUserClicked}>
+                        {props.comment.authorName}
+                    </Link>
+                    <br />
                     <FormattedMessage id="created_with_date" values={{ d: new Date(props.comment.created) }} />
                 </div>
             </div>

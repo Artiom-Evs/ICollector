@@ -14,7 +14,12 @@ export function CollectionSearchResult(props: CollectionSearchResultProps) {
         e.preventDefault();
         navigate("/collection", { state: { id: props.collection.id } });
     }
-    
+
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: { id: props.collection.authorId } });
+    }
+
     return (
         <div className="card mb-2">
             <div className="card-body row">
@@ -26,6 +31,11 @@ export function CollectionSearchResult(props: CollectionSearchResultProps) {
                     {props.collection.description}
                 </div>
                 <div className="col-sm-4">
+                    <FormattedMessage id="author_with_name" values={{ n: "" }} />
+                    <Link to="#" onClick={handleUserClicked}>
+                        {props.collection.authorName}
+                    </Link>
+                    <br />
                     <FormattedMessage id="created_with_date" values={{ d: new Date(props.collection.created) }} />
                     <br />
                     <FormattedMessage id="edited_with_date" values={{ d: new Date(props.collection.edited) }} />

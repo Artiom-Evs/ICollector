@@ -14,7 +14,12 @@ export function ItemSearchResult(props: ItemSearchResultProps) {
         e.preventDefault();
         navigate("/item", { state: { id: props.item.id } });
     }
-    
+
+    function handleUserClicked(e: MouseEvent) {
+        e.preventDefault();
+        navigate("/user", { state: { id: props.item.collection.authorId } });
+    }
+
     return (
         <div className="card mb-2">
             <div className="card-body row">
@@ -24,6 +29,11 @@ export function ItemSearchResult(props: ItemSearchResultProps) {
                     </Link>
                 </div>
                 <div className="col-sm-4">
+                    <FormattedMessage id="author_with_name" values={{ n: "" }} />
+                    <Link to="#" onClick={handleUserClicked}>
+                        {props.item.collection.authorName}
+                    </Link>
+                    <br />
                     <FormattedMessage id="created_with_date" values={{ d: new Date(props.item.created) }} />
                     <br />
                     <FormattedMessage id="edited_with_date" values={{ d: new Date(props.item.edited) }} />
