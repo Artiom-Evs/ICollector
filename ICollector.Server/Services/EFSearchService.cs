@@ -47,11 +47,17 @@ ORDER BY FTS.RANK DESC
     public async Task<IEnumerable<ItemComment>> SearchItemCommentsAsync(string text, int page = 1, int pageSize = 0)
     {
         var p1 = new SqlParameter("@text", text);
-        var items = await _context.ItemComments
+        var comments = await _context.ItemComments
             .FromSqlRaw(SELECT_ITEM_COMMENTS, p1)
             .ToListAsync();
 
-        return items;
+        var itemIds = comments.Select(c => c.ItemId).ToArray();
+        var items = await _context.Items
+            .Where(i => itemIds.Contains(i.Id))
+            .ToArrayAsync();
+        comments.ForEach(c => c.Item = items.FirstOrDefault(i => i.Id == c.ItemId));
+
+        return comments;
     }
 
     public async Task<IEnumerable<UserCollection>> SearchCollectionsAsync(string text, int page = 1, int pageSize = 0)
