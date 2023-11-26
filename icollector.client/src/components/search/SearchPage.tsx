@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useSearchApi } from "../../hooks/UseSearchApi";
+import { useSearchApi } from "../../hooks/useSearchApi";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import { CollectionItemType } from "../../services/ItemsApiService";
 import { ItemCommentType } from "../../services/ItemCommentsApiService";
@@ -7,6 +7,7 @@ import { UserCollectionType } from "../../services/CollectionsApiService";
 import { ItemSearchResult } from "./ItemSearchResult";
 import { FormattedMessage, useIntl } from "react-intl";
 import { CollectionSearchResult } from "./CollectionSearchResult";
+import { ItemCommentSearchResult } from "./ItemCommentSearchResult";
 
 function renderItemsResult(items: CollectionItemType[]) {
     return (<div>
@@ -28,10 +29,10 @@ function renderCollectionsResult(collections: UserCollectionType[]) {
 
 function renderItemCommentsResult(itemComments: ItemCommentType[]) {
     return (<div>
-        <h2><FormattedMessage id="in_comments" /></h2>
-        <p>
-            And {itemComments.length} in the different item comments.
-        </p>
+        <h2><FormattedMessage id="in_item_comments" /></h2>
+        {itemComments.map(c =>
+            <ItemCommentSearchResult key={c.id} comment={c} />
+        )}
     </div>)
 }
 
