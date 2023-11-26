@@ -117,7 +117,7 @@ export const messages: Record<string, Record<string, string>> = {
         "no_items": "No items.",
 
         "items": "Items",
-        "in_comments": "In comments",
+        "in_item_comments": "In item comments",
         "search": "Search",
         "search_something": "Search something",
         "enter_text_to_search": "Enter text to search",
@@ -237,7 +237,7 @@ export const messages: Record<string, Record<string, string>> = {
         "no_items": "Brak itemów.",
 
         "items": "Itemy",
-        "in_comments": "W komentarzach",
+        "in_item_comments": "W komentarzach itemów",
         "search": "Szukaj",
         "search_something": "Szukaj czoś",
         "enter_text_to_search": "Wpisz tekst do szukania",
@@ -358,7 +358,7 @@ export const messages: Record<string, Record<string, string>> = {
         "no_items": "Итемы отсутствуют.",
 
         "items": "Итемы",
-        "in_comments": "В комментариях",
+        "in_item_comments": "В комментариях к итемам",
         "search": "Поиск",
         "search_something": "Ищите что-нибудь",
         "enter_text_to_search": "Введите текст для поиска",

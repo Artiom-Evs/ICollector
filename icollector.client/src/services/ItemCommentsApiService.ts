@@ -1,9 +1,11 @@
 import { AxiosInstance, AxiosResponse } from "axios";
+import { CollectionItemType } from "./ItemsApiService";
 
 const apiPath = "/api/itemcomments";
 
 export interface ItemCommentType {
     id: number,
+    item: CollectionItemType,
     itemId: number,
     authorId: string,
     authorName: string,
