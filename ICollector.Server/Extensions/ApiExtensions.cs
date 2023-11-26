@@ -58,6 +58,7 @@ public static class ApiExtensions
     public static ItemCommentResponse ToApiResponse(this ItemComment comment) => new()
     {
         Id = comment.Id,
+        Item = comment.Item?.ToApiResponse(),
         ItemId = comment.ItemId,
         AuthorId = comment.AuthorId,
         Created = comment.Created,

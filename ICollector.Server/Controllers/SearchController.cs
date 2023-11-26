@@ -1,4 +1,5 @@
-﻿using ICollector.Server.Services;
+﻿using ICollector.Server.Extensions;
+using ICollector.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ICollector.Server.Controllers;
@@ -18,20 +19,24 @@ public class SearchController : Controller
     public async Task<IActionResult> SearchItemsAsync(string text)
     {
         var items = await _search.SearchItemsAsync(text);
-        return Ok(items);
+        var itemResponses = items.Select(i => i.ToApiResponse()).ToArray();
+        return Ok(itemResponses);
     }
 
     [HttpGet("ItemComments")]
     public async Task<IActionResult> SearchItemCommentsAsync(string text)
     {
-        var items = await _search.SearchItemCommentsAsync(text);
-        return Ok(items);
+        var comments = await _search.SearchItemCommentsAsync(text);
+        var commentResponses = comments.Select(i => i.ToApiResponse()).ToArray();
+        return Ok(commentResponses);
     }
 
     [HttpGet("Collections")]
     public async Task<IActionResult> SearchCollectionsAsync(string text)
     {
-        var items = await _search.SearchCollectionsAsync(text);
-        return Ok(items);
+        var collections = await _search.SearchCollectionsAsync(text);
+        var collectionResponses = collections.Select(i => i.ToApiResponse()).ToArray();
+
+        return Ok(collectionResponses);
     }
 }
